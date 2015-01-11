@@ -1,13 +1,20 @@
 package output;
-import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
-import java.io.FileReader;
-import java.io.BufferedReader;
-import java.util.Scanner;
+
+
+import org.apache.commons.io.IOUtils;
 
 public class ReadASCII {
 
-	public static File openFile(String filename){
-		return new File(filename);
+	public static String openFile(String filename) throws IOException{
+		  FileInputStream inputStream = new FileInputStream(filename);
+		  String everything;
+		    try {
+		        everything = IOUtils.toString(inputStream);
+		    } finally {
+		        inputStream.close();
+		    }
+		    return everything;
 	}
 }

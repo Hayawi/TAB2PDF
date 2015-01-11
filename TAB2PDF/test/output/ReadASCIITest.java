@@ -19,25 +19,22 @@ public class ReadASCIITest {
 	public void setUp() throws Exception {
 		PrintWriter writer = new PrintWriter(
 				"tabs.txt","UTF-8");
-		writer.println("-");
+		writer.print("--");
 		writer.close();
 	}
 
 	@Test
 	public void testOpenFileBad() throws IOException {
-		File f = ReadASCII.openFile("tabs.txt");
-		FileReader fr = new FileReader(f);
-		assertNotEquals("Read p as a hyphen.",fr.read(),(int)'p');
-		fr.close();
+		String s = ReadASCII.openFile("tabs.txt");
+		assertFalse("Read p as a hyphen.",s.equals("p"));
 	}
-
+	
 	@Test
 	public void testOpenFileGood() throws IOException {
-		File f = ReadASCII.openFile("tabs.txt");
-		FileReader fr = new FileReader(f);
-		assertEquals("Hyphen not read from tab file.",fr.read(),(int)'-');
-		fr.close();
+		String s = ReadASCII.openFile("tabs.txt");
+		assertTrue("Read p as a hyphen.",s.equals("--"));
 	}
+
 	@After
 	public void closeDown() throws Exception{
 		File f = new File("tabs.txt");
