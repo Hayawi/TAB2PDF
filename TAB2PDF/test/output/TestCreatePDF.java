@@ -15,7 +15,7 @@ public class TestCreatePDF {
 
 	@Test
 	public void testwritePDF() {
-		CreatePDF.writePDF("test.pdf");
+		CreatePDF.writePDF("test.pdf", "some stuff");
 		File f = new File("test.pdf");
 		assertTrue("PDF file not created properly",f.exists() && !f.isDirectory());
 		f.delete();

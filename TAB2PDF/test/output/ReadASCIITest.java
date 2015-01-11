@@ -35,6 +35,7 @@ public class ReadASCIITest {
 		assertTrue("Read p as a hyphen.",s.equals("--"));
 	}
 
+
 	@After
 	public void closeDown() throws Exception{
 		File f = new File("tabs.txt");
