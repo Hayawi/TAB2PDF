@@ -1,0 +1,13 @@
+Requirements
+   Converting ASCII notes to PDF
+      -	Convert the lines (vertical and horizontal) from ASCII note to PDF lines
+      -	Convert the numbers into their positions in the PDF
+      -	Calculate the SPACING between the notes
+      -	Place in the symbols (s, h, p, etc.) into their respective representations in the PDF
+      -	Decide on whether we are using a ‘Drag-and-Drop’ functionality
+      -	Simple UI enough to be usable by average computer users
+      -	Recommended to stay in Java but other languages/libraries are allowed
+      -	Venture off on our own without Professor’s aid, but only if the skeleton is finished early (maybe web application?)
+      -	Speed doesn’t matter, as long as it works
+      -	‘Help’ option for average users but removable for the experts. User’s manual is necessary but opening it is optional
+      -	Easy to navigate through the program
