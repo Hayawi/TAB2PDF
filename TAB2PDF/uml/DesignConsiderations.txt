@@ -1,5 +1,0 @@
-The design is meant to have a large amount of modularity.  Where the only data needed to construct a 
-Tablature object is a string of all the text in the ascii file.  The Tablature object has methods
-which change it's state.  Then the Tablature object is passed to the writePDF utility 
-class which creates a pdf file and applies all the corresponding methods for the settings to the 
-documents. 

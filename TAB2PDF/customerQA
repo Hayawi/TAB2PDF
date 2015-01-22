@@ -9,7 +9,8 @@ Q1:
 		3. create the tab pdf without header information and display no notification.
 		4. create the tab pdf with a header which is the filename of the input text file.
 A1:
-	Piuck
+	Pick anyone for now,  the customer is more concerned with seeing 
+	the base functionality before getting into these details.
 	
 Q2:
 	Will you only be converting one text file at a time or many?
