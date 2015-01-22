@@ -1,4 +1,4 @@
-package output;
+package base_system;
 
 import static org.junit.Assert.*;
 
@@ -12,6 +12,8 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
+import base_system.TAB2PDF;
+
 public class TAB2PDFTest {
 	
 	String[] strings = {"tabs.txt","tabs.pdf"};
@@ -20,7 +22,9 @@ public class TAB2PDFTest {
 	public void setup() throws FileNotFoundException, UnsupportedEncodingException{
 		PrintWriter writer = new PrintWriter(
 				"tabs.txt","UTF-8");
-		writer.print("--");
+		writer.print("TITLE=Moonlight Sonata\n"
+				   + "SUBTITLE=Ludwig van Beethoven\n"
+				   + "SPACING=5");
 		writer.close();
 	}
 

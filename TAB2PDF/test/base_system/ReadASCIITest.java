@@ -1,4 +1,4 @@
-package output;
+package base_system;
 
 import static org.junit.Assert.*;
 
@@ -10,32 +10,34 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
+import base_system.ReadASCII;
+
 public class ReadASCIITest {
 
 	@Before
 	public void setUp() throws Exception {
 		PrintWriter writer = new PrintWriter(
-				"tabs.txt","UTF-8");
+				"hyphen.txt","UTF-8");
 		writer.print("--");
 		writer.close();
 	}
 
 	@Test
 	public void testOpenFileBad() throws IOException {
-		String s = ReadASCII.openFile("tabs.txt");
+		String s = ReadASCII.openFile("hyphen.txt");
 		assertFalse("Read p as a hyphen.",s.equals("p"));
 	}
 	
 	@Test
 	public void testOpenFileGood() throws IOException {
-		String s = ReadASCII.openFile("tabs.txt");
+		String s = ReadASCII.openFile("hyphen.txt");
 		assertTrue("Read p as a hyphen.",s.equals("--"));
 	}
-
+	
 
 	@After
 	public void closeDown() throws Exception{
-		File f = new File("tabs.txt");
+		File f = new File("hyphen.txt");
 		f.delete();
 	}
 
