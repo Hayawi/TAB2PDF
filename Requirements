@@ -1,13 +1,20 @@
 Requirements
    Converting ASCII notes to PDF
-      -	Convert the lines (vertical and horizontal) from ASCII note to PDF lines
-      -	Convert the numbers into their positions in the PDF
-      -	Calculate the SPACING between the notes
-      -	Place in the symbols (s, h, p, etc.) into their respective representations in the PDF
-      -	Decide on whether we are using a ‘Drag-and-Drop’ functionality
-      -	Simple UI enough to be usable by average computer users
-      -	Recommended to stay in Java but other languages/libraries are allowed
-      -	Venture off on our own without Professor’s aid, but only if the skeleton is finished early (maybe web application?)
-      -	Speed doesn’t matter, as long as it works
-      -	‘Help’ option for average users but removable for the experts. User’s manual is necessary but opening it is optional
-      -	Easy to navigate through the program
+        - Convert the lines (vertical and horizontal) from ASCII note to PDF lines
+        - Convert the numbers into their positions in the PDF
+        - Calculate the SPACING between the notes
+        - Place in the symbols (s, h, p, etc.) into their respective representations in the PDF
+        - Decide on whether we are using a ‘Drag-and-Drop’ functionality
+        - Simple UI enough to be usable by average computer users
+        - Recommended to stay in Java but other languages/libraries are allowed
+        - Venture off on our own without Professor’s aid, but only if the skeleton is finished early (maybe web application?)
+        - Speed doesn’t matter, as long as it works
+        - ‘Help’ option for average users but removable for the experts. User’s manual is necessary but opening it is optional
+        - Easy to navigate through the program
+        - Return error messages if input file is corrupt or incomplete
+        - Multiple inputs/outputs to differ us from the other groups
+        - If the header is missing (or any none-vital part) then the program should run without it (as long as music is there then it all goes)
+        - Documented user manual. Since we decided on it, then a video instruction manual should be available too
+        - As long as it works in Eclipse then all is well, also in Java
+        - Use Github to transport or transfer our program to different places
+        - HAVE SOMETHING TO PUT ON THE BIG SCREEN!
