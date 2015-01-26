@@ -1,5 +1,7 @@
 package base_system;
 
+import gui_system.GUI;
+
 import java.io.IOException;
  
 /*
@@ -11,19 +13,33 @@ public class TAB2PDF {
 
 	public static void main(String[] args) throws IOException {
 		
+		if(args.length == 0){
+			GUI gui = new GUI();
+			String input;
+			while(true){
+				Thread.sleep(500);
+				if(gui.isInputEntered()){
+					 input = gui.getInputFileName();
+					 break;
+				}
+			} // end while
+			String s = ReadASCII.openFile(input);
+			Tablature tab = new Tablature(s);
+			CreatePDF.writePDF(gui.getOutPutFileName(),tab);
+		}
+		else{
+
 		//read the ascii, to get a string
 		String s = ReadASCII.openFile(args[0]);
 		
 		//create a new tablature, with ascii
-		Tablature tab = new Tablature(s);
-		
-		
+		Tablature tab = new Tablature(s);		
 		// use methods of tablature to stylize
 		// nothing right now, will use default style. (style of sample output1).
 		
 		//write the pdf
 		CreatePDF.writePDF(args[1],tab);
-		
+		}
 	}
 
 }
