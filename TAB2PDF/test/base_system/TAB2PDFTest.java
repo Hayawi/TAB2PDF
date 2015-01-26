@@ -10,6 +10,7 @@ import java.io.UnsupportedEncodingException;
 
 import org.junit.After;
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 
 import base_system.TAB2PDF;
@@ -17,6 +18,7 @@ import base_system.TAB2PDF;
 public class TAB2PDFTest {
 	
 	String[] strings = {"tabs.txt","tabs.pdf"};
+	String[] empty = {};
 	
 	@Before
 	public void setup() throws FileNotFoundException, UnsupportedEncodingException{
@@ -29,12 +31,17 @@ public class TAB2PDFTest {
 	}
 
 	@Test
-	public void testMainArgs() throws IOException {
+	public void testMainArgs() throws IOException, InterruptedException {
 		
 		TAB2PDF.main(strings);
 		File f = new File(strings[0]);
 		File i = new File(strings[1]);
 		assertTrue("Files not created.",f.isFile() && i.isFile());
+	}
+	
+	@Ignore // Tests what happens if no arguments are passed to main (should open gui)
+	public void testMainWithGUI() throws IOException, InterruptedException{
+		TAB2PDF.main(empty);
 	}
 	
 	@After

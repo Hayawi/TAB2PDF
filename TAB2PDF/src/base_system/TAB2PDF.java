@@ -11,8 +11,9 @@ import java.io.IOException;
  */
 public class TAB2PDF {
 
-	public static void main(String[] args) throws IOException {
+	public static void main(String[] args) throws IOException, InterruptedException {
 		
+		// no arguments supplied, defaults to opening gui for file selection.
 		if(args.length == 0){
 			GUI gui = new GUI();
 			String input;
@@ -25,7 +26,11 @@ public class TAB2PDF {
 			} // end while
 			String s = ReadASCII.openFile(input);
 			Tablature tab = new Tablature(s);
-			CreatePDF.writePDF(gui.getOutPutFileName(),tab);
+			int extensionPos = input.indexOf(".txt");
+			String output =input.substring(0,5);
+			output = input.concat(".pdf");
+			CreatePDF.writePDF(output,tab);
+			
 		}
 		else{
 

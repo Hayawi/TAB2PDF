@@ -31,7 +31,7 @@ public class CreatePDF {
 			if(tab.hasBody()){
 			
 				String body = tab.getBody();
-				System.out.print(body);
+				//System.out.print(body); // debug
 				CreatePDF.drawBody(cb,body);
 			}
 			

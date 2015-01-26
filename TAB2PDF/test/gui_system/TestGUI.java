@@ -10,11 +10,15 @@ public class TestGUI {
 
 	@Before
 	public void setUp() throws Exception {
+		
 	}
 
-	@Ignore
-	public void test() {
-		fail("Not yet implemented");
+	@Test
+	public void testGUIConstructor() {
+		GUI gui = new GUI();
 	}
+	
+	@Test
+	public void test
 
 }
