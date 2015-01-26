@@ -13,7 +13,7 @@ public class TestGUI {
 		
 	}
 
-	@Test
+	@Ignore
 	public void testGUIConstructor() {
 		GUI gui = new GUI();
 	}

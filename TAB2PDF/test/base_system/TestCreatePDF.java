@@ -50,7 +50,7 @@ public class TestCreatePDF {
 		CreatePDF.writePDF("testWritePDF.pdf", testtab);
 		File f = new File("testWritePDF.pdf");
 		assertTrue("PDF file not created properly",f.exists() && !f.isDirectory());
-		//f.delete();
+		f.delete();
 		
 	}
 	/*
@@ -72,26 +72,9 @@ public class TestCreatePDF {
 		document.close(); // must close
 		assertTrue("Header was not drawn successfully",success);
 		
-	}
-
-	/*
-	 * Tests drawing of 6 bar music staff.
-	 */
-	@Test
-	public void testdrawMusicStaff() throws FileNotFoundException, DocumentException {
-		Document document = new Document();
-		PdfWriter writer = PdfWriter.getInstance(document,new FileOutputStream("drawStaffTest.pdf"));
-		
-		document.open();
-		PdfContentByte cb = writer.getDirectContent();
-		boolean value = CreatePDF.drawStaff(cb,800);
-		document.close(); // must close
-		assertTrue("Drawing the staff did not complete successfully",value);
-	}
-
-	@After
-	public void cleanUp(){
-		//FileUtils.cleanDirectory(arg0);
+		// cleanup
+		File f = new File("drawHeaderTest.pdf");
+		f.delete();
 	}
 	
 }

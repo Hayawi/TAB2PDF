@@ -17,7 +17,7 @@ public class TAB2PDF {
 		if(args.length == 0){
 			GUI gui = new GUI();
 			String input;
-			while(true){
+			while(true){ // busy waiting on input from file selector.
 				Thread.sleep(500);
 				if(gui.isInputEntered()){
 					 input = gui.getInputFileName();
@@ -32,13 +32,16 @@ public class TAB2PDF {
 			CreatePDF.writePDF(output,tab);
 			
 		}
-		else{
+		else{ // two arguments should be specified on the commmand line, in CLI system.
 
+		// insert checks for checking proper input formatting.  possibly create methodds to do so. 
+			
 		//read the ascii, to get a string
 		String s = ReadASCII.openFile(args[0]);
 		
 		//create a new tablature, with ascii
-		Tablature tab = new Tablature(s);		
+		Tablature tab = new Tablature(s);
+		
 		// use methods of tablature to stylize
 		// nothing right now, will use default style. (style of sample output1).
 		
@@ -47,4 +50,5 @@ public class TAB2PDF {
 		}
 	}
 
+	
 }
