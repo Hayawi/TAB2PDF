@@ -11,10 +11,13 @@ public class Tablature {
 	private String s;
 	private String[] header;
 	private boolean headerExists;
+	private String body;
+	private boolean bodyExists;
 	
 	public Tablature(String s){
 		this.setAscii(s);
 		this.header = this.parseHeader();
+		this.body = this.parseBody();
 	}
 	
 	public boolean setAscii(String s){
@@ -65,6 +68,26 @@ public class Tablature {
 
 	public boolean hasHeader(){
 		return this.headerExists;
+	}
+	
+	public String parseBody() {
+		int startOfBody = this.s.indexOf('|');
+		if(startOfBody == -1){
+			bodyExists = false;
+			return null;
+		}
+		else{
+			bodyExists = true;
+			return s.substring(startOfBody);
+		}	
+	}
+	
+	public boolean hasBody(){
+		return this.bodyExists;
+	}
+	
+	public String getBody(){
+		return this.body;
 	}
 
 }

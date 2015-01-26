@@ -23,15 +23,17 @@ public class CreatePDF {
 			document.open();
 			PdfContentByte cb = writer.getDirectContent();
 
-			String[] header = tab.getHeader();
-			CreatePDF.drawHeader(cb, header);	
+			if(tab.hasHeader()){
+				String[] header = tab.getHeader();
+				CreatePDF.drawHeader(cb, header);
+			}
 			
-			int startY = 730;
-			int space = 70;
-			CreatePDF.drawStaff(cb, startY);
-			CreatePDF.drawStaff(cb, startY - space);
-			CreatePDF.drawStaff(cb, startY - space*2);
-			CreatePDF.drawStaff(cb, startY - space*3);
+			if(tab.hasBody()){
+			
+				String body = tab.getBody();
+				System.out.print(body);
+				CreatePDF.drawBody(cb,body);
+			}
 			
 			document.close(); // no need to close PDFWriter?
 		} catch (FileNotFoundException e) {
@@ -43,7 +45,68 @@ public class CreatePDF {
 		}
 		return true;
 	}
+	
+	public static void drawBody(PdfContentByte cb, String body) throws DocumentException, IOException{
+		int xLeft = 0;
+		int xRight = 1000;
+		int yStart = 730;
+		int staffSpacing = 70;
+		int barLineSpacing = 7;
+		int xSpacing = 5;
+		int frameIndent = 40;
+		String[] lines = body.split("\n");
+		
+		float xPosition;;
+		
+		for(int i = 0; i < 6; i++){
+			//cb.moveTo(xLeft,yStart - (i*barLineSpacing));
+			//cb.lineTo(xRight,yStart - (i*barLineSpacing));
+			//cb.stroke();
+			
+			xPosition = frameIndent;
+			for(int j = 0; j < lines[i].length(); j++){
+			
+				char c = lines[i].charAt(j);
+				if(c == '-'){
+					cb.moveTo(xPosition,yStart - (i*barLineSpacing));
+					xPosition += xSpacing;
+					cb.lineTo(xPosition,yStart - (i*barLineSpacing));	
+					cb.stroke();
+				}
+				else if(Character.isDigit(c)){
+					cb.beginText();
+					BaseFont bf = BaseFont.createFont();
+			        cb.setFontAndSize(bf, 9); 
+			        cb.showTextAligned(PdfContentByte.ALIGN_CENTER,String.valueOf(c), xPosition +2, yStart - (i*barLineSpacing) -3, 0);
+			        cb.endText();
+			        xPosition += xSpacing;
+			        
+				}
+				else if(c == '|' && i == 0){ // only draws verticle line when detecting '|' on the first line of staff.
+					cb.moveTo(xPosition, yStart);
+					cb.lineTo(xPosition, yStart - 5*barLineSpacing);
+					cb.stroke();
+									
+				}
 
+				
+				
+			}
+		}
+		/*
+		String[] lines = body.split("\n");
+		float vSpacing = 0.5f;
+		float hSpacing = 5.5f;
+		
+		for(int i = 0; lines[i].equals("\n"); i++){
+			String curLine = lines[i];
+			cb.moveTo(xLeft,yStart - (i*staffSpacing));
+			cb.lineTo(xRight,yStart - (i*staffSpacing));
+			cb.stroke();
+		}
+		*/
+	}
+	
 	/*
 	 * Draws a stylish header.
 	 */
