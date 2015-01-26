@@ -17,8 +17,5 @@ public class TestGUI {
 	public void testGUIConstructor() {
 		GUI gui = new GUI();
 	}
-	
-	@Test
-	public void test
 
 }
