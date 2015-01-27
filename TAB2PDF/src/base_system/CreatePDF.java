@@ -32,7 +32,7 @@ public class CreatePDF {
 			
 				String body = tab.getBody();
 				//System.out.print(body); // debug
-				CreatePDF.drawBody(cb,body);
+				CreatePDF.drawBody(cb,body,document);
 			}
 			
 			document.close(); // no need to close PDFWriter?
@@ -46,65 +46,74 @@ public class CreatePDF {
 		return true;
 	}
 	
-	public static void drawBody(PdfContentByte cb, String body) throws DocumentException, IOException{
-		int xLeft = 0;
-		int xRight = 1000;
+	/*
+	 * This has been totally hacked together.  will not work on anything but the first input.
+	 */
+	public static void drawBody(PdfContentByte cb, String body,Document doc) throws DocumentException, IOException{
+		
 		int yStart = 730;
 		int staffSpacing = 70;
+		int numOfStaffs = 0;
 		int barLineSpacing = 7;
 		int xSpacing = 5;
 		int frameIndent = 40;
 		String[] lines = body.split("\n");
-		
-		float xPosition;;
-		
-		for(int i = 0; i < 6; i++){
-			//cb.moveTo(xLeft,yStart - (i*barLineSpacing));
-			//cb.lineTo(xRight,yStart - (i*barLineSpacing));
-			//cb.stroke();
+		float xPosition;
+		boolean drawNext = false;
+		for(int i = 0; i < lines.length; i++){		
 			
-			xPosition = frameIndent;
+			
+			xPosition = frameIndent; // where to start drawing stuff.
+			
+			// if a empty line is found, that means the next 6 lines should be placed adjacent to the last 6 lines drawn.
+			if(lines[i].length() == 0 && drawNext == false)
+			{
+				drawNext = true;
+			}
+			else if(lines[i].length() == 0 && drawNext == true) // next staff after 2 frames.
+			{
+				drawNext = false;
+				numOfStaffs++;
+				yStart = yStart - staffSpacing;
+			}
+			
+			if(drawNext){
+				xPosition += 125 *2;
+				
+			}
 			for(int j = 0; j < lines[i].length(); j++){
-			
+				
+				float yDecrement = i*barLineSpacing;
+				if(drawNext)  
+					yDecrement =(i-7)*barLineSpacing;
+				
 				char c = lines[i].charAt(j);
 				if(c == '-'){
-					cb.moveTo(xPosition,yStart - (i*barLineSpacing));
+					cb.moveTo(xPosition,(yStart +  98 * numOfStaffs ) - yDecrement);
 					xPosition += xSpacing;
-					cb.lineTo(xPosition,yStart - (i*barLineSpacing));	
+					cb.lineTo(xPosition,(yStart +  98 * numOfStaffs) - yDecrement);	
 					cb.stroke();
 				}
 				else if(Character.isDigit(c)){
 					cb.beginText();
 					BaseFont bf = BaseFont.createFont();
 			        cb.setFontAndSize(bf, 9); 
-			        cb.showTextAligned(PdfContentByte.ALIGN_CENTER,String.valueOf(c), xPosition +2, yStart - (i*barLineSpacing) -3, 0);
+			        cb.showTextAligned(PdfContentByte.ALIGN_CENTER,String.valueOf(c), xPosition +2, (yStart + 98 * numOfStaffs) - yDecrement-3, 0);
 			        cb.endText();
 			        xPosition += xSpacing;
 			        
 				}
-				else if(c == '|' && i == 0){ // only draws verticle line when detecting '|' on the first line of staff.
+				else if(c == '|' && (i % 6) == 0){ // only draws verticle line when detecting '|' on the first line of staff.
+			
 					cb.moveTo(xPosition, yStart);
 					cb.lineTo(xPosition, yStart - 5*barLineSpacing);
 					cb.stroke();
-									
+					
+					//System.out.println(numOfFrames);	
 				}
-
-				
 				
 			}
 		}
-		/*
-		String[] lines = body.split("\n");
-		float vSpacing = 0.5f;
-		float hSpacing = 5.5f;
-		
-		for(int i = 0; lines[i].equals("\n"); i++){
-			String curLine = lines[i];
-			cb.moveTo(xLeft,yStart - (i*staffSpacing));
-			cb.lineTo(xRight,yStart - (i*staffSpacing));
-			cb.stroke();
-		}
-		*/
 	}
 	
 	/*

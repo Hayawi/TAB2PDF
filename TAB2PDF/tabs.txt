@@ -1,3 +1,0 @@
-TITLE=Moonlight Sonata
-SUBTITLE=Ludwig van Beethoven
-SPACING=5
