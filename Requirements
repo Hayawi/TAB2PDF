@@ -1,5 +1,4 @@
 Requirements
-   Converting ASCII notes to PDF
         - Convert the lines (vertical and horizontal) from ASCII note to PDF lines
         - Convert the numbers into their positions in the PDF
         - Calculate the SPACING between the notes
@@ -18,3 +17,14 @@ Requirements
         - As long as it works in Eclipse then all is well, also in Java
         - Use Github to transport or transfer our program to different places
         - HAVE SOMETHING TO PUT ON THE BIG SCREEN!
+        -	Fine tune the output (Centre it, rearrange the numbers, readjust lines etc.)
+        -	Implement the spacing into the output
+        -	Strings/bars should fit comfortably in page (if input has 3 bars but only 2 can fit then place excess on new line)
+        -	If we are going to get the program to play music as part of the preview then it is either perfect or we don’t do it at all
+        -	Some advice on split up coding: COMMUNICATION!!! Through this we can adapt one of the two:
+          o	Pair programming (2 at once with one looking over the other’s shoulder)
+          o	Continuous integration (requires often meetings between coders)
+        -	GUI testing is something that is going to be done in 4th year, not yet, but it should be very easy to use and aesthetically pleasing. It should follow standard practices (FlowLayout, button placement etc.)
+        -	The program should be customizable by the user (i.e. font, color, spacing) through the program.
+          o	This also means that the preview will be essential for this part.
+
