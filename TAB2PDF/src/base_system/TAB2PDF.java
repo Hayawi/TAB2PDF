@@ -3,6 +3,8 @@ package base_system;
 import gui_system.GUI;
 
 import java.io.IOException;
+
+import addon_functionality.PDFPreview;
  
 /*
  * The main class of the program. This runs the base system, which is run from 
@@ -29,8 +31,8 @@ public class TAB2PDF {
 			int extensionPos = input.indexOf(".txt");
 			String output =input.substring(0,5);
 			output = input.concat(".pdf");
+			PDFPreview.previewPDFDocumentInImage(tab);
 			CreatePDF.writePDF(output,tab);
-			
 		}
 		else{ // two arguments should be specified on the commmand line, in CLI system.
 
