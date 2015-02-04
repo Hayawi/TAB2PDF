@@ -1,23 +1,15 @@
 package addon_functionality;
 
 import base_system.CreatePDF;
-import base_system.ReadASCII;
 import base_system.Tablature;
 
-import com.itextpdf.text.Document;
-import com.itextpdf.text.DocumentException;
-import com.itextpdf.text.Paragraph;
-import com.itextpdf.text.pdf.PdfWriter;
 import com.sun.pdfview.PDFFile;
 import com.sun.pdfview.PDFPage;
 
 import java.awt.Image;
 import java.awt.Rectangle;
 import java.io.*;
-import java.net.MalformedURLException;
-import java.net.URL;
 import java.nio.ByteBuffer;
-import java.nio.channels.FileChannel;
 
 import javax.swing.*;
 
@@ -43,8 +35,8 @@ public class PDFPreview {
 				true) // block until drawing is done
 		;
 
-		// show the image in a frame
-		JFrame frame = new JFrame("My incredible PDF document");
+		// Mina change if you want
+		JFrame frame = new JFrame("PDF Preview");
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.add(new JLabel(new ImageIcon(img)));
 		frame.pack();
