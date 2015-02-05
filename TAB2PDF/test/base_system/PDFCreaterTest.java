@@ -13,14 +13,14 @@ import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
-import base_system.CreatePDF;
+import base_system.Creater;
 
 import com.itextpdf.text.Document;
 import com.itextpdf.text.DocumentException;
 import com.itextpdf.text.pdf.PdfContentByte;
 import com.itextpdf.text.pdf.PdfWriter;
 
-public class TestCreatePDF {
+public class PDFCreaterTest {
 	String goodHeaderBody;
 
 	@Before
@@ -69,7 +69,7 @@ public class TestCreatePDF {
 	@Test
 	public void testwritePDFGoodHeaderBody() throws IOException {
 		Tablature testtab = new Tablature(goodHeaderBody);
-		CreatePDF.writePDF("testWritePDF.pdf", testtab);
+		new PDFCreater().writePDF("testWritePDF.pdf", testtab);
 		File f = new File("testWritePDF.pdf");
 		assertTrue("PDF file not created properly",f.exists() && !f.isDirectory());
 		//f.delete();
@@ -91,7 +91,7 @@ public class TestCreatePDF {
 		
 		document.open();
 		PdfContentByte cb = writer.getDirectContent();
-		boolean success = CreatePDF.drawHeader(cb,headerParsed);
+		boolean success = Creater.drawHeader(cb,headerParsed);
 		document.close(); // must close
 		assertTrue("Header was not drawn successfully",success);
 		

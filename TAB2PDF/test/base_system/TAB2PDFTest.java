@@ -13,6 +13,8 @@ import org.junit.Before;
 import org.junit.Ignore;
 import org.junit.Test;
 
+import com.itextpdf.text.DocumentException;
+
 import base_system.TAB2PDF;
 
 public class TAB2PDFTest {
@@ -31,7 +33,7 @@ public class TAB2PDFTest {
 	}
 
 	@Test
-	public void testMainArgs() throws IOException, InterruptedException {
+	public void testMainArgs() throws IOException, InterruptedException, DocumentException {
 		
 		TAB2PDF.main(strings);
 		File f = new File(strings[0]);
@@ -40,7 +42,7 @@ public class TAB2PDFTest {
 	}
 	
 	@Ignore // Tests what happens if no arguments are passed to main (should open gui)
-	public void testMainWithGUI() throws IOException, InterruptedException{
+	public void testMainWithGUI() throws IOException, InterruptedException, DocumentException{
 		TAB2PDF.main(empty);
 	}
 	

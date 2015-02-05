@@ -10,9 +10,9 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
-import base_system.ReadASCII;
+import base_system.InputUtil;
 
-public class ReadASCIITest {
+public class InputUtilTest {
 
 	@Before
 	public void setUp() throws Exception {
@@ -24,13 +24,13 @@ public class ReadASCIITest {
 
 	@Test
 	public void testOpenFileBad() throws IOException {
-		String s = ReadASCII.openFile("hyphen.txt");
+		String s = InputUtil.openFile("hyphen.txt");
 		assertFalse("Read p as a hyphen.",s.equals("p"));
 	}
 	
 	@Test
 	public void testOpenFileGood() throws IOException {
-		String s = ReadASCII.openFile("hyphen.txt");
+		String s = InputUtil.openFile("hyphen.txt");
 		assertTrue("Read p as a hyphen.",s.equals("--"));
 	}
 	

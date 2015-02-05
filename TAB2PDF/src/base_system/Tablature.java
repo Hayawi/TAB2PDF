@@ -89,5 +89,9 @@ public class Tablature {
 	public String getBody(){
 		return this.body;
 	}
+	
+	public String toString(){
+		return this.s;
+	}
 
 }
