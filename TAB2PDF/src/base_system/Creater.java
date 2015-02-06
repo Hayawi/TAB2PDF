@@ -88,14 +88,14 @@ public class Creater {
 				if(c == '-'){
 					cb.moveTo(xPosition,(yStart +  98 * numOfStaffs ) - yDecrement);
 					xPosition += xSpacing;
-					cb.lineTo(xPosition+1,(yStart +  98 * numOfStaffs) - yDecrement);	
+					cb.lineTo(xPosition,(yStart +  98 * numOfStaffs) - yDecrement);	
 					cb.stroke();
 				}
 				else if(Character.isDigit(c)){
 					cb.beginText();
 					BaseFont bf = BaseFont.createFont();
 			        cb.setFontAndSize(bf, 9); 
-			        cb.showTextAligned(PdfContentByte.ALIGN_CENTER,String.valueOf(c), xPosition +3, (yStart + 98 * numOfStaffs) - yDecrement-3, 0);
+			        cb.showTextAligned(PdfContentByte.ALIGN_CENTER,String.valueOf(c), (xPosition + 2.5f), (yStart + 98 * numOfStaffs) - yDecrement-3, 0);
 			        cb.endText();
 			        xPosition += xSpacing;
 				}
