@@ -27,4 +27,17 @@ Requirements
         - GUI testing is something that is going to be done in 4th year, not yet, but it should be very easy to use and aesthetically pleasing. It should follow standard practices (FlowLayout, button placement etc.)
         - The program should be customizable by the user (i.e. font, color, spacing) through the program.
           o This also means that the preview will be essential for this part.
+        - Double digits should not be parsed as Characters but as bundles (whether it’s a String or some other sort of parsing
+        - GUI:
+          o Chris:
+              The font color is a number for some reason
+          o Mina:
+              Good bas interface
+              ‘Advanced’ and ‘extra features’ tabs are basically the same thing for customer
+              There is no space for a preview to be visible
+          o Combination of both of the above would be perfect
+        - Functional GUI by next week (Wednesday Feb 11)
+        - The program should be able to print directly to a printer as a push over the top
+        - h and p symbols are unimportant to us
+        - The spacing for the notes should be up to us and how it is integrated
 
