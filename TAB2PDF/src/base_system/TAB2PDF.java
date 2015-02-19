@@ -34,7 +34,7 @@ public class TAB2PDF {
 			String output =input.substring(0,5);
 			output = input.concat(".pdf");
 			new PDFCreater().writePDF(output, tab);
-			PDFPreview.previewPDFDocumentInImage(tab);
+			//PDFPreview.previewPDFDocumentInImage(tab);
 			
 		}// two arguments should be specified on the commmand line, in CLI system.
 		else{ 

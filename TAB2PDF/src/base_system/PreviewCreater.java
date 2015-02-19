@@ -11,12 +11,11 @@ import com.itextpdf.text.pdf.PdfWriter;
 
 public class PreviewCreater extends Creater{
 	
-
 	public ByteArrayOutputStream writePDFInMemory(Tablature tab) throws IOException {
 		Document document = new Document();
 		ByteArrayOutputStream oStream = new ByteArrayOutputStream();
-		try {
-			PdfWriter writer = PdfWriter.getInstance(document,oStream);
+try {		PdfWriter writer = PdfWriter.getInstance(document,oStream);
+
 			document.open();
 			PdfContentByte cb = writer.getDirectContent();
 	
@@ -28,7 +27,7 @@ public class PreviewCreater extends Creater{
 			if(tab.hasBody()){
 				String body = tab.getBody();
 				//System.out.print(body); // debug
-				Creater.drawBody(cb,body,document);
+				Creater.createTab(document,cb,body);
 			}
 			
 			document.close(); // no need to close PDFWriter?

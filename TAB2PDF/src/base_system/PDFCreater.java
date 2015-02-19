@@ -11,12 +11,11 @@ import com.itextpdf.text.pdf.PdfWriter;
 public class PDFCreater extends Creater{
 
 	public boolean writePDF(String filename, Tablature tab) throws IOException {
-		Document document = new Document();
+		Document doc = new Document();
 		try {
-			PdfWriter writer = PdfWriter.getInstance(document,
-					new FileOutputStream(filename));
+			PdfWriter writer = PdfWriter.getInstance(doc,new FileOutputStream(filename));
 	
-			document.open();
+			doc.open();
 			PdfContentByte cb = writer.getDirectContent();
 	
 			if(tab.hasHeader()){
@@ -24,14 +23,14 @@ public class PDFCreater extends Creater{
 				Creater.drawHeader(cb, header);
 			}
 			
-			if(tab.hasBody()){
-			
+			if(tab.hasBody()){		
 				String body = tab.getBody();
 				//System.out.print(body); // debug
-				Creater.drawBody(cb,body,document);
+				//Creater.drawBody(cb,body,document);
+				Creater.createTab(doc,cb,body);
 			}
 			
-			document.close(); // no need to close PDFWriter?
+			doc.close(); // no need to close PDFWriter?
 		} catch (FileNotFoundException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
