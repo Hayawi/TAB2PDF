@@ -27,10 +27,11 @@ public class Creater {
 	// page attributes // probably will be move into Tablature object upon
 	// refactoring
 	// along with several methods
-	private static float spacing = 4.5f;
+	private static float spacing = 4f;
 	private static int bodyWidth = 560; // width of body in pixels.
 	private static int margin = 40;
-	private static int topOfPage = 733;
+	private static int topOfPage = 733; // the y position to start drawing stuff
+										// on each page.
 	private static float lineWidth = 0.3f;
 	private static int defaultFontSize = 8;
 
@@ -57,7 +58,7 @@ public class Creater {
 	public static void createTab(Document document, PdfContentByte contentByte,
 			String body) throws DocumentException, IOException {
 		Creater.document = document;
-		String bodySpacesRemoved = body.replaceAll(" ", "");
+		String bodySpacesRemoved = body.replaceAll(" ", "-");
 		makeBigStave(bodySpacesRemoved);
 		canvas = contentByte;
 		drawTablature();
@@ -171,9 +172,23 @@ public class Creater {
 						String text = token.substring(2, 3);
 						drawText(yTune, xPosTok, yPos, text, defaultFontSize);
 						// System.out.println(token);
+					} else if (token.matches(".[0-9][h][0-9].")) {
+						// TODO: first digit is drawn twice because it's
+						// position is different within the
+						// token.
+						curveAndLetter(token, yTune, xPos, yPos, fontWidth, "h");
 					}
+					// draw pull off, across bar,
+					else if (token.matches("[0-9][-][\\|][p][0-9]")) {
+						// TODO: write a better regex
+						// 3-|p0
+						drawPullOff(token, yTune, xPos, yPos, fontWidth, "p");
+						// System.out.println(" " + token + NOT_IMPLEMENTED);
+					}
+
+					/************* FOR DRAWING BARS *******************/
 					// repeat start
-					else if (token.matches("\\|\\|\\*..")
+					if (token.matches("\\|\\|\\*..")
 							&& i == repeatDetectLineNum) {
 						xPosTok = calcPosRelToEnd(5, xPos);
 						drawBeginRepeatSymbol(xPosTok, yPos, 0);
@@ -186,22 +201,10 @@ public class Creater {
 						xPosTok = calcPosRelToEnd(4, xPos);
 						drawBeginRepeatSymbol(xPosTok, yPos, 1);
 						// System.out.println( " " +token + NOT_IMPLEMENTED);
-					} else if (token.matches("..[0-9][h][0-9]")) {
-
-						curveAndLetter(token, yTune, xPos, yPos, fontWidth, "h");
+						// hammer with single digits
 					}
-					// draw pull off, across bar,
-					else if (token.matches("..[0-9][p][0-9]")) { // TODO: write
-																	// better
-																	// regex
-
-						curveAndLetter(token, yTune, xPos, yPos, fontWidth, "p");
-						System.out.println(" " + token + NOT_IMPLEMENTED);
-					}
-
-					/* FOR DRAWING BARS */
 					// first vertical bar is a special case
-					if (token.matches("\\|[\\*-]...") && i == 3 && j < 5) {
+					else if (token.matches("\\|[\\*-]...") && i == 3 && j < 5) {
 						xPosTok = calcPosRelToEnd(5, xPos);
 						drawThinVertBar(xPosTok, yPos);
 						// System.out.println( " " +token + NOT_IMPLEMENTED);
@@ -215,7 +218,7 @@ public class Creater {
 					// vertical bar end of line case
 					else if (token.matches("...[-\\|]\\|") && i == 3
 							&& j == stave[i].length() - 1) {
-						xPosTok = calcPosRelToEnd(0, xPos);
+						xPosTok = calcPosRelToEnd(1, xPos);
 						drawThinVertBar(xPosTok, yPos);
 						// System.out.println( " " +token + NOT_IMPLEMENTED);
 					}
@@ -230,7 +233,7 @@ public class Creater {
 					else if (i == 0 && token.matches("....[0-9]")
 							&& stave[1].charAt(j) == '|') {
 						String num = token.substring(4, 5);
-						xPosTok = calcPosRelToEnd(6, xPos);
+						xPosTok = calcPosRelToEnd(8, xPos);
 						// System.out.print("start" + num + "end"); // debug
 						String text = "Repeat " + num + " times";
 						drawText(10, xPosTok, yPos, text, defaultFontSize);
@@ -277,28 +280,75 @@ public class Creater {
 	private static void curveAndLetter(String token, float yTune, int xPos,
 			int yPos, int fontWidth, String letter) {
 		float xPosTok;
+
+		// (".[0-9][h][0-9].")
+
 		// draw first digit
-		xPosTok = calcPosRelToEnd(3, xPos);
+		xPosTok = calcPosRelToEnd(4, xPos);
 		singleDigitLineSurround(xPosTok, yPos, fontWidth);
-		String text = token.substring(2, 3);
+		String text = token.substring(1, 2);
 		drawText(yTune, xPosTok, yPos, text, defaultFontSize);
 
 		// draw curve
 		canvas.moveTo(xPosTok, yPos + barSpacing / 1.5f);
-		xPosTok = calcPosRelToEnd(2, xPos);
+		xPosTok = calcPosRelToEnd(3, xPos);
 		canvas.curveTo(xPosTok, yPos + barSpacing * 1.25f,
-				calcPosRelToEnd(0, xPos), yPos + barSpacing / 1.5f);
+				calcPosRelToEnd(1, xPos), yPos + barSpacing / 1.5f);
 		canvas.stroke();
 
 		// draw little letter above curve
 		int fontSize = 5;
 		int xTune = 3;
-		xPosTok = calcPosRelToEnd(2, xPos);
+		xPosTok = calcPosRelToEnd(3, xPos);
 		drawText(-yTune * 3, xPosTok + xTune, yPos, letter, fontSize);
 		canvas.moveTo(xPosTok, yPos);
 
 		// move pencil to just after first char.
+		xPosTok = calcPosRelToEnd(4, xPos);
+		canvas.moveTo(xPosTok + fontWidth / 2, yPos);
+
+		// draw last digit
+		xPosTok = calcPosRelToEnd(1, xPos);
+		singleDigitLineSurround(xPosTok, yPos, fontWidth);
+		text = token.substring(3, 4);
+		drawText(yTune, xPosTok, yPos, text, defaultFontSize);
+	}
+
+	/**
+	 * @param token
+	 * @param yTune
+	 * @param xPos
+	 * @param yPos
+	 * @param fontWidth
+	 */
+	private static void drawPullOff(String token, float yTune, int xPos,
+			int yPos, int fontWidth, String letter) {
+		float xPosTok;
+
+		// (".[0-9][h][0-9].")
+
+		// draw first digit
+		xPosTok = calcPosRelToEnd(5, xPos);
+		singleDigitLineSurround(xPosTok, yPos, fontWidth);
+		String text = token.substring(0, 1);
+		drawText(yTune, xPosTok, yPos, text, defaultFontSize);
+
+		// draw curve
+		canvas.moveTo(xPosTok, yPos + barSpacing / 1.5f);
 		xPosTok = calcPosRelToEnd(3, xPos);
+		canvas.curveTo(xPosTok, yPos + barSpacing * 1.25f,
+				calcPosRelToEnd(1, xPos), yPos + barSpacing / 1.5f);
+		canvas.stroke();
+
+		// draw little letter above curve
+		int fontSize = 5;
+		int xTune = 3;
+		xPosTok = calcPosRelToEnd(3, xPos);
+		drawText(-yTune * 3, xPosTok + xTune, yPos, letter, fontSize);
+		canvas.moveTo(xPosTok, yPos);
+
+		// move pencil to just after first char.
+		xPosTok = calcPosRelToEnd(5, xPos);
 		canvas.moveTo(xPosTok + fontWidth / 2, yPos);
 
 		// draw last digit
@@ -497,8 +547,9 @@ public class Creater {
 		} else if (side == 1) {
 			barSpacing = -2.7f;
 			circleOffset = -5f;
-			symOffset = 2f * spacing; // offset is set to align end offset with
-										// begin offset when
+			symOffset = 1.8f * spacing;
+			// offset is set to align end offset with
+			// begin offset when
 			// they are back to back, its a scalar multiple of spacing to ensure
 			// that
 			// they remain aligned even after a spacing change.
@@ -524,7 +575,7 @@ public class Creater {
 		canvas.setLineWidth(2.4f);
 		canvas.stroke();
 		canvas.moveTo(x, y);
-		canvas.setLineWidth(0.3f);
+		canvas.setLineWidth(lineWidth);
 	}
 
 	/**
@@ -547,12 +598,8 @@ public class Creater {
 		canvas.moveTo(x, y);
 	}
 
-	/******************************************************************************
-	 * *************************************************************************
-	 * ***
-	 * **********************************************************************
-	 * ****** ********************ALL BELOW IS FOR ARRANGING THE
-	 * STAVES*******************
+	/*
+	 * ALL BELOW IS FOR ARRANGING THE STAVES
 	 */
 	/*
 	 * Returns the big stave. Precondition: makeBigStave has be executed
