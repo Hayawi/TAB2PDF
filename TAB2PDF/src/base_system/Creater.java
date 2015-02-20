@@ -13,15 +13,17 @@ public class Creater {
 
 	private static final String NOT_IMPLEMENTED = " NOT IMPLEMENTED!";
 
-	// stave storage
+	// stave storage and reorganization 
 	private static String[] bigStave; // stores all measures on one big stave
 	private static String[] staveBuffer; // stores a tab ready to be placed
 	private static ArrayList<String[]> organizedStaves = new ArrayList<String[]>(); 
 	private static String[] consecRemStaves; // stave with consecutive vertical bars removed
 	private static String[] stavsNoWhtSpace ; // staves with single spaces removed.
 	private static String[] lines; // for split lines method
-	// page
-	private static float spacing = 11f;
+	
+	// page attributes // probably will be move into Tablature object upon refactoring
+	// along with several methods
+	private static float spacing = 14f;
 	private static int bodyWidth = 560; // width of body in pixels.
 	private static int margin = 40;
 	private static Document doc;
@@ -43,7 +45,7 @@ public class Creater {
 	 * @param body
 	 *            The tablature of notes, measures, staves and musical symbols.
 	 * @param doc
-	 *            Refernce to the document to be drawn.
+	 *            y to the document to be drawn.
 	 * @throws DocumentException
 	 * @throws IOException
 	 */
@@ -72,6 +74,12 @@ public class Creater {
 			yPos = topOfPage,
 			fontWidth = 5;
 
+		/*
+		 * This beefy triple for loop carries out all the drawing
+		 * by iterating along each line parsing tokens 5 characters at a time
+		 * and matching them to specific kinds of symbols given by the rugular
+		 * expressions within the if statements.
+		 */
 		int staveCount = 0;
 		for (String[] stave : getOrganizedStaves()) { // new stave
 			
@@ -91,7 +99,6 @@ public class Creater {
 				for (int j = 0; j < stave[i].length(); j++) { // per char
 
 					System.out.print(stave[i].charAt(j)); // debug
-					
 					
 					// special case for the start of the string
 					if (j == 4) {
@@ -204,12 +211,9 @@ public class Creater {
 						xPosTok = calcPosRelToEnd(3, xPos);
 						drawTripleThinBars(xPosTok, yPos);
 						// System.out.println( " " +token + NOT_IMPLEMENTED);
-					}
-					
-							
+					}						
 					// increase pencil position by spacing.
 					xPos += spacing;
-
 				}
 				// draw line for right margin
 				canvas.lineTo(bodyWidth + margin, yPos);
@@ -297,11 +301,11 @@ public class Creater {
 	}
 
 	/**
-	 * @param token
-	 * @param yTune
-	 * @param xPosTok
-	 * @param yPos
-	 * @param fontWidth
+	 * @param token The 5 character token
+	 * @param yTune Tweaks the vertical position
+	 * @param xPosTok The position relative to the end of the token
+	 * @param yPos The y position
+	 * @param fontWidth The font width
 	 */
 	private static void drawLagatoSlide(String token, float yTune,
 			float xPosTok, int yPos, int fontWidth) {
@@ -653,21 +657,19 @@ public class Creater {
 	 * while staying within the page boundries.
 	 */
 	public static boolean reorganizeStaves() {
-
+		boolean measureBiggerThanBody = false;
 		int lastIndex = 0;
 		for (int i = maxVertBars; i < bigStave[1].length(); i++) {
 			if (bigStave[1].charAt(i) == '|') {
 				staveWidth = (i - lastIndex) * spacing;
 			}
-
 			// check if current measure is within bounds.
 			if (staveWidth > bodyWidth) {
 				int temp = i;
 				i = indexOfLastMeasure(lastIndex, i);
 				if (i == -1) {
 					spacing -= 0.5f; // measure is too large to fit in bounds
-					i = temp - 1; // decreases spacing and tries again from same
-									// point.
+					i = temp - 1; // decreases spacing and tries again from same point
 					continue; // TODO: redo the whole thing with new spacing.
 				}
 				cutStave(lastIndex, i + 1);
@@ -679,9 +681,7 @@ public class Creater {
 				organizedStaves.add(staveBuffer);
 			}
 			makeLastStave(lastIndex, i);
-
 		}
-
 		return false;
 	}
 
@@ -700,6 +700,11 @@ public class Creater {
 	 * measure is to large to fit within bounds then -1 is returned. More
 	 * specifically returns the index of the last vertical bar at the end of the
 	 * last measure.
+	 * @param j The current index of the bigStave, (should be the first vertical bar
+	 * of the current measure.
+	 * @param lastIndex The in
+	 * 
+	 * Pre: 
 	 */
 	public static int indexOfLastMeasure(int lastIndex, int j) {
 		int index = 0;
@@ -710,6 +715,8 @@ public class Creater {
 			}
 
 		}
+		// now check that the space between the last index and the current one is 
+		// lest the the body width.
 		if (false == isInBounds(index, j)) {
 			return -1;
 		}
@@ -717,7 +724,7 @@ public class Creater {
 	}
 
 	public static boolean isInBounds(int lastIndex, int curIndex) {
-		return (curIndex - lastIndex) * spacing < bodyWidth;
+		return (curIndex - (lastIndex - maxVertBars)) * spacing < bodyWidth;
 	}
 
 	/*
