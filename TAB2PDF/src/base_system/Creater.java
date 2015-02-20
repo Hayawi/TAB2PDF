@@ -3,6 +3,7 @@ package base_system;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
+
 import com.itextpdf.text.Document;
 import com.itextpdf.text.DocumentException;
 import com.itextpdf.text.pdf.BaseFont;
@@ -13,20 +14,22 @@ public class Creater {
 
 	private static final String NOT_IMPLEMENTED = " NOT IMPLEMENTED!";
 
-	// stave storage and reorganization 
+	// stave storage and reorganization
 	private static String[] bigStave; // stores all measures on one big stave
-	private static String[] staveBuffer; // stores a tab ready to be placed
-	private static ArrayList<String[]> organizedStaves = new ArrayList<String[]>(); 
-	private static String[] consecRemStaves; // stave with consecutive vertical bars removed
-	private static String[] stavsNoWhtSpace ; // staves with single spaces removed.
+	static String[] staveBuffer; // stores a tab ready to be placed
+	private static ArrayList<String[]> organizedStaves = new ArrayList<String[]>();
+	private static String[] consecRemStaves; // stave with consecutive vertical
+												// bars removed
+	private static String[] stavsNoWhtSpace; // staves with single spaces
+												// removed.
 	private static String[] lines; // for split lines method
-	
-	// page attributes // probably will be move into Tablature object upon refactoring
+
+	// page attributes // probably will be move into Tablature object upon
+	// refactoring
 	// along with several methods
 	private static float spacing = 4.5f;
 	private static int bodyWidth = 560; // width of body in pixels.
 	private static int margin = 40;
-	private static Document doc;
 	private static int topOfPage = 733;
 	private static float lineWidth = 0.3f;
 	private static int defaultFontSize = 8;
@@ -37,10 +40,11 @@ public class Creater {
 	private static BaseFont bf;
 	private static PdfContentByte canvas;
 	private static float barSpacing = 7f;
+	private static Document document;
 
 	/**
 	 * 
-	 * @param doc 
+	 * @param doc
 	 * @param contentByte
 	 *            Used to draw to the cnavas and position the pencil
 	 * @param body
@@ -50,16 +54,19 @@ public class Creater {
 	 * @throws DocumentException
 	 * @throws IOException
 	 */
-	public static void createTab(Document document, PdfContentByte contentByte, String body) throws DocumentException, IOException {
-		doc = document;
-		makeBigStave(body);		
+	public static void createTab(Document document, PdfContentByte contentByte,
+			String body) throws DocumentException, IOException {
+		Creater.document = document;
+		String bodySpacesRemoved = body.replaceAll(" ", "");
+		makeBigStave(bodySpacesRemoved);
 		canvas = contentByte;
 		drawTablature();
 	}
 
-	public static void drawTablature() throws DocumentException,IOException {
-		
-		reorganizeStaves(); // takes the big stave and partitions it taking into account spacing.
+	public static void drawTablature() throws DocumentException, IOException {
+
+		reorganizeStaves(); // takes the big stave and partitions it taking into
+							// account spacing.
 		bf = BaseFont.createFont();
 		int repeatDetectLineNum = 3;
 		String token = "";
@@ -69,26 +76,23 @@ public class Creater {
 		float diamondSideLength = 3f;
 		float diamondWidth = diamondSideLength * 1.4142f;
 
-		float yTune = -2.5f;// tunes the  vertical position of the digits drawn.
+		float yTune = -2.5f;// tunes the vertical position of the digits drawn.
 		canvas.setLineWidth(lineWidth);
-		int xPos = margin,
-			yPos = topOfPage,
-			fontWidth = 5;
+		int xPos = margin, yPos = topOfPage, fontWidth = 5;
 
 		/*
-		 * This beefy triple for loop carries out all the drawing
-		 * by iterating along each line parsing tokens 5 characters at a time
-		 * and matching them to specific kinds of symbols given by the rugular
-		 * expressions within the if statements.
+		 * This beefy triple for loop carries out all the drawing by iterating
+		 * along each line parsing tokens 5 characters at a time and matching
+		 * them to specific kinds of symbols given by the rugular expressions
+		 * within the if statements.
 		 */
 		int staveCount = 0;
 		for (String[] stave : getOrganizedStaves()) { // new stave
-			
-			staveCount++;  
+
+			staveCount++;
 			// starts a new page after every 9 staves.
-			if(staveCount % 10 == 0) 
-			{
-				doc.newPage();
+			if (staveCount % 10 == 0) {
+				document.newPage();
 				canvas.setLineWidth(lineWidth);
 				yPos = topOfPage;
 			}
@@ -100,7 +104,7 @@ public class Creater {
 				for (int j = 0; j < stave[i].length(); j++) { // per char
 
 					System.out.print(stave[i].charAt(j)); // debug
-					
+
 					// special case for the start of the string
 					if (j == 4) {
 						token = stave[i].substring(0, 5);
@@ -115,13 +119,13 @@ public class Creater {
 					 * This matches tokens along the line and draws the
 					 * corresponding symbols
 					 */
-					
+
 					// single digit volume swell
 					if (token.matches(".[-*]<[0-9]>")) {
 						xPosTok = calcPosRelToEnd(1, xPos);
 						singleDigitLineSurround(xPosTok, yPos, fontWidth);
 						String text = token.substring(3, 4);
-						drawText(yTune, xPosTok, yPos, text,defaultFontSize);
+						drawText(yTune, xPosTok, yPos, text, defaultFontSize);
 						drawDiamond(xPosTok, yPos, diamondSpace, diamondWidth);
 						// System.out.println(token);
 					}
@@ -130,7 +134,7 @@ public class Creater {
 						xPosTok = calcPosRelToEnd(3, xPos);
 						twoDigitLineSurround(xPosTok, yPos, fontWidth);
 						String text = token.substring(2, 4);
-						drawText(yTune, xPosTok, yPos, text,defaultFontSize);
+						drawText(yTune, xPosTok, yPos, text, defaultFontSize);
 						drawDiamond(xPosTok, yPos, diamondSpace, diamondWidth);
 						// System.out.println(token);
 					}
@@ -157,14 +161,14 @@ public class Creater {
 						xPosTok = calcPosRelToEnd(2, xPos);
 						twoDigitLineSurround(xPosTok, yPos, fontWidth);
 						String text = token.substring(3);
-						drawText(yTune, xPosTok, yPos, text,defaultFontSize);
+						drawText(yTune, xPosTok, yPos, text, defaultFontSize);
 						// System.out.println(token + NOT_IMPLEMENTED);
 					}
 					// single digit
-					else if (token.matches("..[*-][0-9][*-]")) {
-						xPosTok = calcPosRelToEnd(2, xPos);
+					else if (token.matches(".[\\|\\*-][0-9][\\*\\|-].")) {
+						xPosTok = calcPosRelToEnd(3, xPos);
 						singleDigitLineSurround(xPosTok, yPos, fontWidth);
-						String text = token.substring(3, 4);
+						String text = token.substring(2, 3);
 						drawText(yTune, xPosTok, yPos, text, defaultFontSize);
 						// System.out.println(token);
 					}
@@ -184,16 +188,20 @@ public class Creater {
 						// System.out.println( " " +token + NOT_IMPLEMENTED);
 					} else if (token.matches("..[0-9][h][0-9]")) {
 
-						curveAndLetter(token, yTune, xPos, yPos,fontWidth,"h");
+						curveAndLetter(token, yTune, xPos, yPos, fontWidth, "h");
 					}
-					// draw pull off, across bar, 
-					else if (token.matches("..[0-9][p][0-9]")) { // TODO: write better regex
+					// draw pull off, across bar,
+					else if (token.matches("..[0-9][p][0-9]")) { // TODO: write
+																	// better
+																	// regex
 
-						curveAndLetter(token, yTune, xPos, yPos,fontWidth,"p");
-						System.out.println( " " +token + NOT_IMPLEMENTED);
+						curveAndLetter(token, yTune, xPos, yPos, fontWidth, "p");
+						System.out.println(" " + token + NOT_IMPLEMENTED);
 					}
+
+					/* FOR DRAWING BARS */
 					// first vertical bar is a special case
-					else if (token.matches("\\|[\\*-]...") && i == 3 && j < 5) {
+					if (token.matches("\\|[\\*-]...") && i == 3 && j < 5) {
 						xPosTok = calcPosRelToEnd(5, xPos);
 						drawThinVertBar(xPosTok, yPos);
 						// System.out.println( " " +token + NOT_IMPLEMENTED);
@@ -205,7 +213,7 @@ public class Creater {
 						// System.out.println( " " +token + NOT_IMPLEMENTED);
 					}
 					// vertical bar end of line case
-					else if (token.matches("...[-]\\|") && i == 3
+					else if (token.matches("...[-\\|]\\|") && i == 3
 							&& j == stave[i].length() - 1) {
 						xPosTok = calcPosRelToEnd(0, xPos);
 						drawThinVertBar(xPosTok, yPos);
@@ -219,11 +227,12 @@ public class Creater {
 						// System.out.println( " " +token + NOT_IMPLEMENTED);
 					}
 					// draw "repeat x number of times" embedded in bars.
-					else if(i==0 && token.matches("....[0-9]") && stave[1].charAt(j) == '|' ){
-						String num = token.substring(4,5);
+					else if (i == 0 && token.matches("....[0-9]")
+							&& stave[1].charAt(j) == '|') {
+						String num = token.substring(4, 5);
 						xPosTok = calcPosRelToEnd(6, xPos);
 						// System.out.print("start" + num + "end"); // debug
-						String text = "Repeat " + num + " times" ;
+						String text = "Repeat " + num + " times";
 						drawText(10, xPosTok, yPos, text, defaultFontSize);
 					}
 					// increase pencil position by spacing.
@@ -239,10 +248,10 @@ public class Creater {
 				canvas.moveTo(xPos, yPos); // move pencil here
 				System.out.println(); // for debugging
 			} // end line for loop
-			// make space for next stave
+				// make space for next stave
 
-				yPos -= barSpacing * 4.2; // spacing between staves
-			
+			yPos -= barSpacing * 4.2; // spacing between staves
+
 			System.out.println(); // for debugging
 		} // end stave for loop
 	} // end drawTablature method
@@ -265,29 +274,29 @@ public class Creater {
 	 * @param yPos
 	 * @param fontWidth
 	 */
-	private static void curveAndLetter(String token, float yTune,
-			int xPos, int yPos, int fontWidth, String letter) {
+	private static void curveAndLetter(String token, float yTune, int xPos,
+			int yPos, int fontWidth, String letter) {
 		float xPosTok;
 		// draw first digit
 		xPosTok = calcPosRelToEnd(3, xPos);
 		singleDigitLineSurround(xPosTok, yPos, fontWidth);
 		String text = token.substring(2, 3);
-		drawText(yTune, xPosTok, yPos, text,defaultFontSize);
+		drawText(yTune, xPosTok, yPos, text, defaultFontSize);
 
 		// draw curve
-		canvas.moveTo(xPosTok, yPos + barSpacing/1.5f);
+		canvas.moveTo(xPosTok, yPos + barSpacing / 1.5f);
 		xPosTok = calcPosRelToEnd(2, xPos);
-		canvas.curveTo(xPosTok, yPos + barSpacing*1.25f ,
-				calcPosRelToEnd(0, xPos), yPos + barSpacing/1.5f);
+		canvas.curveTo(xPosTok, yPos + barSpacing * 1.25f,
+				calcPosRelToEnd(0, xPos), yPos + barSpacing / 1.5f);
 		canvas.stroke();
-		
+
 		// draw little letter above curve
 		int fontSize = 5;
 		int xTune = 3;
 		xPosTok = calcPosRelToEnd(2, xPos);
-		drawText(-yTune*3, xPosTok+xTune, yPos, letter,fontSize);
+		drawText(-yTune * 3, xPosTok + xTune, yPos, letter, fontSize);
 		canvas.moveTo(xPosTok, yPos);
-		
+
 		// move pencil to just after first char.
 		xPosTok = calcPosRelToEnd(3, xPos);
 		canvas.moveTo(xPosTok + fontWidth / 2, yPos);
@@ -296,7 +305,7 @@ public class Creater {
 		xPosTok = calcPosRelToEnd(0, xPos);
 		singleDigitLineSurround(xPosTok, yPos, fontWidth);
 		text = token.substring(4, 5);
-		drawText(yTune, xPosTok, yPos, text,defaultFontSize);
+		drawText(yTune, xPosTok, yPos, text, defaultFontSize);
 	}
 
 	/**
@@ -319,11 +328,16 @@ public class Creater {
 	}
 
 	/**
-	 * @param token The 5 character token
-	 * @param yTune Tweaks the vertical position
-	 * @param xPosTok The position relative to the end of the token
-	 * @param yPos The y position
-	 * @param fontWidth The font width
+	 * @param token
+	 *            The 5 character token
+	 * @param yTune
+	 *            Tweaks the vertical position
+	 * @param xPosTok
+	 *            The position relative to the end of the token
+	 * @param yPos
+	 *            The y position
+	 * @param fontWidth
+	 *            The font width
 	 */
 	private static void drawLagatoSlide(String token, float yTune,
 			float xPosTok, int yPos, int fontWidth) {
@@ -331,7 +345,7 @@ public class Creater {
 
 		// draw first digit
 		String text = token.substring(2, 3);
-		drawText(yTune, xPosTok, yPos, text,defaultFontSize);
+		drawText(yTune, xPosTok, yPos, text, defaultFontSize);
 
 		// draw slash
 		drawSlash(xPosTok, yPos);
@@ -413,13 +427,20 @@ public class Creater {
 
 	/**
 	 * 
-	 * @param yTune For fine tuning the vertical postion of the text relative to the pencil coordinates
-	 * @param xPos The pencils current horizontal coordinates
-	 * @param yPos The pencils current vertical coordinates
-	 * @param text The text to be written
-	 * @param fontSize The desired font size
+	 * @param yTune
+	 *            For fine tuning the vertical postion of the text relative to
+	 *            the pencil coordinates
+	 * @param xPos
+	 *            The pencils current horizontal coordinates
+	 * @param yPos
+	 *            The pencils current vertical coordinates
+	 * @param text
+	 *            The text to be written
+	 * @param fontSize
+	 *            The desired font size
 	 */
-	private static void drawText(float yTune, float xPos, int yPos, String text, int fontSize) {
+	private static void drawText(float yTune, float xPos, int yPos,
+			String text, int fontSize) {
 		canvas.beginText();
 		canvas.setFontAndSize(bf, fontSize);
 		canvas.showTextAligned(PdfContentByte.ALIGN_CENTER, text, xPos, yPos
@@ -526,11 +547,13 @@ public class Creater {
 		canvas.moveTo(x, y);
 	}
 
-/******************************************************************************
- * ****************************************************************************	
- * ****************************************************************************
- * ********************ALL BELOW IS FOR ARRANGING THE STAVES*******************
- */
+	/******************************************************************************
+	 * *************************************************************************
+	 * ***
+	 * **********************************************************************
+	 * ****** ********************ALL BELOW IS FOR ARRANGING THE
+	 * STAVES*******************
+	 */
 	/*
 	 * Returns the big stave. Precondition: makeBigStave has be executed
 	 * successfully.
@@ -543,46 +566,42 @@ public class Creater {
 	 * Makes one big stave with all measures on it.
 	 */
 	public static boolean makeBigStave(String body) {
-		String[] staves = seperateStaves(body);		
-		/*// debug
-		for(int i = 0; i < staves.length; i++)
-		{
-			for(int j = 0; j < staves[i].length(); j++){
-				System.out.print(staves[i].charAt(j));
-			}
-			System.out.println();
-		}
-		*/
+		// String[] evenNewerStaves = removeWhiteSpace(newStaves);
+		String[] staves = seperateStaves(body);
+		/*
+		 * // debug for(int i = 0; i < staves.length; i++) { for(int j = 0; j <
+		 * staves[i].length(); j++){ System.out.print(staves[i].charAt(j)); }
+		 * System.out.println(); }
+		 */
 		String[] newStaves = removeConsecutiveBars(staves);
-		/*  //debug
-		for(int i = 0; i < newStaves.length; i++)
-		{
-			for(int j = 0; j < newStaves[i].length(); j++){
-				System.out.print(newStaves[i].charAt(j));
-			}
-		}
-		*/
-		//String[] evenNewerStaves = removeWhiteSpace(newStaves);
+		/*
+		 * //debug for(int i = 0; i < newStaves.length; i++) { for(int j = 0; j
+		 * < newStaves[i].length(); j++){
+		 * System.out.print(newStaves[i].charAt(j)); } }
+		 */
+
 		bigStave = concatStaves(newStaves);
 		return true;
 	}
 
-	/** TODO
-	 * Removes all whitespace from the bigStave.
+	/**
+	 * TODO Removes all whitespace from the bigStave.
+	 * 
 	 * @param newStaves
 	 * @return
 	 */
 	private static String[] removeWhiteSpace(String[] newStaves) {
-		
+
 		stavsNoWhtSpace = new String[newStaves.length];
 		for (int i = 1; i < newStaves.length; i++) {
 			String[] lines = splitLines(newStaves[i]);
-			
+
 			for (int j = 0; j < lines.length; j++) {
-				String[] splits = lines[j].split("\\s+");  // 1 or more white space chars
-				
+				String[] splits = lines[j].split("\\s+"); // 1 or more white
+															// space chars
+
 			}
-			//newStavesNoWhiteSpace[i] = buildStave(lines);
+			// newStavesNoWhiteSpace[i] = buildStave(lines);
 		}
 		return null;
 	}
@@ -590,18 +609,18 @@ public class Creater {
 	/**
 	 * Separates all the staves into they're own respective strings.
 	 * 
-	 * Precondition: is that all staves are separated by two or more consecutive new
-	 * line characters. 
+	 * Precondition: is that all staves are separated by two or more consecutive
+	 * new line characters.
 	 * 
-	 * Post: Returns an array of Strings. Each array is a
-	 * stave.
+	 * Post: Returns an array of Strings. Each array is a stave.
 	 * 
 	 */
 	public static String[] seperateStaves(String s) {
-		
-		// note it also has to handle the Windows version of new line character as well as unix.
+
+		// note it also has to handle the Windows version of new line character
+		// as well as unix.
 		String[] staves = s.split("(\n|\r\n){2,}");
-		
+
 		return staves;
 	}
 
@@ -615,7 +634,7 @@ public class Creater {
 	 * no need for the list length to be dynamic.
 	 */
 	public static String[] removeConsecutiveBars(String[] staves) {
-		 consecRemStaves = new String[staves.length];
+		consecRemStaves = new String[staves.length];
 
 		consecRemStaves[0] = staves[0]; // doesn't change the first stave.
 		int numOfLastBarsOfLastStave = countEndBars(staves[0]);
@@ -656,7 +675,6 @@ public class Creater {
 	 */
 	public static String[] concatStaves(String[] staves) {
 
-		
 		String[] lines = new String[6];
 		int numLines = lines.length;
 		Arrays.fill(lines, ""); // too prevent stings being inialized to "null"
@@ -695,8 +713,9 @@ public class Creater {
 				i = indexOfLastMeasure(lastIndex, i);
 				if (i == -1) {
 					spacing -= 0.5f; // measure is too large to fit in bounds
-					i = temp - 1; // decreases spacing and tries again from same point
-					continue; // TODO: redo the whole thing with new spacing.
+					i = temp - 1; // decreases spacing and tries again from same
+									// point
+					continue; // TODO: add more fineness to spacing changes
 				}
 				cutStave(lastIndex, i + 1);
 				if (bigStave[2].charAt(i + 1) == '*')
@@ -726,11 +745,13 @@ public class Creater {
 	 * measure is to large to fit within bounds then -1 is returned. More
 	 * specifically returns the index of the last vertical bar at the end of the
 	 * last measure.
-	 * @param j The current index of the bigStave, (should be the first vertical bar
-	 * of the current measure.
+	 * 
+	 * @param j The current index of the bigStave, (should be the first vertical
+	 * bar of the current measure.
+	 * 
 	 * @param lastIndex The in
 	 * 
-	 * Pre: 
+	 * Pre:
 	 */
 	public static int indexOfLastMeasure(int lastIndex, int j) {
 		int index = 0;
@@ -741,7 +762,8 @@ public class Creater {
 			}
 
 		}
-		// now check that the space between the last index and the current one is 
+		// now check that the space between the last index and the current one
+		// is
 		// lest the the body width.
 		if (false == isInBounds(index, j)) {
 			return -1;
@@ -767,13 +789,9 @@ public class Creater {
 
 	}
 
-	public static String[] getStaveBuffer() {
-		return staveBuffer;
-	}
-
 	/*
-	 * Post: returns the repeat number embedded in in double vertical bars, if no
-	 * number is embedded then returns -1.
+	 * Post: returns the repeat number embedded in in double vertical bars, if
+	 * no number is embedded then returns -1.
 	 */
 	public static int getRepeatNum(String line1, String line2) {
 		int numBars1 = countEndBars(line1);
@@ -794,8 +812,8 @@ public class Creater {
 	public static int countEndBars(String line) {
 		int j = line.length() - 1;
 		int count = 0;
-		
-		for (int i = 0; i < 5 && (j-i) >= 0; i++) {
+
+		for (int i = 0; i < 5 && (j - i) >= 0; i++) {
 			if (line.charAt(j - i) == '|')
 				count++;
 		}
@@ -872,9 +890,11 @@ public class Creater {
 		canvas.beginText();
 		BaseFont bf = BaseFont.createFont();
 		canvas.setFontAndSize(bf, 32);
-		canvas.showTextAligned(PdfContentByte.ALIGN_CENTER, header[0], 275, 780, 0);
+		canvas.showTextAligned(PdfContentByte.ALIGN_CENTER, header[0], 275,
+				780, 0);
 		canvas.setFontAndSize(bf, 14);
-		canvas.showTextAligned(PdfContentByte.ALIGN_CENTER, header[1], 275, 760, 0);
+		canvas.showTextAligned(PdfContentByte.ALIGN_CENTER, header[1], 275,
+				760, 0);
 		canvas.endText();
 		return true;
 	}
