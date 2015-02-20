@@ -23,16 +23,17 @@ public class Creater {
 	
 	// page attributes // probably will be move into Tablature object upon refactoring
 	// along with several methods
-	private static float spacing = 14f;
+	private static float spacing = 12f;
 	private static int bodyWidth = 560; // width of body in pixels.
 	private static int margin = 40;
 	private static Document doc;
 	private static int topOfPage = 733;
 	private static float lineWidth = 0.3f;
+	private static int defaultFontSize = 9;
 
 	// details
 	private static float staveWidth = 0f;
-	private static int maxVertBars = 2;
+	private static int maxVertBars = 3;
 	private static BaseFont bf;
 	private static PdfContentByte canvas;
 	private static float barSpacing = 7f;
@@ -120,7 +121,7 @@ public class Creater {
 						xPosTok = calcPosRelToEnd(1, xPos);
 						singleDigitLineSurround(xPosTok, yPos, fontWidth);
 						String text = token.substring(3, 4);
-						drawText(yTune, xPosTok, yPos, text);
+						drawText(yTune, xPosTok, yPos, text,defaultFontSize);
 						drawDiamond(xPosTok, yPos, diamondSpace, diamondWidth);
 						// System.out.println(token);
 					}
@@ -129,7 +130,7 @@ public class Creater {
 						xPosTok = calcPosRelToEnd(3, xPos);
 						twoDigitLineSurround(xPosTok, yPos, fontWidth);
 						String text = token.substring(2, 4);
-						drawText(yTune, xPosTok, yPos, text);
+						drawText(yTune, xPosTok, yPos, text,defaultFontSize);
 						drawDiamond(xPosTok, yPos, diamondSpace, diamondWidth);
 						// System.out.println(token);
 					}
@@ -156,7 +157,7 @@ public class Creater {
 						xPosTok = calcPosRelToEnd(2, xPos);
 						twoDigitLineSurround(xPosTok, yPos, fontWidth);
 						String text = token.substring(3);
-						drawText(yTune, xPosTok, yPos, text);
+						drawText(yTune, xPosTok, yPos, text,defaultFontSize);
 						// System.out.println(token + NOT_IMPLEMENTED);
 					}
 					// single digit
@@ -164,7 +165,7 @@ public class Creater {
 						xPosTok = calcPosRelToEnd(2, xPos);
 						singleDigitLineSurround(xPosTok, yPos, fontWidth);
 						String text = token.substring(3, 4);
-						drawText(yTune, xPosTok, yPos, text);
+						drawText(yTune, xPosTok, yPos, text, defaultFontSize);
 						// System.out.println(token);
 					}
 					// repeat start
@@ -259,17 +260,23 @@ public class Creater {
 		xPosTok = calcPosRelToEnd(3, xPos);
 		singleDigitLineSurround(xPosTok, yPos, fontWidth);
 		String text = token.substring(2, 3);
-		drawText(yTune, xPosTok, yPos, text);
+		drawText(yTune, xPosTok, yPos, text,defaultFontSize);
 
 		// draw curve
-		canvas.moveTo(xPosTok, yPos + barSpacing);
+		canvas.moveTo(xPosTok, yPos + barSpacing/1.5f);
 		xPosTok = calcPosRelToEnd(2, xPos);
-		canvas.curveTo(xPosTok, yPos + barSpacing * 2,
-				calcPosRelToEnd(0, xPos), yPos + barSpacing);
+		canvas.curveTo(xPosTok, yPos + barSpacing*1.25f ,
+				calcPosRelToEnd(0, xPos), yPos + barSpacing/1.5f);
 		canvas.stroke();
 		
 		// draw little h for hammer
-
+		text = "h";
+		int fontSize = 5;
+		int xTune = 3;
+		xPosTok = calcPosRelToEnd(2, xPos);
+		drawText(-yTune*3, xPosTok+xTune, yPos, text,fontSize);
+		canvas.moveTo(xPosTok, yPos);
+		
 		// move pencil to just after first char.
 		xPosTok = calcPosRelToEnd(3, xPos);
 		canvas.moveTo(xPosTok + fontWidth / 2, yPos);
@@ -278,7 +285,7 @@ public class Creater {
 		xPosTok = calcPosRelToEnd(0, xPos);
 		singleDigitLineSurround(xPosTok, yPos, fontWidth);
 		text = token.substring(4, 5);
-		drawText(yTune, xPosTok, yPos, text);
+		drawText(yTune, xPosTok, yPos, text,defaultFontSize);
 	}
 
 	/**
@@ -313,7 +320,7 @@ public class Creater {
 
 		// draw first digit
 		String text = token.substring(2, 3);
-		drawText(yTune, xPosTok, yPos, text);
+		drawText(yTune, xPosTok, yPos, text,defaultFontSize);
 
 		// draw slash
 		drawSlash(xPosTok, yPos);
@@ -393,9 +400,9 @@ public class Creater {
 		canvas.moveTo(xPosTok + fontWidth / 2, yPos);
 	}
 
-	private static void drawText(float yTune, float xPos, int yPos, String text) {
+	private static void drawText(float yTune, float xPos, int yPos, String text, int fontSize) {
 		canvas.beginText();
-		canvas.setFontAndSize(bf, 9);
+		canvas.setFontAndSize(bf, fontSize);
 		canvas.showTextAligned(PdfContentByte.ALIGN_CENTER, text, xPos, yPos
 				+ yTune, 0);
 		canvas.endText();
