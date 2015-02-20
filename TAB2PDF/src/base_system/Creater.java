@@ -23,13 +23,13 @@ public class Creater {
 	
 	// page attributes // probably will be move into Tablature object upon refactoring
 	// along with several methods
-	private static float spacing = 12f;
+	private static float spacing = 4.5f;
 	private static int bodyWidth = 560; // width of body in pixels.
 	private static int margin = 40;
 	private static Document doc;
 	private static int topOfPage = 733;
 	private static float lineWidth = 0.3f;
-	private static int defaultFontSize = 9;
+	private static int defaultFontSize = 8;
 
 	// details
 	private static float staveWidth = 0f;
@@ -184,8 +184,13 @@ public class Creater {
 						// System.out.println( " " +token + NOT_IMPLEMENTED);
 					} else if (token.matches("..[0-9][h][0-9]")) {
 
-						hammerTime(barSpacing, token, yTune, xPos, yPos,
-								fontWidth);
+						curveAndLetter(token, yTune, xPos, yPos,fontWidth,"h");
+					}
+					// draw pull off, across bar, 
+					else if (token.matches("..[0-9][p][0-9]")) { // TODO: write better regex
+
+						curveAndLetter(token, yTune, xPos, yPos,fontWidth,"p");
+						System.out.println( " " +token + NOT_IMPLEMENTED);
 					}
 					// first vertical bar is a special case
 					else if (token.matches("\\|[\\*-]...") && i == 3 && j < 5) {
@@ -212,7 +217,15 @@ public class Creater {
 						xPosTok = calcPosRelToEnd(3, xPos);
 						drawTripleThinBars(xPosTok, yPos);
 						// System.out.println( " " +token + NOT_IMPLEMENTED);
-					}						
+					}
+					// draw "repeat x number of times" embedded in bars.
+					else if(i==0 && token.matches("....[0-9]") && stave[1].charAt(j) == '|' ){
+						String num = token.substring(4,5);
+						xPosTok = calcPosRelToEnd(6, xPos);
+						// System.out.print("start" + num + "end"); // debug
+						String text = "Repeat " + num + " times" ;
+						drawText(10, xPosTok, yPos, text, defaultFontSize);
+					}
 					// increase pencil position by spacing.
 					xPos += spacing;
 				}
@@ -246,15 +259,14 @@ public class Creater {
 	}
 
 	/**
-	 * @param barSpacing
 	 * @param token
 	 * @param yTune
 	 * @param xPos
 	 * @param yPos
 	 * @param fontWidth
 	 */
-	private static void hammerTime(float barSpacing, String token, float yTune,
-			int xPos, int yPos, int fontWidth) {
+	private static void curveAndLetter(String token, float yTune,
+			int xPos, int yPos, int fontWidth, String letter) {
 		float xPosTok;
 		// draw first digit
 		xPosTok = calcPosRelToEnd(3, xPos);
@@ -269,12 +281,11 @@ public class Creater {
 				calcPosRelToEnd(0, xPos), yPos + barSpacing/1.5f);
 		canvas.stroke();
 		
-		// draw little h for hammer
-		text = "h";
+		// draw little letter above curve
 		int fontSize = 5;
 		int xTune = 3;
 		xPosTok = calcPosRelToEnd(2, xPos);
-		drawText(-yTune*3, xPosTok+xTune, yPos, text,fontSize);
+		drawText(-yTune*3, xPosTok+xTune, yPos, letter,fontSize);
 		canvas.moveTo(xPosTok, yPos);
 		
 		// move pencil to just after first char.
@@ -400,6 +411,14 @@ public class Creater {
 		canvas.moveTo(xPosTok + fontWidth / 2, yPos);
 	}
 
+	/**
+	 * 
+	 * @param yTune For fine tuning the vertical postion of the text relative to the pencil coordinates
+	 * @param xPos The pencils current horizontal coordinates
+	 * @param yPos The pencils current vertical coordinates
+	 * @param text The text to be written
+	 * @param fontSize The desired font size
+	 */
 	private static void drawText(float yTune, float xPos, int yPos, String text, int fontSize) {
 		canvas.beginText();
 		canvas.setFontAndSize(bf, fontSize);
