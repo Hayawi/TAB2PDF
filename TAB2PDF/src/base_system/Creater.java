@@ -19,8 +19,6 @@ public class Creater {
 	static String[] staveBuffer; // stores a tab ready to be placed
 	private static ArrayList<String[]> organizedStaves = new ArrayList<String[]>();
 	private static String[] consecRemStaves; // stave with consecutive vertical
-												// bars removed
-	private static String[] stavsNoWhtSpace; // staves with single spaces
 												// removed.
 	private static String[] lines; // for split lines method
 
@@ -36,12 +34,47 @@ public class Creater {
 	private static int defaultFontSize = 8;
 
 	// details
+	// used in the algorithm for checking if the stave under construction will
+	// fit on the page.
 	private static float staveWidth = 0f;
 	private static int maxVertBars = 3;
 	private static BaseFont bf;
 	private static PdfContentByte canvas;
 	private static float barSpacing = 7f;
 	private static Document document;
+
+	/**
+	 * 
+	 * @return The current spacing being used.
+	 */
+	public static float getSpacing() {
+		return spacing;
+	}
+
+	/**
+	 * Returns the current font size used for printing the notes.
+	 */
+	public static int getDefaultFontSize() {
+		return defaultFontSize;
+	}
+
+	/**
+	 * Used for setting the spacing between the notes. The spacing has no
+	 * maximum setting, but it will automatically adjust the it's self to ensure
+	 * that no measure will go out of bound of the pageWidth.
+	 */
+	public static void setSpacing(float spacing) {
+		Creater.spacing = spacing;
+	}
+
+	/**
+	 * Sets the font size to be used for printing notes. The default is 8.
+	 * 
+	 * @param defaultFontSize
+	 */
+	public static void setDefaultFontSize(int defaultFontSize) {
+		Creater.defaultFontSize = defaultFontSize;
+	}
 
 	/**
 	 * 
@@ -316,10 +349,15 @@ public class Creater {
 
 	/**
 	 * @param token
+	 *            A String taken from the big stave which is used for pattern
+	 *            matching.
 	 * @param yTune
 	 * @param xPos
 	 * @param yPos
 	 * @param fontWidth
+	 *            Used for ensuring the bar lines are not drawn through the
+	 *            characters. The width of the character is used to know where
+	 *            to stop drawing and where to start drawing again.
 	 */
 	private static void drawPullOff(String token, float yTune, int xPos,
 			int yPos, int fontWidth, String letter) {
@@ -639,13 +677,11 @@ public class Creater {
 	 */
 	private static String[] removeWhiteSpace(String[] newStaves) {
 
-		stavsNoWhtSpace = new String[newStaves.length];
 		for (int i = 1; i < newStaves.length; i++) {
 			String[] lines = splitLines(newStaves[i]);
 
 			for (int j = 0; j < lines.length; j++) {
-				String[] splits = lines[j].split("\\s+"); // 1 or more white
-															// space chars
+				lines[j].split("\\s+");
 
 			}
 			// newStavesNoWhiteSpace[i] = buildStave(lines);
@@ -748,7 +784,6 @@ public class Creater {
 	 * while staying within the page boundries.
 	 */
 	public static boolean reorganizeStaves() {
-		boolean measureBiggerThanBody = false;
 		int lastIndex = 0;
 		for (int i = maxVertBars; i < bigStave[1].length(); i++) {
 			if (bigStave[1].charAt(i) == '|') {
