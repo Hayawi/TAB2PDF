@@ -12,9 +12,12 @@ import com.itextpdf.text.pdf.PdfContentByte;
 
 public class Creater {
 
+	/** Specifies that a particular pattern has been match, but no 
+	 * drawing procedure for the pattern has been implemented yet.*/
 	private static final String NOT_IMPLEMENTED = " NOT IMPLEMENTED!";
 
 	// stave storage and reorganization
+	private static String[] staves;	  // stores all the seperate staves, each as a single string.
 	private static String[] bigStave; // stores all measures on one big stave
 	static String[] staveBuffer; // stores a tab ready to be placed
 	private static ArrayList<String[]> organizedStaves = new ArrayList<String[]>();
@@ -25,7 +28,7 @@ public class Creater {
 	// page attributes // probably will be move into Tablature object upon
 	// refactoring
 	// along with several methods
-	private static float spacing = 4f;
+	private static float spacing = 80f;
 	private static int bodyWidth = 560; // width of body in pixels.
 	private static int margin = 40;
 	private static int topOfPage = 733; // the y position to start drawing stuff
@@ -38,6 +41,7 @@ public class Creater {
 	// fit on the page.
 	private static float staveWidth = 0f;
 	private static int maxVertBars = 3;
+	private static float vertBarSpacing = 4f;
 	private static BaseFont bf;
 	private static PdfContentByte canvas;
 	private static float barSpacing = 7f;
@@ -46,6 +50,7 @@ public class Creater {
 	/**
 	 * 
 	 * @return The current spacing being used.
+	 * 
 	 */
 	public static float getSpacing() {
 		return spacing;
@@ -59,32 +64,33 @@ public class Creater {
 	}
 
 	/**
-	 * Used for setting the spacing between the notes. The spacing has no
-	 * maximum setting, but it will automatically adjust the it's self to ensure
-	 * that no measure will go out of bound of the pageWidth.
+	 * Used for setting the spacing between the notes. The spacing 
+	 * has a maximum setting of 80 since anything more than that would not
+	 * allow a measure to have 5 spaces between vertical bars. 
 	 */
 	public static void setSpacing(float spacing) {
+		if(spacing > 80f){
+			spacing = 80f;
+		}
 		Creater.spacing = spacing;
 	}
 
 	/**
 	 * Sets the font size to be used for printing notes. The default is 8.
-	 * 
 	 * @param defaultFontSize
 	 */
 	public static void setDefaultFontSize(int defaultFontSize) {
 		Creater.defaultFontSize = defaultFontSize;
 	}
 
-	/**
+	/** The method which is called to produce a new PDF tablature. It calls all
+	 * the methods necessary to create a new PDF. It should only be called when 
+	 * creating a new PDF and not when modifying an exiting one for performance 
+	 * reasons.
 	 * 
-	 * @param doc
-	 * @param contentByte
-	 *            Used to draw to the cnavas and position the pencil
-	 * @param body
-	 *            The tablature of notes, measures, staves and musical symbols.
-	 * @param doc
-	 *            y to the document to be drawn.
+	 * @param document A reference to the iText pdf document.
+	 * @param contentByte The canvas which is being drawn to.
+	 * @param body The tablature of notes, measures, staves and musical symbols.
 	 * @throws DocumentException
 	 * @throws IOException
 	 */
@@ -97,8 +103,17 @@ public class Creater {
 		drawTablature();
 	}
 
+	/** drawTablature is responsible for drawing the actual PDF
+	 * It is called the first time a PDF is created and for all subsequent 
+	 * modifications to the PDF. It has the precondition that the staves 
+	 * have already been concatenated into one large stave to be partitioned
+	 * into smaller staves which will fit within the width of the page.
+	 * 
+	 * @throws DocumentException
+	 * @throws IOException
+	 */
 	public static void drawTablature() throws DocumentException, IOException {
-
+		
 		reorganizeStaves(); // takes the big stave and partitions it taking into
 							// account spacing.
 		bf = BaseFont.createFont();
@@ -153,7 +168,8 @@ public class Creater {
 					 * This matches tokens along the line and draws the
 					 * corresponding symbols
 					 */
-
+					
+					/* FOR DRAWING MUSICAL SYMBOLS/DIGITS */
 					// single digit volume swell
 					if (token.matches(".[-*]<[0-9]>")) {
 						xPosTok = calcPosRelToEnd(1, xPos);
@@ -219,7 +235,7 @@ public class Creater {
 						// System.out.println(" " + token + NOT_IMPLEMENTED);
 					}
 
-					/************* FOR DRAWING BARS *******************/
+					/* FOR DRAWING BARS */
 					// repeat start
 					if (token.matches("\\|\\|\\*..")
 							&& i == repeatDetectLineNum) {
@@ -240,6 +256,13 @@ public class Creater {
 					else if (token.matches("\\|[\\*-]...") && i == 3 && j < 5) {
 						xPosTok = calcPosRelToEnd(5, xPos);
 						drawThinVertBar(xPosTok, yPos);
+						// System.out.println( " " +token + NOT_IMPLEMENTED);
+					}
+					// first vertical bar(s) is a special case
+					else if (token.matches("\\|{2}[\\*-]..") && i == 3 && j < 5) {
+						xPosTok = calcPosRelToEnd(5, xPos);
+						drawThinVertBar(xPosTok, yPos);
+						drawThinVertBar(xPosTok + vertBarSpacing, yPos);
 						// System.out.println( " " +token + NOT_IMPLEMENTED);
 					}
 					// vertical bar middle case
@@ -292,23 +315,28 @@ public class Creater {
 		} // end stave for loop
 	} // end drawTablature method
 
-	/**
-	 * @param xPosTok
-	 * @param yPos
+	/** Draws three vertical bars.
+	 * @param xPosTok The position of the first bar relative 
+	 * to the last character in the token, multiplied by the line 
+	 * spacing.
+	 * @param yPos The vertical position of the bar.
 	 */
 	private static void drawTripleThinBars(float xPosTok, int yPos) {
-		float vertBarSpacing = 4f;
+		
 		drawThinVertBar(xPosTok, yPos);
 		drawThinVertBar(xPosTok + vertBarSpacing, yPos);
 		drawThinVertBar(xPosTok + vertBarSpacing * 2, yPos);
 	}
 
 	/**
-	 * @param token
-	 * @param yTune
-	 * @param xPos
-	 * @param yPos
-	 * @param fontWidth
+	 * @param token The token to be parsed, in version 1.0 this is 5 character long.
+	 * @param yTune Used to tune the vertical position relative to the original y position.
+	 * @param xPos The horizontal position of the symbol to be drawn.
+	 * @param yPos The original vertical position of the symbol to be drawn.
+	 * @param fontWidth The width of the character.  Not exactly the actually width,
+	 * there are no units associated with this number currently.  It is for tweaking
+	 * the position where the bar line stops being drawn, and then starts being drawn
+	 * again after the symbol is drawn.
 	 */
 	private static void curveAndLetter(String token, float yTune, int xPos,
 			int yPos, int fontWidth, String letter) {
@@ -348,16 +376,14 @@ public class Creater {
 	}
 
 	/**
-	 * @param token
-	 *            A String taken from the big stave which is used for pattern
-	 *            matching.
-	 * @param yTune
-	 * @param xPos
-	 * @param yPos
-	 * @param fontWidth
-	 *            Used for ensuring the bar lines are not drawn through the
-	 *            characters. The width of the character is used to know where
-	 *            to stop drawing and where to start drawing again.
+	 * @param token The token to be parsed, in version 1.0 this is 5 character long.
+	 * @param yTune Used to tune the vertical position relative to the original y position.
+	 * @param xPos The horizontal position of the symbol to be drawn.
+	 * @param yPos The original vertical position of the symbol to be drawn.
+	 * @param fontWidth The width of the character.  Not exactly the actually width,
+	 * there are no units associated with this number currently.  It is for tweaking
+	 * the position where the bar line stops being drawn, and then starts being drawn
+	 * again after the symbol is drawn.
 	 */
 	private static void drawPullOff(String token, float yTune, int xPos,
 			int yPos, int fontWidth, String letter) {
@@ -396,18 +422,24 @@ public class Creater {
 		drawText(yTune, xPosTok, yPos, text, defaultFontSize);
 	}
 
-	/**
-	 * @param indexFromEnd
-	 * @param xPos
-	 * @return
+	/** Finds the position relative to the last character of a token,
+	 * taking line spacing into account.
+	 * @param posFromEnd The number of characters between the last character
+	 * and the character whose position we want to find. 
+	 * @param xPos The position of the last character of the token.
+	 * @return The horizontal position of the character whose position
+	 * relative to the end of the token is scaled by the spacing for 
+	 * document.
 	 */
-	private static float calcPosRelToEnd(int indexFromEnd, int xPos) {
-		return xPos - spacing * indexFromEnd;
+	private static float calcPosRelToEnd(int posFromEnd, int xPos) {
+		return xPos - spacing * posFromEnd;
 	}
 
-	/**
-	 * @param xPos
-	 * @param yPos
+	/** Draws the left margin of the document. Has the precondition 
+	 * that the x Position argument is equal to the margin width.
+	 * 
+	 * @param xPos The current horizontal position of the pencil.
+	 * @param yPos The current vertical position of the pencil.
 	 */
 	private static void drawLeftMargin(int xPos, int yPos) {
 		canvas.lineTo(xPos - margin, yPos);
@@ -415,17 +447,16 @@ public class Creater {
 		canvas.moveTo(xPos, yPos);
 	}
 
-	/**
-	 * @param token
-	 *            The 5 character token
-	 * @param yTune
-	 *            Tweaks the vertical position
-	 * @param xPosTok
-	 *            The position relative to the end of the token
-	 * @param yPos
-	 *            The y position
-	 * @param fontWidth
-	 *            The font width
+	/** Draw the lagato slide, which is a digit followed by a 
+	 * slash through the barline, followed by another digit.
+	 * @param token The 5 character token (as of version 1.0)
+	 * @param yTune  Tweaks the vertical position with which the symbols are drawn.
+	 * @param xPosTok  The position relative to the end of the token
+	 * @param yPos The y position of the pencil
+	 * @param fontWidth The width of the character.  Not exactly the actually width,
+	 * there are no units associated with this number currently.  It is for tweaking
+	 * the position where the bar line stops being drawn, and then starts being drawn
+	 * again after the symbol is drawn.
 	 */
 	private static void drawLagatoSlide(String token, float yTune,
 			float xPosTok, int yPos, int fontWidth) {
@@ -452,9 +483,10 @@ public class Creater {
 		canvas.endText();
 	}
 
-	/**
-	 * @param xPosTok
-	 * @param yPos
+	/** Helper method for the legato slide methods.  It draws the slash which 
+	 * goes through the barline.
+	 * @param xPosTok The position of th eslash relative to the end of the token.
+	 * @param yPos The vertical position of the pencil.
 	 */
 	private static void drawSlash(float xPosTok, int yPos) {
 		canvas.lineTo(xPosTok + spacing, yPos);
@@ -465,11 +497,14 @@ public class Creater {
 		canvas.moveTo(xPosTok + spacing, yPos);
 	}
 
-	/**
-	 * @param xPosTok
-	 * @param yPos
-	 * @param diamondSpace
-	 * @param diamondWidth
+	/** Draws the diamond shape for volume swells. 
+	 * @param xPosTok The position of the diamond relative to the end of the token.
+	 * @param yPos The vertical position of the pencil.
+	 * @param diamondSpace the length of the line between the digit to be drawn 
+	 * and the left edge of the the diamond to be drawn. Increasing this value moves the 
+	 * diamond to the right, while decreasin it moves the diamond closer to the left. 
+	 * @param diamondWidth The length of the diamond going to the left side to the right side
+	 *  it is unit-less and is meant for tweaking the overall size of the diamond.
 	 */
 	private static void drawDiamond(float xPosTok, int yPos,
 			float diamondSpace, float diamondWidth) {
@@ -514,9 +549,10 @@ public class Creater {
 	}
 
 	/**
+	 * Draws text to the specified position.
 	 * 
 	 * @param yTune
-	 *            For fine tuning the vertical postion of the text relative to
+	 *            For fine tuning the vertical position of the text relative to
 	 *            the pencil coordinates
 	 * @param xPos
 	 *            The pencils current horizontal coordinates
@@ -525,7 +561,7 @@ public class Creater {
 	 * @param text
 	 *            The text to be written
 	 * @param fontSize
-	 *            The desired font size
+	 *            The desired font size.  Default is 8
 	 */
 	private static void drawText(float yTune, float xPos, int yPos,
 			String text, int fontSize) {
@@ -536,6 +572,15 @@ public class Creater {
 		canvas.endText();
 	}
 
+	/**
+	 * Used for drawing barlines around double digits.
+	 * @param xPosTok The position of the first digit relative to the second one.
+	 * @param yPos The vertical position of the pencil.
+	 * @param fontWidth The width of the character.  Not exactly the actually width,
+	 * there are no units associated with this number currently.  It is for tweaking
+	 * the position where the bar line stops being drawn, and then starts being drawn
+	 * again after the symbol is drawn.
+	 */
 	private static void twoDigitLineSurround(float xPosTok, int yPos,
 			int fontWidth) {
 		canvas.lineTo(xPosTok - fontWidth, yPos);
@@ -545,7 +590,10 @@ public class Creater {
 
 	/**
 	 * Draws dots at the specified x and y coordinates.
-	 * 
+	 * @param offset The offset moves the dots to the right for positive values 
+	 * and to the left for negative values. 
+	 * @param xPos the x position of the pencil.
+	 * @param y the y position of the pencil.
 	 */
 	public static void drawCircles(float xPos, float y, float offset) {
 		float x = xPos + offset; // adjust relative pencil position
@@ -567,12 +615,8 @@ public class Creater {
 
 	/**
 	 * Draws a thick vertical bar at the given x and y position.
-	 * 
-	 * @param cicleOffset
-	 *            the spacing between the bar and the dots
-	 * @param side
-	 *            specifies weather it is a begin or end repeat symbol 0 means
-	 *            begin and 1 means end.
+	 * @param side  specifies whether it is a begin or end repeat symbol,
+	 *  0 means begin and 1 means end.
 	 */
 	public static void drawBeginRepeatSymbol(float x, float y, int side) {
 		float barSpacing = 0f, // spacing between thick and thing bar
@@ -598,10 +642,9 @@ public class Creater {
 	}
 
 	/**
-	 * @param x
-	 *            is horz position
-	 * @param y
-	 *            is the vertical position of the third bar.
+	 * Draws a thick vertical bar at the specified x and y coordinates.
+	 * @param x is horizontal position
+	 * @param y is the vertical position of the third bar.
 	 */
 	private static void drawThickVertBar(float x, float y) {
 		// draw line upto bar
@@ -616,11 +659,9 @@ public class Creater {
 		canvas.setLineWidth(lineWidth);
 	}
 
-	/**
-	 * @param x
-	 *            is horz position
-	 * @param y
-	 *            is the vertical position of the third bar.
+	/** Draws a thin vertcal bar at the specified coordinates.
+	 * @param x is horizontal position of the bar.
+	 * @param y is the vertical position of the third bar.
 	 */
 	private static void drawThinVertBar(float x, float y) {
 		// draw line upto bar
@@ -639,82 +680,60 @@ public class Creater {
 	/*
 	 * ALL BELOW IS FOR ARRANGING THE STAVES
 	 */
-	/*
-	 * Returns the big stave. Precondition: makeBigStave has be executed
+	/**
+	 * Returns the big stave. 
+	 * Precondition: The big stave has been created 
 	 * successfully.
 	 */
 	public static String[] getBigStave() {
 		return bigStave;
 	}
 
-	/*
+	/**
 	 * Makes one big stave with all measures on it.
+	 * @param body all staves, measures and digits. 
 	 */
 	public static boolean makeBigStave(String body) {
 		// String[] evenNewerStaves = removeWhiteSpace(newStaves);
 		String[] staves = seperateStaves(body);
-		/*
-		 * // debug for(int i = 0; i < staves.length; i++) { for(int j = 0; j <
+		/*// debugging
+		 * for(int i = 0; i < staves.length; i++) { for(int j = 0; j <
 		 * staves[i].length(); j++){ System.out.print(staves[i].charAt(j)); }
 		 * System.out.println(); }
 		 */
 		String[] newStaves = removeConsecutiveBars(staves);
-		/*
-		 * //debug for(int i = 0; i < newStaves.length; i++) { for(int j = 0; j
+		/*  // debugging
+		 * for(int i = 0; i < newStaves.length; i++) { for(int j = 0; j
 		 * < newStaves[i].length(); j++){
 		 * System.out.print(newStaves[i].charAt(j)); } }
 		 */
-
 		bigStave = concatStaves(newStaves);
 		return true;
 	}
 
 	/**
-	 * TODO Removes all whitespace from the bigStave.
-	 * 
-	 * @param newStaves
-	 * @return
-	 */
-	private static String[] removeWhiteSpace(String[] newStaves) {
-
-		for (int i = 1; i < newStaves.length; i++) {
-			String[] lines = splitLines(newStaves[i]);
-
-			for (int j = 0; j < lines.length; j++) {
-				lines[j].split("\\s+");
-
-			}
-			// newStavesNoWhiteSpace[i] = buildStave(lines);
-		}
-		return null;
-	}
-
-	/**
-	 * Separates all the staves into they're own respective strings.
-	 * 
-	 * Precondition: is that all staves are separated by two or more consecutive
-	 * new line characters.
-	 * 
-	 * Post: Returns an array of Strings. Each array is a stave.
-	 * 
+	 * Separates all the staves into seperate strings.
+	 * @param s The whole body which contains all staves, measures and symbols.
+	 * Precondition: All staves are separated by two or more consecutive
+	 * new line characters. 
+	 * Post: Returns an array of Strings where each array is a stave.
 	 */
 	public static String[] seperateStaves(String s) {
 
 		// note it also has to handle the Windows version of new line character
 		// as well as unix.
-		String[] staves = s.split("(\n|\r\n){2,}");
-
+		staves = s.split("(\n|\r\n){2,}");
 		return staves;
 	}
 
-	/*
-	 * Takes a string of staves and removes consecutive vertical bars. The first
-	 * stave does not have it's first vertical bar removed. All bars afterwards
-	 * have they're first vertical bars removed.
-	 * 
-	 * Programmer: An array list was not used because the number of staves
-	 * remains the same. The needed array size is known beforehand, so thereis
-	 * no need for the list length to be dynamic.
+	/**
+	 * Takes a array of staves and removes consecutive vertical bars, so that the 
+	 * big stave is a valid musical stave.   For example:
+	 *  |-----|----|----|-----|
+	 *  
+	 *  instead of...
+	 *  |-----|----||----|-----| when after conctenating staves together.
+	 *
 	 */
 	public static String[] removeConsecutiveBars(String[] staves) {
 		consecRemStaves = new String[staves.length];
@@ -729,8 +748,7 @@ public class Creater {
 					lines[j] = lines[j].substring(1); // remove the first char
 				if (numOfLastBarsOfLastStave == 2
 						&& countBeginBars(lines[j]) == 2)
-					lines[j] = lines[j].substring(2); // remove the first two
-														// chars
+					lines[j] = lines[j].substring(2); // remove the first two chars
 				if (numOfLastBarsOfLastStave == 1
 						&& countBeginBars(lines[j]) == 2)
 					lines[j] = lines[j].substring(1); // remove the first char
@@ -739,7 +757,7 @@ public class Creater {
 					lines[j] = lines[j].substring(1); // remove the first char
 				if (numOfLastBarsOfLastStave == 3)
 					;
-				// do nothing.
+				// do nothing , no measures after, end of song.
 			}
 			consecRemStaves[i] = buildStave(lines);
 			numOfLastBarsOfLastStave = countEndBars(staves[i]);
@@ -747,14 +765,18 @@ public class Creater {
 		return consecRemStaves;
 	}
 
+	/**
+	 * @return The list of staves partitioned in way that
+	 * they will fit on the page.
+	 */
 	public static ArrayList<String[]> getOrganizedStaves() {
 
 		return organizedStaves;
 	}
 
-	/*
-	 * concatenates all the staves into one long stave, which is returned as an
-	 * array of lines. Each line ends with the new line character.
+	/**
+	 * Concatenates all the staves into one long stave, which is returned as an
+	 * array strings, each string is a separate line of the stave. 
 	 */
 	public static String[] concatStaves(String[] staves) {
 
@@ -768,20 +790,18 @@ public class Creater {
 				if (line == null)
 					System.out.print("null string in stave Concat method");
 			}
-			// lines[i] += "\n";
+			// lines[i] += "\n";  // no need to use newline character, the array index is enough to reference distinct lines.
 		}
 		return lines;
 	}
 
-	/*
+	/**
 	 * Takes the big Stave and partitions it into 1 or more staves such that
-	 * each stave contains the maxumum number of measures while each stave
-	 * remains with the boundry of the body width.
+	 * each stave contains the maximum number of measures, while each stave
+	 * remains with the boundary of the body width.
 	 * 
-	 * Pre: - bigStave must be initialized, - the first measure has no more than
-	 * 3 vertical bars at the start. Post: The measures allocated to staves in
-	 * way such that each stave will contain the maximum number of measures
-	 * while staying within the page boundries.
+	 * Preconditon: The big stave must be initialized, 
+	 * 	- the first measure has no more than 3 vertical bars at the start.
 	 */
 	public static boolean reorganizeStaves() {
 		int lastIndex = 0;
@@ -812,9 +832,10 @@ public class Creater {
 		return false;
 	}
 
-	// the end of the big stave is reached
-	// but the current set of measures is still in bounds
-	// then make a new stave containing all remaining measures.
+	/** If end of the big stave has been reached
+	 *  but the current set of measures is still in bounds
+	 * then make a new stave containing all remaining measures.
+	 */ 
 	private static void makeLastStave(int lastIndex, int i) {
 		if (i + 1 >= bigStave[0].length()) {
 			cutStave(lastIndex, bigStave[0].length());
@@ -822,45 +843,56 @@ public class Creater {
 		}
 	}
 
-	/*
-	 * returns the index of the last measure. If no last measure is found or the
-	 * measure is to large to fit within bounds then -1 is returned. More
+	/**
+	 * Returns the index of the previous measure. If no previous measure is found or the
+	 * current measure is to large to fit within bounds then -1 is returned. More
 	 * specifically returns the index of the last vertical bar at the end of the
-	 * last measure.
+	 * preceding measure.
 	 * 
-	 * @param j The current index of the bigStave, (should be the first vertical
+	 * @param firstBarCurMeas The current index of the bigStave, (should be the first vertical
 	 * bar of the current measure.
 	 * 
-	 * @param lastIndex The in
-	 * 
-	 * Pre:
+	 * @param lastBarLastMeas The index of the last vertical bar of the preceding measure. 
 	 */
-	public static int indexOfLastMeasure(int lastIndex, int j) {
+	public static int indexOfLastMeasure(int lastBarLastMeas, int firstBarCurMeas) {
 		int index = 0;
-		for (int i = j - maxVertBars; i >= lastIndex; i--) {
+		for (int i = firstBarCurMeas - maxVertBars; i >= lastBarLastMeas; i--) {
 			if (bigStave[3].charAt(i) == '|') {
 				index = i;
 				break;
 			}
-
 		}
-		// now check that the space between the last index and the current one
-		// is
-		// lest the the body width.
-		if (false == isInBounds(index, j)) {
+		// checks to see if the current measure is in bounds.
+		if (false == isInBounds(index, firstBarCurMeas)) {
 			return -1;
 		}
 		return index;
 	}
 
+	/** Checks to see if the space between the two indices is within the bounds
+	 * of the page.
+	 * 
+	 * @param lastIndex The index of the last vertical bar of the last measure, or
+	 * in the case of being start of the song, the vertical bar at the begging of 
+	 * the song.
+	 * @param curIndex The first vertical bar of the current measure. 
+	 * @return True if the space between the two indices is less than 
+	 * desired width of the body.  False otherwise.
+	 */
 	public static boolean isInBounds(int lastIndex, int curIndex) {
 		return (curIndex - (lastIndex - maxVertBars)) * spacing < bodyWidth;
 	}
 
-	/*
-	 * Pre: bigStave must be initialized, lastindex must be less than curindex
-	 * and both must be naturalk numbers. Post: Returns the former portion of
-	 * the stave which does fit on the current stave being drawn.
+	/** Copies a partition of the big stave into a a stave buffer, to be copied into 
+	 * the final list of organized staves. 
+	 * @param lastIndex The beginning index where the cut starts.
+	 * @param curIndex The last part where the cut ends.
+	 * 
+	 * Pre-condition: bigStave must be initialized, lastindex must be less than curindex
+	 * and both must be natural numbers. 
+	 * 
+	 * Post: Sets the staveBuffer to a copy of the partition between the 
+	 * start and end indices.
 	 */
 	public static void cutStave(int lastIndex, int curIndex) {
 		staveBuffer = new String[6];
@@ -871,9 +903,26 @@ public class Creater {
 
 	}
 
-	/*
-	 * Post: returns the repeat number embedded in in double vertical bars, if
+	/**
+	 * @return The repeat number embedded in in double vertical bars, if
 	 * no number is embedded then returns -1.
+	 * 
+	 * for example:
+	 * 
+	 *  |2
+	 *  ||
+	 *  ||
+	 *  ||
+	 *  
+	 *  will return 2.
+     *
+  	 *  ||
+	 *  ||
+	 *  ||
+	 *  ||
+	 *  
+	 *	will return -1
+	 *
 	 */
 	public static int getRepeatNum(String line1, String line2) {
 		int numBars1 = countEndBars(line1);
@@ -885,11 +934,14 @@ public class Creater {
 		}
 	}
 
-	/*
-	 * counts the number of consecutive vertical bars counting backwards from
-	 * the end of the last line. Pre: All vertical bars are located within the
-	 * last 5 indices of the line. and all measure have a length greater than
-	 * 10. Post: Returns the number of ending vertical bars.
+	/**
+	 * Counts the number of consecutive vertical bars counting backwards from
+	 * the end of the last line.
+	 * Pre-condition: All vertical bars are located within the
+	 * last 5 indices of the line and all measures have a length greater than
+	 * 5.
+	 * 
+	 * @return Returns the number of ending vertical bars.
 	 */
 	public static int countEndBars(String line) {
 		int j = line.length() - 1;
@@ -902,11 +954,14 @@ public class Creater {
 		return count;
 	}
 
-	/*
-	 * counts the number of consecutive vertical bars counting from the start of
-	 * the first line. Pre: All vertical bars are located within the first 5
-	 * indices of the line. and all measure have a length greater than 10. Post:
-	 * Returns the number of beggining vertical bars.
+	// TODO:  Change so that it counts vertical bars on the second line instead of the first. 
+	// the embedded repeated number will interfere if bars are counted on the first line.
+	/**
+	 * Counts the number of consecutive vertical bars counting from the start of
+	 * the first line. 
+	 * Pre-conditions: All vertical bars are located within the first 5
+	 * indices of the line. All measure have a length greater than 5.
+	 * @return the number of vertical bars at the start of the first line.
 	 */
 	public static int countBeginBars(String line) {
 		int count = 0;
@@ -917,42 +972,47 @@ public class Creater {
 		return count;
 	}
 
-	/*
-	 * Takes an array of lines and builds a stave from it. Pre: all lines are
-	 * the same length.
+	/**
+	 * Takes an array of lines and builds a stave from it. 
+	 * Pre-condition: All lines are the same length.
 	 */
 	private static String buildStave(String[] lines) {
-		String stave = "";
+		String stave = "";   // TODO:  local variable should not be returned!  value can be lost!
 		for (int i = 0; i < lines.length; i++) {
 			stave += lines[i] + '\n';
 		}
 		return stave;
 	}
 
-	/*
-	 * Splits a stave into it's lines. Pre: Each line is ended with \n Post: An
-	 * array of lines for the given stave.
+	/**
+	 * Splits a stave into separate lines.
+	 *  Pre-condition: Each line is ended with \n
+	 *  Post: An array of lines for the given stave.
 	 */
 	private static String[] splitLines(String stave) {
 		lines = stave.split("(\n)");
 		return lines;
 	}
 
-	/*
-	 * returns the ith line of the given string where 0 is the first line. If
-	 * there there is no ith line null is returned.
+	/** 
+	 * Returns the i'th line of the given string where 0 is the first line. If
+	 * there there is no i'th line null is returned.
+	 * @param i The line to be removed.
+	 * @param s A string of lines.
 	 */
 	public static String getLine(int i, String s) {
-		String[] lines = s.split("(\n|\r\n)");
+		String[] lines = s.split("(\n|\r\n)"); 
 		if (lines.length <= i)
 			return "null";
 		else
-			return lines[i];
+			return lines[i];// TODO: returns a local variable! not good.
 
 	}
 
-	/*
-	 * Counts the number of lines in a string.
+	/**
+	 * Counts the number of lines in the string.
+	 * @param s The string with lines in it.
+	 * @return The number of lines within the string.
 	 */
 	public static int countLines(String s) {
 
@@ -961,11 +1021,14 @@ public class Creater {
 			if (s.charAt(i) == '\n')
 				count++;
 
-		return count;
+		return count; // TODO: returns a local variable! not good.
 	}
 
-	/*
+	/**
 	 * Draws a stylish header.
+	 * @param canvas Used to draw objects to the PDF.
+	 * @param header A array of strings the, first being the title of the song and
+	 * the second being the composer.
 	 */
 	public static boolean drawHeader(PdfContentByte canvas, String[] header)
 			throws DocumentException, IOException {
