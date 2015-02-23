@@ -28,11 +28,11 @@ public class Creater {
 	// page attributes // probably will be move into Tablature object upon
 	// refactoring
 	// along with several methods
-	private static float spacing = 4f;
+	private static float spacing = 4.4f;
 	private static int bodyWidth = 560; // width of body in pixels.
 	private static int margin = 40;
 	private static int topOfPage = 733; // the y position to start drawing stuff
-										// on each page.
+			// on each page.
 	private static float lineWidth = 0.3f;
 	private static int defaultFontSize = 8;
 
