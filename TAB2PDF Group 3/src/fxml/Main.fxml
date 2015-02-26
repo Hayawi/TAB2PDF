@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.effect.*?>
+<?import javafx.scene.paint.*?>
+<?import javafx.scene.text.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.control.*?>
+<?import java.lang.*?>
+<?import javafx.scene.layout.*?>
+
+<SplitPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller">
+  <items>
+    <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="346.0" prefWidth="598.0">
+         <children>
+            <ImageView fitHeight="349.0" fitWidth="602.0" layoutX="-2.0" pickOnBounds="true" AnchorPane.bottomAnchor="49.0" AnchorPane.leftAnchor="-2.0" AnchorPane.rightAnchor="-2.0" AnchorPane.topAnchor="0.0">
+               <image>
+                  <Image url="@images/splash.jpg" />
+               </image>
+            </ImageView>
+            <Button fx:id="convertButton" layoutX="205.0" layoutY="260.0" mnemonicParsing="false" onAction="#convert" prefHeight="38.0" prefWidth="279.0" text="Convert to PDF">
+               <effect>
+                  <DropShadow />
+               </effect></Button>
+            <Separator layoutX="151.0" layoutY="119.0" orientation="VERTICAL" prefHeight="183.0" prefWidth="21.0" />
+            <Label layoutX="28.0" layoutY="25.0" prefHeight="0.0" prefWidth="263.0" text="Tab - 2 - PDF" textFill="WHITE">
+               <font>
+                  <Font name="System Bold" size="42.0" />
+               </font>
+               <effect>
+                  <DropShadow color="#008eff" radius="6.2925" width="6.17" />
+               </effect>
+            </Label>
+            <Button layoutX="427.0" layoutY="148.0" mnemonicParsing="false" onAction="#browse" text="Browse">
+               <effect>
+                  <DropShadow />
+               </effect></Button>
+            <TextField fx:id="inputField" editable="false" layoutX="206.0" layoutY="148.0" prefHeight="25.0" prefWidth="208.0" promptText="Press browse to select the file" />
+            <TextField fx:id="outputField" layoutX="206.0" layoutY="212.0" prefHeight="25.0" prefWidth="279.0" />
+            <Label layoutX="206.0" layoutY="119.0" text="Please select the text file to convert to PDF:" textFill="WHITE">
+               <effect>
+                  <DropShadow />
+               </effect></Label>
+            <Label layoutX="206.0" layoutY="187.0" text="Please enter the name of your PDF:" textFill="WHITE">
+               <effect>
+                  <DropShadow />
+               </effect></Label>
+            <Button layoutX="32.0" layoutY="161.0" mnemonicParsing="false" onAction="#showCustomizePage" text="Customize PDF">
+               <effect>
+                  <DropShadow />
+               </effect></Button>
+            <Button layoutX="59.0" layoutY="273.0" mnemonicParsing="false" text="Help" textFill="#161aff">
+               <effect>
+                  <DropShadow />
+               </effect></Button>
+         </children>
+      </AnchorPane>
+  </items>
+</SplitPane>

@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.effect.*?>
+<?import javafx.scene.paint.*?>
+<?import javafx.scene.text.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.control.*?>
+<?import java.lang.*?>
+<?import javafx.scene.layout.*?>
+
+<SplitPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="548.0" prefWidth="795.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller">
+  <items>
+    <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0">
+         <children>
+            <ImageView fitHeight="546.0" fitWidth="795.0" layoutX="-2.0" pickOnBounds="true" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="-2.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+               <image>
+                  <Image url="@images/splash.jpg" />
+               </image>
+            </ImageView>
+            <Button layoutX="81.0" layoutY="314.0" mnemonicParsing="false" onAction="#convert" prefHeight="50.0" prefWidth="275.0" text="Convert to PDF" />
+            <Separator layoutX="43.0" layoutY="116.0" orientation="VERTICAL" prefHeight="252.0" prefWidth="21.0">
+               <effect>
+                  <DropShadow />
+               </effect></Separator>
+            <Label layoutX="33.0" layoutY="28.0" text="Tab - 2 - PDF" textFill="WHITE">
+               <font>
+                  <Font name="System Bold" size="42.0" />
+               </font>
+               <effect>
+                  <DropShadow color="#008eff" height="13.59" radius="4.4399999999999995" width="6.17" />
+               </effect>
+            </Label>
+            <Button layoutX="291.0" layoutY="140.0" mnemonicParsing="false" onAction="#browse" prefHeight="25.0" prefWidth="63.0" text="Browse">
+               <effect>
+                  <DropShadow />
+               </effect></Button>
+            <TextField fx:id="inputField" editable="false" layoutX="81.0" layoutY="140.0" prefHeight="25.0" prefWidth="208.0" promptText="Press browse to select the file" />
+            <TextField fx:id="outputField" layoutX="81.0" layoutY="205.0" prefHeight="25.0" prefWidth="275.0" />
+            <Label layoutX="81.0" layoutY="116.0" text="Please select the text file to convert to PDF:" textFill="WHITE">
+               <effect>
+                  <DropShadow />
+               </effect></Label>
+            <Label layoutX="83.0" layoutY="182.0" text="Please enter the name of your PDF:" textFill="WHITE">
+               <effect>
+                  <DropShadow />
+               </effect></Label>
+            <Button layoutX="224.0" layoutY="489.0" mnemonicParsing="false" onAction="#showMainPage" text="Back to Basic Options">
+               <effect>
+                  <DropShadow />
+               </effect></Button>
+            <Button disable="true" layoutX="23.0" layoutY="489.0" mnemonicParsing="false" text="Help" textFill="#161aff" />
+            <Label layoutX="82.0" layoutY="243.0" prefHeight="17.0" prefWidth="123.0" text="Select Spacing:" textFill="WHITE">
+               <effect>
+                  <DropShadow />
+               </effect>
+            </Label>
+            <ColorPicker fx:id="ColorChooser" disable="true" layoutX="228.0" layoutY="267.0" prefHeight="25.0" prefWidth="123.0" />
+            <Label disable="true" layoutX="228.0" layoutY="243.0" prefHeight="17.0" prefWidth="123.0" text="Select Font Color:" textFill="WHITE">
+               <effect>
+                  <DropShadow />
+               </effect>
+            </Label>
+            <ImageView fx:id="previewPage" fitHeight="468.0" fitWidth="360.0" layoutX="427.0" layoutY="15.0" onDragExited="#preview" pickOnBounds="true" preserveRatio="true" />
+            <TextField fx:id="spacingSelect" layoutX="81.0" layoutY="268.0" onAction="#change" prefHeight="25.0" prefWidth="123.0" promptText="Select (1-10)" text="5" />
+            <Button fx:id="leftPage" disable="true" layoutX="419.0" layoutY="489.0" mnemonicParsing="false" onAction="#turnLeft" prefHeight="25.0" prefWidth="130.0" text="Page Left" />
+            <Button fx:id="rightPage" layoutX="650.0" layoutY="489.0" mnemonicParsing="false" onAction="#turnRight" prefHeight="25.0" prefWidth="130.0" text="Page Right" />
+            <Label fx:id="pageCounter" layoutX="568.0" layoutY="489.0" prefHeight="25.0" prefWidth="21.0" text="0" textFill="WHITE" />
+            <Label fx:id="maxPages" layoutX="616.0" layoutY="493.0" text="0" textFill="WHITE" />
+            <Label layoutX="587.0" layoutY="493.0" text="/" textFill="WHITE" />
+         </children>
+      </AnchorPane>
+  </items>
+</SplitPane>
