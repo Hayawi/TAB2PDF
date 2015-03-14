@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.effect.*?>
+<?import javafx.scene.text.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.control.*?>
+<?import java.lang.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="537.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller">
+   <children>
+      <ImageView fitHeight="407.0" fitWidth="600.0" layoutY="-2.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@images/Untitled.png" />
+         </image>
+      </ImageView>
+      <Label layoutX="205.0" layoutY="-2.0" text="TAB2PDF" textFill="WHITE">
+         <font>
+            <Font name="System Bold" size="29.0" />
+         </font>
+      </Label>
+      <Label layoutX="492.0" layoutY="374.0" text="Help" textFill="WHITE">
+         <font>
+            <Font size="16.0" />
+         </font>
+      </Label>
+      <Label layoutX="57.0" layoutY="61.0" text="Select an Option:" textFill="WHITE">
+         <font>
+            <Font name="Nirmala UI" size="20.0" />
+         </font>
+      </Label>
+      <ImageView fitHeight="150.0" fitWidth="200.0" layoutX="57.0" layoutY="125.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@images/Settings-icon.png" />
+         </image>
+      </ImageView>
+      <Separator layoutX="227.0" layoutY="117.0" orientation="VERTICAL" prefHeight="200.0">
+         <effect>
+            <Blend />
+         </effect>
+      </Separator>
+      <Button blendMode="MULTIPLY" layoutX="56.0" layoutY="117.0" mnemonicParsing="false" onAction="#showAdvancedMode" prefHeight="200.0" prefWidth="150.0" />
+      <Label layoutX="71.0" layoutY="284.0" text="Advanced Mode" textFill="WHITE">
+         <font>
+            <Font size="17.0" />
+         </font>
+      </Label>
+      <Label layoutX="241.0" layoutY="117.0" text="Please select the text file to convert to PDF:" textFill="WHITE">
+         <font>
+            <Font name="Nirmala UI" size="15.0" />
+         </font>
+      </Label>
+      <TextField fx:id="inputField" layoutX="241.0" layoutY="149.0" prefHeight="25.0" prefWidth="232.0" />
+      <Label layoutX="241.0" layoutY="181.0" text="Please enter the name of your PDF:" textFill="WHITE">
+         <font>
+            <Font name="Nirmala UI" size="15.0" />
+         </font>
+      </Label>
+      <TextField fx:id="outputField" layoutX="241.0" layoutY="205.0" prefHeight="25.0" prefWidth="286.0" />
+      <Button blendMode="MULTIPLY" layoutX="241.0" layoutY="276.0" mnemonicParsing="false" onAction="#convert" prefHeight="43.0" prefWidth="286.0" text="Convert to PDF" />
+      <Button blendMode="MULTIPLY" layoutX="473.0" layoutY="149.0" mnemonicParsing="false" onAction="#browse" text="Browse" />
+      <Label layoutX="241.0" layoutY="239.0" text="Spacing:" textFill="WHITE">
+         <font>
+            <Font name="Nirmala UI" size="15.0" />
+         </font>
+      </Label>
+      <Slider blendMode="MULTIPLY" layoutX="309.0" layoutY="243.0" prefHeight="14.0" prefWidth="218.0" />
+      <ImageView fx:id="Cover" fitHeight="207.0" fitWidth="292.0" layoutX="241.0" layoutY="117.0" pickOnBounds="true">
+         <image>
+            <Image url="@images/cover.png" />
+         </image>
+      </ImageView>
+      <Button fx:id="BasicMode" blendMode="MULTIPLY" layoutX="312.0" layoutY="117.0" mnemonicParsing="false" onAction="#showBasicMode" prefHeight="200.0" prefWidth="150.0" />
+      <Label fx:id="BasicLabel" layoutX="341.0" layoutY="284.0" text="Basic Mode" textFill="WHITE">
+         <font>
+            <Font size="17.0" />
+         </font>
+      </Label>
+      <Label fx:id="PDFcomplete" layoutX="269.0" layoutY="330.0" text="Your PDF is ready!" textFill="WHITE" visible="false">
+         <font>
+            <Font name="System Bold Italic" size="17.0" />
+         </font>
+      </Label>
+      <Button fx:id="openPDF" blendMode="MULTIPLY" layoutX="429.0" layoutY="330.0" mnemonicParsing="false" onAction="#openPDF" text="Open my PDF" visible="false" />
+   </children>
+</AnchorPane>
