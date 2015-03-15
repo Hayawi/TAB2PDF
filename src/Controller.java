@@ -10,6 +10,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ColorPicker;
 import javafx.scene.control.Label;
+import javafx.scene.control.Separator;
 import javafx.scene.control.Slider;
 import javafx.scene.control.TextField;
 import javafx.scene.image.ImageView;
@@ -29,7 +30,7 @@ public class Controller {
 	@FXML
 	private ImageView previewPage;
 	@FXML
-	private TextField spacingSelect;
+	private Slider spacing;
 	@FXML
 	private ColorPicker ColorChooser;
 	@FXML
@@ -52,7 +53,12 @@ public class Controller {
 	private Button Back;
 	@FXML
 	private Button openPDF;
-	
+	@FXML
+	private ImageView pdfLogo;
+	@FXML
+	private Separator separator;
+	@FXML
+	private Separator middle_separator;
 	
 	private boolean firstTime = true;
 
@@ -64,6 +70,9 @@ public class Controller {
 		Cover.setVisible(false);
 		BasicMode.setVisible(false);
 		BasicLabel.setVisible(false);
+		pdfLogo.setVisible(false);
+		separator.setVisible(true);
+		middle_separator.setVisible(false);
 		
 	}
 	
@@ -86,11 +95,11 @@ public class Controller {
 					+ GUI.outputName + ".pdf";
 		}
 		if (GUI.customizeSelected == true && firstTime == true) {
-			//Tablature tab = new Tablature(GUI.inputPath, GUI.outputPath);
-			DrawPDF.writePDF(new Tablature(GUI.inputPath,GUI.outputPath));
-		//	new PDFCreater().writePDF(GUI.outputPath, tab);
 			
-			previewPage.setImage(PDFPreview.previewPDFDocumentInImage(tab));
+			
+	
+			
+			previewPage.setImage(PDFPreview.previewPDFDocumentInImage(new Tablature(GUI.inputPath,GUI.outputPath)));
 			pageCounter.setText(Integer.toString(1));
 			maxPages.setText(Integer.toString(PDFPreview.getMaxPage()));
 			firstTime = false;
@@ -108,48 +117,44 @@ public class Controller {
 	}	
 
 	public void convert(ActionEvent event) throws IOException, DocumentException {
+		
 		GUI.outputName = outputField.getText();
-		GUI.outputPath = GUI.inputPath.substring(0,
-				GUI.inputPath.lastIndexOf('\\') + 1)
-				+ GUI.outputName + ".pdf";
+		GUI.outputPath = GUI.inputPath.substring(0,GUI.inputPath.lastIndexOf('\\') + 1)	+ GUI.outputName + ".pdf";
 	
 		Tablature tab = new Tablature(GUI.inputPath, GUI.outputPath);
-		if (GUI.customizeSelected == true) {
-			Creater.setSpacing(Float.parseFloat(spacingSelect.getText()));
-		}
-	//	new PDFCreater().writePDF(GUI.outputPath, tab);
+		tab.setSpacing((float)spacing.getValue());
+		DrawPDF.writePDF(tab);
+
 		PDFcomplete.setVisible(true);
 		openPDF.setVisible(true);
 	}
 
 	public void showMainMenu(ActionEvent event) throws IOException {
+	
 		GUI.customizeSelected = false;
-		Parent root = FXMLLoader
-				.load(getClass().getResource("/fxml/MainMenu.fxml"));
+		Parent root = FXMLLoader.load(getClass().getResource("/fxml/MainMenu.fxml"));
 		Scene scene = new Scene(root, 535, 395);
+	
 		GUI.main.setScene(scene);
 		GUI.main.centerOnScreen();
 		GUI.main.show();
 	}
 
 	public void showAdvancedMode(ActionEvent event) throws IOException {
+		
 		GUI.customizeSelected = true;
-		Parent root = FXMLLoader.load(getClass().getResource(
-				"/fxml/AdvancedMode.fxml"));
+		Parent root = FXMLLoader.load(getClass().getResource("/fxml/AdvancedMode.fxml"));
 		Scene scene = new Scene(root, 1046, 768);
+	
 		GUI.main.setScene(scene);
 		GUI.main.centerOnScreen();
 		GUI.main.show();
 		
 	}
-	public void openPDF(){
+	public void openPDF() throws IOException{
 		if (Desktop.isDesktopSupported()) {
-		    try {
-		        File myFile = new File(GUI.outputPath);
-		        Desktop.getDesktop().open(myFile);
-		    } catch (IOException ex) {
-		        // no application registered for PDFs
-		    }
+		    File myFile = new File(GUI.outputPath);
+		    Desktop.getDesktop().open(myFile);
 		}
 	}
 	

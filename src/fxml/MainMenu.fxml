@@ -19,7 +19,7 @@
             <Font name="System Bold" size="29.0" />
          </font>
       </Label>
-      <Label layoutX="492.0" layoutY="374.0" text="Help" textFill="WHITE">
+      <Label layoutX="492.0" layoutY="372.0" text="Help" textFill="WHITE">
          <font>
             <Font size="16.0" />
          </font>
@@ -34,12 +34,12 @@
             <Image url="@images/Settings-icon.png" />
          </image>
       </ImageView>
-      <Separator layoutX="227.0" layoutY="117.0" orientation="VERTICAL" prefHeight="200.0">
+      <Separator fx:id="separator" layoutX="227.0" layoutY="117.0" orientation="VERTICAL" prefHeight="200.0" visible="false">
          <effect>
             <Blend />
          </effect>
       </Separator>
-      <Button blendMode="MULTIPLY" layoutX="56.0" layoutY="117.0" mnemonicParsing="false" onAction="#showAdvancedMode" prefHeight="200.0" prefWidth="150.0" />
+      <Button blendMode="MULTIPLY" layoutX="58.0" layoutY="121.0" mnemonicParsing="false" onAction="#showAdvancedMode" prefHeight="200.0" prefWidth="150.0" />
       <Label layoutX="71.0" layoutY="284.0" text="Advanced Mode" textFill="WHITE">
          <font>
             <Font size="17.0" />
@@ -64,14 +64,19 @@
             <Font name="Nirmala UI" size="15.0" />
          </font>
       </Label>
-      <Slider blendMode="MULTIPLY" layoutX="309.0" layoutY="243.0" prefHeight="14.0" prefWidth="218.0" />
+      <Slider fx:id="spacing" blendMode="MULTIPLY" blockIncrement="1.0" layoutX="309.0" layoutY="243.0" majorTickUnit="5.0" max="20.0" min="1.0" minorTickCount="1" prefHeight="14.0" prefWidth="218.0" showTickLabels="true" showTickMarks="true" value="5.0" />
       <ImageView fx:id="Cover" fitHeight="207.0" fitWidth="292.0" layoutX="241.0" layoutY="117.0" pickOnBounds="true">
          <image>
             <Image url="@images/cover.png" />
          </image>
       </ImageView>
-      <Button fx:id="BasicMode" blendMode="MULTIPLY" layoutX="312.0" layoutY="117.0" mnemonicParsing="false" onAction="#showBasicMode" prefHeight="200.0" prefWidth="150.0" />
-      <Label fx:id="BasicLabel" layoutX="341.0" layoutY="284.0" text="Basic Mode" textFill="WHITE">
+      <ImageView fx:id="pdfLogo" fitHeight="150.0" fitWidth="200.0" layoutX="342.0" layoutY="125.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@images/pdf.png" />
+         </image>
+      </ImageView>
+      <Button fx:id="BasicMode" blendMode="MULTIPLY" layoutX="343.0" layoutY="121.0" mnemonicParsing="false" onAction="#showBasicMode" prefHeight="200.0" prefWidth="150.0" />
+      <Label fx:id="BasicLabel" layoutX="374.0" layoutY="284.0" text="Basic Mode" textFill="WHITE">
          <font>
             <Font size="17.0" />
          </font>
@@ -82,5 +87,6 @@
          </font>
       </Label>
       <Button fx:id="openPDF" blendMode="MULTIPLY" layoutX="429.0" layoutY="330.0" mnemonicParsing="false" onAction="#openPDF" text="Open my PDF" visible="false" />
+      <Separator fx:id="middle_separator" layoutX="205.0" layoutY="121.0" orientation="VERTICAL" prefHeight="200.0" prefWidth="140.0" />
    </children>
 </AnchorPane>

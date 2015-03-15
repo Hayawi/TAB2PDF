@@ -41,7 +41,6 @@ public class GUI extends Application {
 
 		primaryStage.setScene(scene);
 		primaryStage.setTitle("Tab2PDF");
-
 		primaryStage.setResizable(false);
 		primaryStage.centerOnScreen();
 		primaryStage.show();

@@ -1,5 +1,3 @@
-
-
 import java.awt.Graphics;
 import java.awt.Image;
 import java.awt.Rectangle;
@@ -9,7 +7,6 @@ import java.io.*;
 import java.nio.ByteBuffer;
 
 import javax.imageio.ImageIO;
-import javax.swing.*;
 
 import com.itextpdf.text.DocumentException;
 import com.sun.pdfview.PDFFile;
@@ -42,7 +39,7 @@ public class PDFPreview {
 			Tablature tab) throws IOException, DocumentException {
 		// ByteBuffer buf = null;
 		
-		buf = ByteBuffer.wrap(PreviewCreater.writePDFInMemory(tab).toByteArray());
+		buf = ByteBuffer.wrap(DrawPDF.writePDFInMemory(tab).toByteArray());
 
 		// use the PDFRenderer library on the buf which contains the in memory
 		// PDF document
