@@ -35,7 +35,7 @@ public class GUI extends Application {
 	public void start(Stage primaryStage) throws IOException {
 
 		Parent root = FXMLLoader
-				.load(getClass().getResource("/fxml/MainMenu.fxml"));
+				.load(getClass().getResource("/fxml/Main2.0.fxml"));
 
 		Scene scene = new Scene(root, 527, 395);
 

@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.effect.*?>
+<?import javafx.scene.text.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.control.*?>
+<?import java.lang.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="537.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller">
+   <children>
+      <ImageView fitHeight="407.0" fitWidth="600.0" layoutY="-2.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@images/Untitled.png" />
+         </image>
+      </ImageView>
+      <Button fx:id="tablature" blendMode="MULTIPLY" layoutX="307.0" layoutY="221.0" mnemonicParsing="false" onAction="#selectMultiple" prefHeight="55.0" prefWidth="220.0" text="Convert Tablature(s) to PDF(s)" visible="false" />
+      <Label layoutX="205.0" layoutY="-2.0" text="TAB2PDF" textFill="WHITE">
+         <font>
+            <Font name="System Bold" size="29.0" />
+         </font>
+      </Label>
+      <Label layoutX="492.0" layoutY="372.0" text="Help" textFill="WHITE">
+         <font>
+            <Font size="16.0" />
+         </font>
+      </Label>
+      <Label layoutX="57.0" layoutY="61.0" text="Select a Mode:" textFill="WHITE">
+         <font>
+            <Font name="Nirmala UI" size="20.0" />
+         </font>
+      </Label>
+      <ImageView fitHeight="150.0" fitWidth="200.0" layoutX="58.0" layoutY="125.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@images/Settings-icon.png" />
+         </image>
+      </ImageView>
+      <Separator fx:id="separator" layoutX="227.0" layoutY="117.0" orientation="VERTICAL" prefHeight="200.0" visible="false">
+         <effect>
+            <Blend />
+         </effect>
+      </Separator>
+      <Button blendMode="MULTIPLY" layoutX="58.0" layoutY="121.0" mnemonicParsing="false" onAction="#showAdvancedMode" prefHeight="200.0" prefWidth="150.0" />
+      <Label layoutX="95.0" layoutY="285.0" text="Advanced" textFill="WHITE">
+         <font>
+            <Font size="17.0" />
+         </font>
+      </Label>
+      <Label fx:id="BasicLabel" layoutX="398.0" layoutY="285.0" text="Basic" textFill="WHITE">
+         <font>
+            <Font size="17.0" />
+         </font>
+      </Label>
+      <Label fx:id="PDFcomplete" layoutX="269.0" layoutY="330.0" text="Your PDF is ready!" textFill="WHITE" visible="false">
+         <font>
+            <Font name="System Bold Italic" size="17.0" />
+         </font>
+      </Label>
+      <Button fx:id="openPDF" blendMode="MULTIPLY" layoutX="429.0" layoutY="330.0" mnemonicParsing="false" onAction="#openPDF" text="Open my PDF" visible="false" />
+      <Separator fx:id="middle_separator" layoutX="208.0" layoutY="121.0" orientation="VERTICAL" prefHeight="200.0" prefWidth="140.0" />
+      <ImageView fx:id="pdfLogo" fitHeight="150.0" fitWidth="200.0" layoutX="348.0" layoutY="133.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@images/pdf.png" />
+         </image>
+      </ImageView>
+      <Button fx:id="BasicMode" blendMode="MULTIPLY" layoutX="348.0" layoutY="121.0" mnemonicParsing="false" onAction="#showBasicMode" prefHeight="200.0" prefWidth="150.0" />
+      <Label fx:id="instructions" layoutX="307.0" layoutY="133.0" prefHeight="82.0" prefWidth="220.0" text="For each tablature file selected, it will be converted into a PDF and saved in the same directory under the same name. (rough)" textFill="WHITE" visible="false" wrapText="true">
+         <font>
+            <Font size="14.0" />
+         </font>
+      </Label>
+   </children>
+</AnchorPane>

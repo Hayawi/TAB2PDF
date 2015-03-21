@@ -24,7 +24,7 @@
             <Font size="15.0" />
          </font>
       </Label>
-      <Label layoutX="36.0" layoutY="260.0" text="Please enter the name of your PDF:" textFill="WHITE">
+      <Label layoutX="33.0" layoutY="326.0" text="Enter the name of your PDF:" textFill="WHITE">
          <font>
             <Font name="Nirmala UI" size="18.0" />
          </font>
@@ -34,33 +34,40 @@
          <font>
             <Font size="22.0" />
          </font></Button>
-      <Label layoutX="33.0" layoutY="193.0" text="Please select the text file to convert to PDF:" textFill="WHITE">
+      <Label layoutX="33.0" layoutY="193.0" text="Select the text file to convert to PDF:" textFill="WHITE">
          <font>
             <Font name="Nirmala UI" size="18.0" />
          </font>
       </Label>
-      <Button blendMode="MULTIPLY" layoutX="34.0" layoutY="544.0" mnemonicParsing="false" onAction="#convert" prefHeight="43.0" prefWidth="343.0" text="Convert to PDF" />
+      <Button blendMode="MULTIPLY" layoutX="35.0" layoutY="586.0" mnemonicParsing="false" onAction="#convert" prefHeight="43.0" prefWidth="343.0" text="Convert to PDF" />
       <TextField fx:id="inputField" layoutX="33.0" layoutY="229.0" prefHeight="25.0" prefWidth="286.0" />
-      <TextField fx:id="outputField" layoutX="35.0" layoutY="291.0" prefHeight="25.0" prefWidth="343.0" />
+      <TextField fx:id="outputField" layoutX="34.0" layoutY="353.0" prefHeight="25.0" prefWidth="343.0" />
       <Button blendMode="MULTIPLY" layoutX="325.0" layoutY="229.0" mnemonicParsing="false" onAction="#browse" text="Browse" />
-      <Label layoutX="40.0" layoutY="433.0" text="Spacing:" textFill="WHITE">
+      <Label layoutX="36.0" layoutY="414.0" text="Spacing:" textFill="WHITE">
          <font>
             <Font name="Nirmala UI" size="18.0" />
          </font>
       </Label>
-      <Slider blendMode="MULTIPLY" layoutX="115.0" layoutY="440.0" prefHeight="14.0" prefWidth="263.0" />
+      <Slider blendMode="MULTIPLY" layoutX="114.0" layoutY="423.0" prefHeight="14.0" prefWidth="263.0" />
       <ImageView fx:id="previewPage" fitHeight="600.0" fitWidth="504.0" layoutX="428.0" layoutY="86.0" pickOnBounds="true" preserveRatio="true" />
-      <Separator layoutX="384.0" layoutY="198.0" orientation="VERTICAL" prefHeight="392.0" prefWidth="6.0" />
-      <Label layoutX="36.0" layoutY="329.0" text="Font Color:" textFill="WHITE">
+      <Separator layoutX="397.0" layoutY="80.0" orientation="VERTICAL" prefHeight="600.0" prefWidth="0.0" />
+      <Label layoutX="34.0" layoutY="386.0" text="Font Color:" textFill="WHITE">
          <font>
             <Font name="Nirmala UI" size="18.0" />
          </font>
       </Label>
-      <ColorPicker blendMode="MULTIPLY" layoutX="129.0" layoutY="330.0" prefHeight="25.0" prefWidth="249.0" />
-      <Button fx:id="leftPage" blendMode="MULTIPLY" layoutX="962.0" layoutY="636.0" mnemonicParsing="false" onAction="#turnLeft" text="Left Page" visible="false" />
-      <Button fx:id="rightPage" blendMode="MULTIPLY" layoutX="958.0" layoutY="665.0" mnemonicParsing="false" onAction="#turnRight" text="Right Page" visible="false" />
+      <ColorPicker blendMode="MULTIPLY" layoutX="132.0" layoutY="388.0" prefHeight="25.0" prefWidth="249.0" />
+      <Button fx:id="leftPage" blendMode="MULTIPLY" layoutX="962.0" layoutY="636.0" mnemonicParsing="false" onAction="#turnLeft" text="Previous Page" visible="false" />
+      <Button fx:id="rightPage" blendMode="MULTIPLY" layoutX="958.0" layoutY="665.0" mnemonicParsing="false" onAction="#turnRight" text="Next Page" visible="false" />
       <Label fx:id="pageCounter" layoutX="664.0" layoutY="669.0" />
       <Label fx:id="maxPages" layoutX="700.0" layoutY="669.0" />
-      <Button blendMode="MULTIPLY" layoutX="268.0" layoutY="615.0" mnemonicParsing="false" onAction="#openPDF" prefHeight="43.0" prefWidth="122.0" text="Open my PDF" />
+      <Button blendMode="MULTIPLY" layoutX="257.0" layoutY="640.0" mnemonicParsing="false" onAction="#openPDF" prefHeight="43.0" prefWidth="122.0" text="Open my PDF" />
+      <TextField layoutX="33.0" layoutY="291.0" prefHeight="25.0" prefWidth="290.0" />
+      <Label layoutX="33.0" layoutY="264.0" text="Select a Destination Folder:" textFill="WHITE">
+         <font>
+            <Font name="Nirmala UI" size="18.0" />
+         </font>
+      </Label>
+      <Button blendMode="MULTIPLY" layoutX="327.0" layoutY="291.0" mnemonicParsing="false" onAction="#selectFolder" text="Browse" />
    </children>
 </AnchorPane>

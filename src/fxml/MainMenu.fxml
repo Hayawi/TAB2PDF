@@ -24,7 +24,7 @@
             <Font size="16.0" />
          </font>
       </Label>
-      <Label layoutX="57.0" layoutY="61.0" text="Select an Option:" textFill="WHITE">
+      <Label layoutX="57.0" layoutY="61.0" text="Select a Mode:" textFill="WHITE">
          <font>
             <Font name="Nirmala UI" size="20.0" />
          </font>
@@ -40,7 +40,7 @@
          </effect>
       </Separator>
       <Button blendMode="MULTIPLY" layoutX="58.0" layoutY="121.0" mnemonicParsing="false" onAction="#showAdvancedMode" prefHeight="200.0" prefWidth="150.0" />
-      <Label layoutX="71.0" layoutY="284.0" text="Advanced Mode" textFill="WHITE">
+      <Label layoutX="95.0" layoutY="285.0" text="Advanced" textFill="WHITE">
          <font>
             <Font size="17.0" />
          </font>
@@ -57,14 +57,14 @@
          </font>
       </Label>
       <TextField fx:id="outputField" layoutX="241.0" layoutY="205.0" prefHeight="25.0" prefWidth="286.0" />
-      <Button blendMode="MULTIPLY" layoutX="241.0" layoutY="276.0" mnemonicParsing="false" onAction="#convert" prefHeight="43.0" prefWidth="286.0" text="Convert to PDF" />
+      <Button fx:id="convertButton" blendMode="MULTIPLY" disable="true" layoutX="241.0" layoutY="276.0" mnemonicParsing="false" onAction="#convert" prefHeight="43.0" prefWidth="286.0" styleClass="silver-flat-button" stylesheets="@flat-buttons/flat-buttons/style.css" text="Convert to PDF" />
       <Button blendMode="MULTIPLY" layoutX="473.0" layoutY="149.0" mnemonicParsing="false" onAction="#browse" text="Browse" />
       <Label layoutX="241.0" layoutY="239.0" text="Spacing:" textFill="WHITE">
          <font>
             <Font name="Nirmala UI" size="15.0" />
          </font>
       </Label>
-      <Slider fx:id="spacing" blendMode="MULTIPLY" blockIncrement="1.0" layoutX="309.0" layoutY="243.0" majorTickUnit="5.0" max="20.0" min="1.0" minorTickCount="1" prefHeight="14.0" prefWidth="218.0" showTickLabels="true" showTickMarks="true" value="5.0" />
+      <Slider fx:id="spacing" blendMode="MULTIPLY" blockIncrement="1.0" layoutX="309.0" layoutY="243.0" majorTickUnit="2.0" max="20.0" min="1.0" minorTickCount="1" prefHeight="14.0" prefWidth="218.0" showTickLabels="true" showTickMarks="true" snapToTicks="true" value="5.0" />
       <ImageView fx:id="Cover" fitHeight="207.0" fitWidth="292.0" layoutX="241.0" layoutY="117.0" pickOnBounds="true">
          <image>
             <Image url="@images/cover.png" />
@@ -76,7 +76,7 @@
          </image>
       </ImageView>
       <Button fx:id="BasicMode" blendMode="MULTIPLY" layoutX="343.0" layoutY="121.0" mnemonicParsing="false" onAction="#showBasicMode" prefHeight="200.0" prefWidth="150.0" />
-      <Label fx:id="BasicLabel" layoutX="374.0" layoutY="284.0" text="Basic Mode" textFill="WHITE">
+      <Label fx:id="BasicLabel" layoutX="399.0" layoutY="285.0" text="Basic" textFill="WHITE">
          <font>
             <Font size="17.0" />
          </font>

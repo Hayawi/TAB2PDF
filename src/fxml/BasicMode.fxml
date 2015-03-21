@@ -24,38 +24,44 @@
             <Font size="15.0" />
          </font>
       </Label>
-      <Label layoutX="36.0" layoutY="260.0" text="Please enter the name of your PDF:" textFill="WHITE">
+      <Label layoutX="33.0" layoutY="318.0" text="Enter the name of your destination PDF" textFill="WHITE">
          <font>
             <Font name="Nirmala UI" size="18.0" />
          </font>
       </Label>
-      <ImageView fitHeight="150.0" fitWidth="200.0" layoutX="325.0" layoutY="125.0" pickOnBounds="true" preserveRatio="true" />
       <Button blendMode="MULTIPLY" layoutX="15.0" layoutY="6.0" mnemonicParsing="false" prefHeight="57.0" prefWidth="116.0" text="Back">
          <font>
             <Font size="22.0" />
          </font></Button>
-      <Label layoutX="33.0" layoutY="193.0" text="Please select the text file to convert to PDF:" textFill="WHITE">
+      <Label layoutX="33.0" layoutY="193.0" text="Select a tablature to convert to PDF:" textFill="WHITE">
          <font>
             <Font name="Nirmala UI" size="18.0" />
          </font>
       </Label>
       <Button blendMode="MULTIPLY" layoutX="34.0" layoutY="544.0" mnemonicParsing="false" prefHeight="43.0" prefWidth="343.0" text="Convert to PDF" />
       <TextField layoutX="33.0" layoutY="229.0" prefHeight="25.0" prefWidth="286.0" />
-      <TextField layoutX="35.0" layoutY="291.0" prefHeight="25.0" prefWidth="343.0" />
-      <Button blendMode="MULTIPLY" layoutX="325.0" layoutY="229.0" mnemonicParsing="false" text="Button" />
-      <Label layoutX="40.0" layoutY="433.0" text="Spacing:" textFill="WHITE">
+      <TextField layoutX="34.0" layoutY="345.0" prefHeight="25.0" prefWidth="343.0" />
+      <Button blendMode="MULTIPLY" layoutX="325.0" layoutY="229.0" mnemonicParsing="false" text="Browse" />
+      <Label layoutX="35.0" layoutY="408.0" text="Spacing:" textFill="WHITE">
          <font>
             <Font name="Nirmala UI" size="18.0" />
          </font>
       </Label>
-      <Slider blendMode="MULTIPLY" layoutX="115.0" layoutY="440.0" prefHeight="14.0" prefWidth="263.0" />
+      <Slider blendMode="MULTIPLY" layoutX="124.0" layoutY="416.0" prefHeight="14.0" prefWidth="263.0" />
       <ImageView fitHeight="578.0" fitWidth="482.0" layoutX="398.0" layoutY="91.0" pickOnBounds="true" preserveRatio="true" />
-      <Separator layoutX="384.0" layoutY="198.0" orientation="VERTICAL" prefHeight="392.0" prefWidth="6.0" />
-      <ChoiceBox blendMode="MULTIPLY" layoutX="135.0" layoutY="330.0" prefHeight="25.0" prefWidth="243.0" />
-      <Label layoutX="36.0" layoutY="329.0" text="Font Color:" textFill="WHITE">
+      <Separator layoutX="390.0" layoutY="198.0" orientation="VERTICAL" prefHeight="392.0" prefWidth="6.0" />
+      <Label layoutX="34.0" layoutY="381.0" text="Font Color:" textFill="WHITE">
          <font>
             <Font name="Nirmala UI" size="18.0" />
          </font>
       </Label>
+      <Label layoutX="33.0" layoutY="262.0" text="Select the destination folder:" textFill="WHITE">
+         <font>
+            <Font name="Nirmala UI" size="18.0" />
+         </font>
+      </Label>
+      <TextField layoutX="33.0" layoutY="289.0" prefHeight="25.0" prefWidth="286.0" />
+      <Button blendMode="MULTIPLY" layoutX="322.0" layoutY="289.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="61.0" text="Browse" />
+      <ColorPicker blendMode="MULTIPLY" layoutX="135.0" layoutY="382.0" prefHeight="25.0" prefWidth="245.0" />
    </children>
 </AnchorPane>
