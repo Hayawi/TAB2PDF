@@ -73,6 +73,8 @@ public class Controller {
 	private Button tablature;
 	@FXML
 	private Label instructions;
+	@FXML
+	private TextField destinationFolder;
 
 
 	public void showBasicMode(){
@@ -107,23 +109,23 @@ public class Controller {
 		
 		inputField.setText(GUI.inputPath);
 		outputField.setText(GUI.inputPath.substring(GUI.inputPath.lastIndexOf('\\') + 1,GUI.inputPath.length() - 4));
-		
+		destinationFolder.setText(GUI.inputPath.substring(0,GUI.inputPath.lastIndexOf('\\') + 1));
 	    
 		// if the gui is selected then render a preview of the pdf
 		
 			previewPage.setImage(PDFPreview.previewPDFDocumentInImage(new Tablature(GUI.inputPath,GUI.outputPath)));
 			
-			pageCounter.setText(Integer.toString(1));
-			maxPages.setText(Integer.toString(PDFPreview.getMaxPage()));
+			//pageCounter.setText(Integer.toString(1));
+		//	maxPages.setText(Integer.toString(PDFPreview.getMaxPage()));
 			
-			leftPage.setVisible(true);
-			leftPage.setDisable(true);
-			rightPage.setVisible(true);
+			//leftPage.setVisible(true);
+		//	leftPage.setDisable(true);
+		//	rightPage.setVisible(true);
 			
-			if(PDFPreview.getCurrentPage() == PDFPreview.getMaxPage()){
-				rightPage.setDisable(true);
+		//	if(PDFPreview.getCurrentPage() == PDFPreview.getMaxPage()){
+		//		rightPage.setDisable(true);
 			
-		}
+	//	}
 		
 		// enable the user to press the convert button
 		
@@ -142,6 +144,15 @@ public class Controller {
 		
 		
 		
+	}
+	
+	public void selectFolder(){
+		
+		DirectoryChooser directoryChooser = new DirectoryChooser();
+		File directory = directoryChooser.showDialog(GUI.main);
+		
+		destinationFolder.setText(directory.getPath());
+		GUI.destinationFolder = directory.getPath();
 	}
 	public void convert() throws IOException, DocumentException {
 		if (GUI.customizeSelected == true) {
@@ -173,7 +184,7 @@ public class Controller {
 		
 		GUI.customizeSelected = true;
 		
-		Parent root = FXMLLoader.load(getClass().getResource("/fxml/AdvancedMode.fxml"));
+		Parent root = FXMLLoader.load(getClass().getResource("/fxml/BasicMode.fxml"));
 		Scene scene = new Scene(root, 1046, 768);
 	
 		GUI.main.setScene(scene);
