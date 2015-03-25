@@ -13,7 +13,6 @@ public class Measure {
 			this.tokens.add(ParseFile.parse(s));
 		}
 		this.length = getMeasureLength(tokens);
-	
 	}
 	
 	public int getLength() {
