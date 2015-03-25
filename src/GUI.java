@@ -17,6 +17,7 @@ public class GUI extends Application {
 	public static String inputPath;
 	public static String outputName;
 	public static String outputPath;
+	public static String destinationFolder;
 	public static boolean InputEntered;
 	public static boolean customizeSelected = false;
 

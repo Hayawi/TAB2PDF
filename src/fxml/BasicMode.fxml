@@ -7,7 +7,7 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="768.0" prefWidth="1046.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="768.0" prefWidth="1046.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller">
    <children>
       <ImageView fitHeight="771.0" fitWidth="1055.0" layoutY="-2.0" pickOnBounds="true">
          <image>
@@ -29,19 +29,20 @@
             <Font name="Nirmala UI" size="18.0" />
          </font>
       </Label>
-      <Button blendMode="MULTIPLY" layoutX="15.0" layoutY="6.0" mnemonicParsing="false" prefHeight="57.0" prefWidth="116.0" text="Back">
+      <Button blendMode="MULTIPLY" layoutX="15.0" layoutY="6.0" mnemonicParsing="false" onAction="#showMainMenu" prefHeight="57.0" prefWidth="116.0" text="Back">
          <font>
             <Font size="22.0" />
-         </font></Button>
+         </font>
+      </Button>
       <Label layoutX="33.0" layoutY="193.0" text="Select a tablature to convert to PDF:" textFill="WHITE">
          <font>
             <Font name="Nirmala UI" size="18.0" />
          </font>
       </Label>
       <Button blendMode="MULTIPLY" layoutX="34.0" layoutY="544.0" mnemonicParsing="false" prefHeight="43.0" prefWidth="343.0" text="Convert to PDF" />
-      <TextField layoutX="33.0" layoutY="229.0" prefHeight="25.0" prefWidth="286.0" />
-      <TextField layoutX="34.0" layoutY="345.0" prefHeight="25.0" prefWidth="343.0" />
-      <Button blendMode="MULTIPLY" layoutX="325.0" layoutY="229.0" mnemonicParsing="false" text="Browse" />
+      <TextField fx:id="inputField" layoutX="33.0" layoutY="229.0" prefHeight="25.0" prefWidth="286.0" />
+      <TextField fx:id="outputField" layoutX="34.0" layoutY="345.0" prefHeight="25.0" prefWidth="343.0" />
+      <Button blendMode="MULTIPLY" layoutX="325.0" layoutY="229.0" mnemonicParsing="false" onAction="#browse" text="Browse" />
       <Label layoutX="35.0" layoutY="408.0" text="Spacing:" textFill="WHITE">
          <font>
             <Font name="Nirmala UI" size="18.0" />
@@ -60,8 +61,9 @@
             <Font name="Nirmala UI" size="18.0" />
          </font>
       </Label>
-      <TextField layoutX="33.0" layoutY="289.0" prefHeight="25.0" prefWidth="286.0" />
-      <Button blendMode="MULTIPLY" layoutX="322.0" layoutY="289.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="61.0" text="Browse" />
+      <TextField fx:id="destinationFolder" layoutX="33.0" layoutY="289.0" prefHeight="25.0" prefWidth="286.0" />
+      <Button blendMode="MULTIPLY" layoutX="322.0" layoutY="289.0" mnemonicParsing="false" onAction="#selectFolder" prefHeight="25.0" prefWidth="61.0" text="Browse" />
       <ColorPicker blendMode="MULTIPLY" layoutX="135.0" layoutY="382.0" prefHeight="25.0" prefWidth="245.0" />
+      <ImageView fx:id="previewPage" fitHeight="590.0" fitWidth="626.0" layoutX="407.0" layoutY="91.0" pickOnBounds="true" preserveRatio="true" />
    </children>
 </AnchorPane>
