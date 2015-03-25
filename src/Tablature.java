@@ -1,14 +1,9 @@
-
-
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Queue;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-
 import com.itextpdf.text.DocumentException;
-
-
 /* This class is the document which is being built to be writing as a PDF file.
  * It contains the original ascii as a single string, individial parts 
  * of the file.   For example it hold the header as seperate data from the
@@ -91,7 +86,7 @@ public class Tablature {
 		this.fontSize = fontSize;
 	}
 
-	// fix later
+	// fix later 
 	private void processFile(String file) {
 		char newLine = '\n';
 		int indexOfTitle = file.indexOf("TITLE="); 
@@ -124,7 +119,7 @@ public class Tablature {
 		else 
 			file = "";
 		this.body = file;
-		this.staves = ParseFile.staffSort(file);
+		this.staves = ParseFile.sortMeasure(file);
 	}
 	
 	
