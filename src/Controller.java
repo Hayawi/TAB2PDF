@@ -38,7 +38,7 @@ public class Controller {
 	@FXML
 	private ImageView previewPage;
 	@FXML
-	private Slider spacing;
+	private Slider spacingslider;
 	@FXML
 	private ColorPicker ColorChooser;
 	@FXML
@@ -129,7 +129,7 @@ public class Controller {
 		
 		// enable the user to press the convert button
 		
-		convertButton.setDisable(false);
+	//	convertButton.setDisable(false);
 	}	
 	public void selectMultiple() throws IOException{
 		FileChooser fileChooser = new FileChooser();
@@ -153,18 +153,19 @@ public class Controller {
 		
 		destinationFolder.setText(directory.getPath());
 		GUI.destinationFolder = directory.getPath();
+		GUI.outputPath = GUI.destinationFolder + '\\'+GUI.outputName + ".pdf";
 	}
 	public void convert() throws IOException, DocumentException {
-		if (GUI.customizeSelected == true) {
+		
 		GUI.outputName = outputField.getText();
-		GUI.outputPath = GUI.inputPath.substring(0,GUI.inputPath.lastIndexOf('\\') + 1)	+ GUI.outputName + ".pdf";
-		}
+		GUI.outputPath = GUI.destinationFolder + '\\'+  GUI.outputName + ".pdf";
+		
 		Tablature tab = new Tablature(GUI.inputPath, GUI.outputPath);
-		//tab.setSpacing((float)spacing.getValue());
+		tab.setSpacing((float)spacingslider.getValue());
 		DrawPDF.writePDF(tab);
 
-		PDFcomplete.setVisible(true);
-		openPDF.setVisible(true);
+	//	PDFcomplete.setVisible(true);
+	//	openPDF.setVisible(true);
 		
 	}
 
