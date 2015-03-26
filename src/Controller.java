@@ -5,6 +5,8 @@ import java.io.FilenameFilter;
 import java.io.IOException;
 import java.util.List;
 
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
@@ -12,7 +14,10 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.CheckBox;
+import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.ColorPicker;
+import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.Pagination;
 import javafx.scene.control.Separator;
@@ -75,25 +80,41 @@ public class Controller {
 	private Label instructions;
 	@FXML
 	private TextField destinationFolder;
+	@FXML
+	private ComboBox choosePDF;
+	@FXML
+	private CheckBox selected;
+	@FXML
+	private CheckBox converted;
+	@FXML
+	private Button openFolder;
+	@FXML
+	private ImageView checkConvert; 
+	@FXML
+	private ImageView checkSelect;
+	@FXML
+	private Button convertMultiple;
 
-
-	public void showBasicMode(){
-		
-		BasicMode.setVisible(false);
-		BasicLabel.setVisible(false);
-		pdfLogo.setVisible(false);
-		tablature.setVisible(true);
-		instructions.setVisible(true);		
-	}
-	
 	public void openPDF() throws IOException{
 				
 		if (Desktop.isDesktopSupported()) {
-		    File myFile = new File(GUI.outputPath);
+		    File myFile = new File((String) choosePDF.getValue());
+		    
+		    //GUI.dir.indexOf(myFile);
 		    Desktop.getDesktop().open(myFile);
 		}
 	}
-	
+	public void openFolder() throws IOException{
+		
+		if (Desktop.isDesktopSupported()) {
+			
+			String directoryname = (String) choosePDF.getValue();
+		    File myFile = new File(directoryname.substring(0,directoryname.lastIndexOf('\\')+1));
+		    
+		    //GUI.dir.indexOf(myFile);
+		    Desktop.getDesktop().open(myFile);
+		}
+	}
 	public void browse() throws IOException, DocumentException {
 		
 		// file chooser
@@ -135,14 +156,30 @@ public class Controller {
 		FileChooser fileChooser = new FileChooser();
 		fileChooser.setTitle("Open Text File");
 		List<File> dir = fileChooser.showOpenMultipleDialog(GUI.main);
+		GUI.dir = dir;
+		checkSelect.setVisible(true);
+		convertMultiple.setDisable(false);
+	}
+	
+	public void convertMultiple() throws IOException{
 		
-		for(File f:dir){
+		ObservableList<String> choices = FXCollections.observableArrayList();
+		
+		for(File f:GUI.dir){
 			String output = f.getPath().substring(0,f.getPath().length()-3) + "pdf";
 			Tablature tab = new Tablature(f.getPath(), output);
 			DrawPDF.writePDF(tab);
+			
+			choices.add(output);
 		}
 		
-		
+		choosePDF.setItems(choices);
+		choosePDF.getSelectionModel().select(0);
+	    choosePDF.setDisable(false);  
+	    PDFcomplete.setDisable(false);
+	    openPDF.setDisable(false);
+	    openFolder.setDisable(false);
+	    checkConvert.setVisible(true);
 		
 	}
 	
@@ -173,7 +210,7 @@ public class Controller {
 	
 		GUI.customizeSelected = false;
 		
-		Parent root = FXMLLoader.load(getClass().getResource("/fxml/Main2.0.fxml"));
+		Parent root = FXMLLoader.load(getClass().getResource("/fxml/Main3.0.fxml"));
 		Scene scene = new Scene(root, 535, 395);
 	
 		GUI.main.setScene(scene);
@@ -197,10 +234,9 @@ public class Controller {
 	public void preview() throws IOException, DocumentException {
 		
 		Tablature tab = new Tablature(GUI.inputPath, GUI.outputPath);
-		
 		previewPage.setImage(PDFPreview.updatePreviewPDFDocument());
 	}
-
+/*
 	public void turnRight() throws IOException, DocumentException {
 
 		leftPage.setDisable(false);
@@ -232,5 +268,5 @@ public class Controller {
 		preview();
 
 	}
-	
+	*/
 }
