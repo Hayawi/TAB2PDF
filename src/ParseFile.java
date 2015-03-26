@@ -140,7 +140,7 @@ public class ParseFile {
 	}
 	
 	public static ArrayList<Measure> convertToMeasures(ArrayList<String> block) {
-		Pattern separator = Pattern.compile("(\\||^[0-9])([0-9]|\\|)?");
+		Pattern separator = Pattern.compile("(\\||^[0-9])([0-9]|\\|)?\\|?");
 		Matcher matcher = separator.matcher(block.get(2));
 		ArrayList<String> measure = new ArrayList<String>();
 		ArrayList<Measure> newMeasures = new ArrayList<Measure>();

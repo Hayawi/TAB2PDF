@@ -1,15 +1,10 @@
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Queue;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-import com.itextpdf.text.DocumentException;
-/* This class is the document which is being built to be writing as a PDF file.
- * It contains the original ascii as a single string, individial parts 
- * of the file.   For example it hold the header as seperate data from the
- * music tabs. 
- */
-public class Tablature {
+import com.itextpdf.text.BaseColor;
+
+public class Tablature extends Object {
 	
 	private String s;
 	private String title = "";
@@ -18,9 +13,9 @@ public class Tablature {
 	private String filepath;
 	private float spacing;
 	private int fontSize;
-	private ArrayList<Measure> staves;
-
+	private ArrayList<Measure> measures;
 	private String body;
+	private BaseColor fontColor;
 
 	public void draw() throws IOException {
 		DrawPDF.writePDF(this);
@@ -39,6 +34,7 @@ public class Tablature {
 		String file = ParseFile.openFile(inputPath);
 		this.filepath = outputPath;
 		this.processFile(file);
+		this.fontColor = BaseColor.BLACK;
 	}
 	
 	public boolean setAscii(String s){
@@ -66,8 +62,8 @@ public class Tablature {
 		return this.fontSize;
 	}
 	
-	public ArrayList getMeasures() {
-		return this.staves;
+	public ArrayList<Measure> getMeasures() {
+		return this.measures;
 	}
 	
 	public void setTitle(String title) {
@@ -86,6 +82,13 @@ public class Tablature {
 		this.fontSize = fontSize;
 	}
 
+	public BaseColor getFontColor() {
+		return this.fontColor;
+	}
+	
+	public void setFontColor(BaseColor color) {
+		this.fontColor = color;
+	}
 	// fix later 
 	private void processFile(String file) {
 		char newLine = '\n';
@@ -119,7 +122,7 @@ public class Tablature {
 		else 
 			file = "";
 		this.body = file;
-		this.staves = ParseFile.sortMeasure(file);
+		this.measures = ParseFile.sortMeasure(file);
 	}
 	
 	
