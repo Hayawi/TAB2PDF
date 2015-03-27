@@ -159,14 +159,14 @@ public class DrawPDF {
 			else if (s.equals("||")) {
 				if (previousToken.equals("*")) {
 					drawVerticalBars(cb, horizontalShift - spacing/2, pageLocationY);
+					drawThickVerticalBars(cb, horizontalShift, pageLocationY);
 				}
 				else
-				drawThickVerticalBars(cb, horizontalShift, pageLocationY);
+					drawVerticalBars(cb, horizontalShift, pageLocationY);
 				if (firstVerticalLine) {
 					horizontalShift += spacing; ;
 					firstVerticalLine = false;
 				}
-
 			}
 			else if (s.equals("|||")) {
 				for (int i = 0; i < s.length(); i++) {
