@@ -61,7 +61,7 @@ public class DrawPDF {
 			e.printStackTrace();
 		}
 	}
-	
+
 	public static ByteArrayOutputStream writePDFInMemory(Tablature tab)
 			throws IOException {
 		ByteArrayOutputStream output = new ByteArrayOutputStream();
