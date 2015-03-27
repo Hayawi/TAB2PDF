@@ -1,6 +1,7 @@
 
 import java.io.File;
 import java.io.IOException;
+import java.util.List;
 
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
@@ -18,6 +19,7 @@ public class GUI extends Application {
 	public static String outputName;
 	public static String outputPath;
 	public static String destinationFolder;
+	public static List<File> dir;
 	public static boolean InputEntered;
 	public static boolean customizeSelected = false;
 
@@ -36,7 +38,7 @@ public class GUI extends Application {
 	public void start(Stage primaryStage) throws IOException {
 
 		Parent root = FXMLLoader
-				.load(getClass().getResource("/fxml/Main2.0.fxml"));
+				.load(getClass().getResource("/fxml/Main3.0.fxml"));
 
 		Scene scene = new Scene(root, 527, 395);
 
