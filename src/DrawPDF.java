@@ -6,6 +6,8 @@ import java.util.*;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import javax.swing.JOptionPane;
+
 import com.itextpdf.text.BaseColor;
 import com.itextpdf.text.Chunk;
 import com.itextpdf.text.Document;
@@ -41,8 +43,9 @@ public class DrawPDF {
 	@SuppressWarnings("unchecked")
 	public static void writePDF(Tablature tab) throws IOException{
 		Document document = new Document(PageSize.A4);
-		FileOutputStream output = new FileOutputStream(tab.getOutputPath());
+		
 		try {
+			FileOutputStream output = new FileOutputStream(tab.getOutputPath());
 			PdfWriter writer = PdfWriter.getInstance(document, output);
 			document.open();
 			PdfContentByte cb = writer.getDirectContent();
@@ -56,6 +59,8 @@ public class DrawPDF {
 			document.close(); // no need to close PDFWriter?
 			} catch (FileNotFoundException e) {
 			e.printStackTrace();
+		    JOptionPane.showMessageDialog(null, "CLOSE THE FILE, MORON", "Error",
+		                                    JOptionPane.ERROR_MESSAGE);
 			} catch (DocumentException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
