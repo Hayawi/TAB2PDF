@@ -5,7 +5,7 @@ import java.util.regex.Pattern;
 import com.itextpdf.text.BaseColor;
 
 public class Tablature extends Object {
-	 
+	
 	private String s;
 	private String title = "";
 	private String subtitle = "";

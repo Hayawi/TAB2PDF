@@ -138,7 +138,7 @@ public class ParseFile {
 		}
 		return token;
 	}
-	 
+	
 	public static ArrayList<Measure> convertToMeasures(ArrayList<String> block) {
 		Pattern separator = Pattern.compile("(\\||^[0-9])([0-9]|\\|)?\\|?");
 		Matcher matcher = separator.matcher(block.get(2));
