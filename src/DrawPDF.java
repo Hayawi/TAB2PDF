@@ -56,7 +56,6 @@ public class DrawPDF {
 			document.close(); // no need to close PDFWriter?
 			} catch (FileNotFoundException e) {
 			e.printStackTrace();
-			throw new FileNotFoundException("CLOSE THE FUCKING THING YOU PIECE OF SHIT");
 			} catch (DocumentException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
