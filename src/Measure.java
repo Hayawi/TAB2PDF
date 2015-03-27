@@ -21,7 +21,7 @@ public class Measure extends Object {
 	public ArrayList<ArrayList<String>> getTokens() {
 		return tokens;
 	}
-
+ 
 	public static int getMeasureLength(ArrayList<ArrayList<String>> tokens) {
 		int staffLength = -1;
 		ArrayList<String> line = tokens.get(2);
