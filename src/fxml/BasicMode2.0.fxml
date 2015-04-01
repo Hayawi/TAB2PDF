@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.geometry.*?>
 <?import java.lang.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.effect.*?>
@@ -19,12 +20,7 @@
             <Font name="Nirmala UI Bold" size="60.0" />
          </font>
       </Label>
-      <Label layoutX="1009.0" layoutY="715.0" text="Help" textFill="WHITE">
-         <font>
-            <Font size="15.0" />
-         </font>
-      </Label>
-      <Label layoutX="33.0" layoutY="318.0" text="Enter the name of your destination PDF" textFill="WHITE">
+      <Label layoutX="33.0" layoutY="208.0" text="Enter the name of your destination PDF" textFill="WHITE">
          <font>
             <Font name="Nirmala UI" size="18.0" />
          </font>
@@ -34,36 +30,71 @@
             <Font size="22.0" />
          </font>
       </Button>
-      <Label layoutX="33.0" layoutY="193.0" text="Select a tablature to convert to PDF:" textFill="WHITE">
+      <Label layoutX="33.0" layoutY="91.0" text="Select a tablature to convert to PDF:" textFill="WHITE">
          <font>
             <Font name="Nirmala UI" size="18.0" />
          </font>
       </Label>
-      <Button blendMode="MULTIPLY" layoutX="34.0" layoutY="544.0" mnemonicParsing="false" onAction="#convert" prefHeight="43.0" prefWidth="343.0" text="Convert to PDF" />
-      <TextField fx:id="inputField" layoutX="33.0" layoutY="229.0" prefHeight="25.0" prefWidth="286.0" />
-      <TextField fx:id="outputField" layoutX="34.0" layoutY="345.0" prefHeight="25.0" prefWidth="343.0" />
-      <Button blendMode="MULTIPLY" layoutX="325.0" layoutY="229.0" mnemonicParsing="false" onAction="#browse" text="Browse" />
-      <Label layoutX="35.0" layoutY="408.0" text="Spacing:" textFill="WHITE">
+      <Button blendMode="MULTIPLY" layoutX="34.0" layoutY="575.0" mnemonicParsing="false" onAction="#convert" prefHeight="43.0" prefWidth="343.0" text="Convert to PDF" />
+      <TextField fx:id="inputField" layoutX="33.0" layoutY="125.0" prefHeight="25.0" prefWidth="286.0" />
+      <TextField fx:id="outputField" layoutX="35.0" layoutY="235.0" prefHeight="25.0" prefWidth="343.0" />
+      <Button blendMode="MULTIPLY" layoutX="325.0" layoutY="125.0" mnemonicParsing="false" onAction="#browse" text="Browse" />
+      <Label layoutX="33.0" layoutY="520.0" text="Spacing:" textFill="WHITE">
          <font>
             <Font name="Nirmala UI" size="18.0" />
          </font>
       </Label>
-      <Slider fx:id="spacingslider" blendMode="MULTIPLY" layoutX="124.0" layoutY="428.0" majorTickUnit="2.0" max="15.0" min="1.0" minorTickCount="1" prefHeight="14.0" prefWidth="263.0" showTickLabels="true" showTickMarks="true" value="5.0" />
+      <Slider fx:id="spacingslider" blendMode="MULTIPLY" layoutX="112.0" layoutY="527.0" majorTickUnit="2.0" max="15.0" min="1.0" minorTickCount="1" prefHeight="14.0" prefWidth="171.0" showTickLabels="true" showTickMarks="true" value="5.0" />
       <ImageView fitHeight="578.0" fitWidth="482.0" layoutX="398.0" layoutY="91.0" pickOnBounds="true" preserveRatio="true" />
-      <Separator layoutX="390.0" layoutY="198.0" orientation="VERTICAL" prefHeight="392.0" prefWidth="6.0" />
+      <Separator layoutX="392.0" layoutY="82.0" orientation="VERTICAL" prefHeight="590.0" prefWidth="4.0" />
       <Label layoutX="34.0" layoutY="381.0" text="Font Color:" textFill="WHITE">
          <font>
             <Font name="Nirmala UI" size="18.0" />
          </font>
       </Label>
-      <Label layoutX="33.0" layoutY="262.0" text="Select the destination folder:" textFill="WHITE">
+      <Label layoutX="33.0" layoutY="150.0" text="Select the destination folder:" textFill="WHITE">
          <font>
             <Font name="Nirmala UI" size="18.0" />
          </font>
       </Label>
-      <TextField fx:id="destinationFolder" layoutX="33.0" layoutY="289.0" prefHeight="25.0" prefWidth="286.0" />
-      <Button blendMode="MULTIPLY" layoutX="322.0" layoutY="289.0" mnemonicParsing="false" onAction="#selectFolder" prefHeight="25.0" prefWidth="61.0" text="Browse" />
-      <ColorPicker fx:id="ColorChooser" blendMode="MULTIPLY" layoutX="135.0" layoutY="382.0" prefHeight="25.0" prefWidth="245.0" />
+      <TextField fx:id="destinationFolder" layoutX="33.0" layoutY="177.0" prefHeight="25.0" prefWidth="286.0" />
+      <Button blendMode="MULTIPLY" layoutX="322.0" layoutY="177.0" mnemonicParsing="false" onAction="#selectFolder" prefHeight="25.0" prefWidth="61.0" text="Browse" />
       <ImageView fx:id="previewPage" fitHeight="590.0" fitWidth="626.0" layoutX="407.0" layoutY="91.0" pickOnBounds="true" preserveRatio="true" />
+      <ColorPicker fx:id="ColorChooser" blendMode="MULTIPLY" layoutX="152.0" layoutY="382.0" onAction="#preview" prefHeight="25.0" prefWidth="228.0">
+         <opaqueInsets>
+            <Insets />
+         </opaqueInsets></ColorPicker>
+      <Button fx:id="openFolder" blendMode="MULTIPLY" disable="true" layoutX="34.0" layoutY="625.0" mnemonicParsing="false" onAction="#advancedFolder" prefHeight="43.0" prefWidth="155.0" text="Open Containing Folder" />
+      <Button fx:id="openPDF" blendMode="MULTIPLY" disable="true" layoutX="206.0" layoutY="625.0" mnemonicParsing="false" onAction="#advancedPDF" prefHeight="43.0" prefWidth="171.0" text="Open Selected PDF" />
+      <Label layoutX="34.0" layoutY="414.0" text="Title Color:" textFill="WHITE">
+         <font>
+            <Font name="Nirmala UI" size="18.0" />
+         </font>
+      </Label>
+      <ColorPicker fx:id="titleColor" blendMode="MULTIPLY" layoutX="152.0" layoutY="415.0" onAction="#preview" prefHeight="25.0" prefWidth="228.0" />
+      <Label layoutX="34.0" layoutY="447.0" text="Subtitle Color:" textFill="WHITE">
+         <font>
+            <Font name="Nirmala UI" size="18.0" />
+         </font>
+      </Label>
+      <ColorPicker fx:id="subtitleColor" blendMode="MULTIPLY" layoutX="152.0" layoutY="448.0" onAction="#preview" prefHeight="25.0" prefWidth="228.0" />
+      <Button blendMode="MULTIPLY" layoutX="291.0" layoutY="521.0" mnemonicParsing="false" onAction="#preview" prefHeight="25.0" prefWidth="96.0" text="Apply Change" />
+      <TextField fx:id="titleField" layoutX="37.0" layoutY="287.0" onAction="#preview" prefHeight="25.0" prefWidth="343.0" />
+      <TextField fx:id="subtitleField" layoutX="37.0" layoutY="348.0" onAction="#preview" prefHeight="25.0" prefWidth="343.0" />
+      <Label layoutX="33.0" layoutY="260.0" text="Enter the new title of your PDF" textFill="WHITE">
+         <font>
+            <Font name="Nirmala UI" size="18.0" />
+         </font>
+      </Label>
+      <Label layoutX="33.0" layoutY="318.0" text="Enter the new subtitle of the PDF" textFill="WHITE">
+         <font>
+            <Font name="Nirmala UI" size="18.0" />
+         </font>
+      </Label>
+      <Button blendMode="MULTIPLY" layoutX="931.0" layoutY="701.0" mnemonicParsing="false" onAction="#openWebsite" prefHeight="57.0" prefWidth="107.0" text="Help">
+         <font>
+            <Font size="24.0" />
+         </font>
+      </Button>
    </children>
 </AnchorPane>

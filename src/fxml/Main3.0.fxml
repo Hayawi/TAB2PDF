@@ -20,11 +20,6 @@
             <Font name="System Bold" size="29.0" />
          </font>
       </Label>
-      <Label layoutX="492.0" layoutY="372.0" text="Help" textFill="WHITE">
-         <font>
-            <Font size="16.0" />
-         </font>
-      </Label>
       <Label layoutX="57.0" layoutY="61.0" text="Select a Mode:" textFill="WHITE">
          <font>
             <Font name="Nirmala UI" size="20.0" />
@@ -82,5 +77,6 @@
          </font>
       </Label>
       <Button fx:id="BasicMode" blendMode="MULTIPLY" layoutX="62.0" layoutY="117.0" mnemonicParsing="false" onAction="#showBasic" prefHeight="200.0" prefWidth="150.0" />
+      <Button blendMode="MULTIPLY" layoutX="486.0" layoutY="370.0" mnemonicParsing="false" onAction="#openWebsite" text="Help" />
    </children>
 </AnchorPane>

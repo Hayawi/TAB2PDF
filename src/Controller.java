@@ -3,8 +3,11 @@ import java.awt.Desktop;
 import java.io.File;
 import java.io.FilenameFilter;
 import java.io.IOException;
+import java.net.URI;
 import java.util.List;
 
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -95,7 +98,15 @@ public class Controller {
 	private ImageView checkSelect;
 	@FXML
 	private Button convertMultiple;
-
+	@FXML
+	private ColorPicker titleColor;
+	@FXML
+	private ColorPicker subtitleColor;
+	@FXML
+	private TextField titleField;
+	@FXML
+	private TextField subtitleField;
+	
 	public void openPDF() throws IOException{
 				
 		if (Desktop.isDesktopSupported()) {
@@ -114,6 +125,38 @@ public class Controller {
 		    Desktop.getDesktop().open(myFile);
 		}
 	}
+	public void openWebsite() throws IOException{
+		
+		if (Desktop.isDesktopSupported()) {
+		    String htmlFile = "https://docs.google.com/document/d/1c9ieJbA7ZBDRBE2fL4T_ZOh1aMUGF1Iuo86CKayG7Kg/edit";
+		    
+		    //GUI.dir.indexOf(myFile);
+		    Desktop.getDesktop().browse(URI.create(htmlFile));
+		}
+		
+	}
+	
+	public void advancedPDF() throws IOException{
+		
+		if (Desktop.isDesktopSupported()) {
+		    File myFile = new File(GUI.outputPath);
+		    
+		    //GUI.dir.indexOf(myFile);
+		    Desktop.getDesktop().open(myFile);
+		}
+		
+	}
+	
+	public void advancedFolder() throws IOException{
+		
+		if (Desktop.isDesktopSupported()) {
+			
+			String directoryname = GUI.outputPath;
+		    File myFile = new File(directoryname.substring(0,directoryname.lastIndexOf('\\')+1));
+		    Desktop.getDesktop().open(myFile);
+		}		
+	}
+	
 	
 	public void showBasic(){
 				
@@ -136,16 +179,18 @@ public class Controller {
 		fileChooser.setTitle("Open Text File");
 		
 		File file = fileChooser.showOpenDialog(GUI.main);
-		GUI.inputPath = file.getPath();
-		GUI.outputName = GUI.inputPath.substring(GUI.inputPath.lastIndexOf('\\') + 1,GUI.inputPath.length() - 4);
-		GUI.outputPath = GUI.inputPath.substring(0,GUI.inputPath.lastIndexOf('\\') + 1)	+ GUI.outputName + ".pdf"; 
 		
-		inputField.setText(GUI.inputPath);
-		outputField.setText(GUI.inputPath.substring(GUI.inputPath.lastIndexOf('\\') + 1,GUI.inputPath.length() - 4));
-		destinationFolder.setText(GUI.inputPath.substring(0,GUI.inputPath.lastIndexOf('\\') + 1));
+		inputField.setText(file.getPath());
+		outputField.setText(file.getPath().substring(file.getPath().lastIndexOf('\\') + 1,file.getPath().length() - 4));
+		destinationFolder.setText(file.getPath().substring(0,file.getPath().lastIndexOf('\\') + 1));
 	    
-		previewPage.setImage(PDFPreview.previewPDFDocumentInImage(new Tablature(GUI.inputPath,GUI.outputPath)));
-			
+		String outputPath = destinationFolder.getText() + outputField.getText() + ".pdf";
+		
+		previewPage.setImage(PDFPreview.previewPDFDocumentInImage(new Tablature(file.getPath(),outputPath)));
+		ColorChooser.setValue(javafx.scene.paint.Color.BLACK);
+		titleColor.setValue(javafx.scene.paint.Color.BLACK);
+		subtitleColor.setValue(javafx.scene.paint.Color.BLACK);
+		
 		//pageCounter.setText(Integer.toString(1));
 		//	maxPages.setText(Integer.toString(PDFPreview.getMaxPage()));
 			
@@ -173,6 +218,8 @@ public class Controller {
 			checkSelect.setVisible(true);
 			convertMultiple.setDisable(false);
 		}
+		
+		checkConvert.setVisible(false);
 	}
 	
 	public void convertMultiple() throws IOException{
@@ -203,22 +250,27 @@ public class Controller {
 		File directory = directoryChooser.showDialog(GUI.main);
 		
 		destinationFolder.setText(directory.getPath());
-		GUI.destinationFolder = directory.getPath();
-		GUI.outputPath = GUI.destinationFolder + '\\'+GUI.outputName + ".pdf";
+		
 	}
 	public void convert() throws IOException, DocumentException {
 		
-		GUI.outputName = outputField.getText();
-		GUI.outputPath = GUI.destinationFolder + '\\'+  GUI.outputName + ".pdf";
+		openFolder.setDisable(false);
+		openPDF.setDisable(false);
 		
-		Tablature tab = new Tablature(GUI.inputPath, GUI.outputPath);
-		tab.setSpacing((float)spacingslider.getValue());
+		String inputPath = inputField.getText();
+		String outputPath = destinationFolder.getText() + outputField.getText() + ".pdf";
 		
+	
+		GUI.outputPath = outputPath;
 		BaseColor f = new BaseColor((float)ColorChooser.getValue().getRed(), (float)ColorChooser.getValue().getGreen(),(float)ColorChooser.getValue().getBlue());
 		
-		tab.setFontColor(f);
-		DrawPDF.writePDF(tab);
+		Tablature tab = new Tablature(inputPath, outputPath);
 		
+		tab.setSpacing((float)spacingslider.getValue());
+		tab.setFontColor(f);
+		
+		DrawPDF.writePDF(tab);
+			
 	}
 
 	public void showMainMenu() throws IOException {
@@ -249,8 +301,15 @@ public class Controller {
 	
 	public void preview() throws IOException, DocumentException {
 		
-		Tablature tab = new Tablature(GUI.inputPath, GUI.outputPath);
-		previewPage.setImage(PDFPreview.updatePreviewPDFDocument());
+			
+		
+		String inputPath = inputField.getText();
+		String outputPath = destinationFolder.getText() + outputField.getText() + ".pdf";
+		Tablature tab = new Tablature(inputPath, outputPath);
+		BaseColor f = new BaseColor((float)ColorChooser.getValue().getRed(), (float)ColorChooser.getValue().getGreen(),(float)ColorChooser.getValue().getBlue());
+		tab.setFontColor(f);
+		tab.setSpacing((float)spacingslider.getValue());
+		previewPage.setImage(PDFPreview.previewPDFDocumentInImage(tab));
 	}
 /*
 	public void turnRight() throws IOException, DocumentException {

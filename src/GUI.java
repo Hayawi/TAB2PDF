@@ -4,13 +4,13 @@ import java.io.IOException;
 import java.util.List;
 
 import javafx.application.Application;
+
+import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 
-import javax.swing.JFileChooser;
-import javax.swing.JPanel;
 
 public class GUI extends Application {
 
@@ -22,7 +22,7 @@ public class GUI extends Application {
 	public static List<File> dir;
 	public static boolean InputEntered;
 	public static boolean customizeSelected = false;
-
+	
 	public static void main(String[] args) {
 		launch(args);
 	}
@@ -49,5 +49,7 @@ public class GUI extends Application {
 		primaryStage.show();
 
 		main = primaryStage;
+		
+		
 	}
 }
