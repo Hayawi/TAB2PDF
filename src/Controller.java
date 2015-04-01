@@ -39,7 +39,7 @@ public class Controller {
 	private TextField inputField;
 	@FXML
 	private TextField outputField;
-	@FXML
+	@FXML 
 	private Button convertButton;
 	@FXML
 	private ImageView previewPage;
