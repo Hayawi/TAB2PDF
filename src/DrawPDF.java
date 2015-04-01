@@ -35,12 +35,12 @@ public class DrawPDF {
 	private static BaseColor fontColor = BaseColor.BLACK;
 	private static float[] previousNoteX = new float[6];
 	private static int[] previousNoteY = new int[6];
+	private static int[] previousNoteLine = new int[6];
 	
 	private DrawPDF () {
 		
 	}
 	
-	@SuppressWarnings("unchecked")
 	public static boolean writePDF(Tablature tab) throws IOException{
 		Document document = new Document(PageSize.A4);
 		
@@ -59,7 +59,7 @@ public class DrawPDF {
 			document.close(); // no need to close PDFWriter?
 			} catch (FileNotFoundException e) {
 			e.printStackTrace();
-		    JOptionPane.showMessageDialog(null, "CLOSE THE FILE, MORON", "Error",
+		    JOptionPane.showMessageDialog(null, "file cannot be found or is open", "Error",
 		                                    JOptionPane.ERROR_MESSAGE);
 			} catch (DocumentException e) {
 			// TODO Auto-generated catch block
@@ -242,7 +242,6 @@ public class DrawPDF {
 			}
 			index++; 
 		}
-		System.out.println();
 	}
 	
 
@@ -283,7 +282,7 @@ public class DrawPDF {
 	
 	
 	private static void drawSlash(PdfContentByte cb, float x, float y) {
-		float size = spacing / 2;
+		float size = 2.5f;
 		cb.moveTo(x - size, y - size);
 		cb.lineTo(x + size, y + size);
 		cb.stroke();

@@ -30,6 +30,7 @@ import javafx.stage.Stage;
 
 import javax.swing.JFileChooser;
 
+import com.itextpdf.text.BaseColor;
 import com.itextpdf.text.DocumentException;
 
 public class Controller {
@@ -95,42 +96,41 @@ public class Controller {
 	@FXML
 	private Button convertMultiple;
 
-	/* 
-	 * this was added to help with testing.
-	 * - chris
-	 */
-	public void setChoosePDF(ComboBox<String> b){
-		this.choosePDF = b;
-	}
-	
-	public  boolean openPDF() throws IOException {
-
+	public void openPDF() throws IOException{
+				
 		if (Desktop.isDesktopSupported()) {
 		    File myFile = new File((String) choosePDF.getValue());
+		    
 		    //GUI.dir.indexOf(myFile);
 		    Desktop.getDesktop().open(myFile);
 		}
-		return true;
 	}
-	public boolean openFolder() throws IOException{
+	public void openFolder() throws IOException{
 		
 		if (Desktop.isDesktopSupported()) {
 			
 			String directoryname = (String) choosePDF.getValue();
-			//System.out.println(choosePDF.getValue());  //debug
-			try{ // the windows case
 		    File myFile = new File(directoryname.substring(0,directoryname.lastIndexOf('\\')+1));
-		  //GUI.dir.indexOf(myFile);
 		    Desktop.getDesktop().open(myFile);
-			}
-			catch(IllegalArgumentException e){ // the linux case
-		    	File myFile = new File(directoryname.substring(0,directoryname.lastIndexOf('/')+1)); 
-		        Desktop.getDesktop().open(myFile);
-		    }
-		     
 		}
-		return true;
 	}
+	
+	public void showBasic(){
+				
+		pdfLogo.setVisible(false);
+		BasicMode.setVisible(false);
+		BasicLabel.setVisible(false);
+		
+		tablature.setVisible(true);
+		convertMultiple.setVisible(true);
+		choosePDF.setVisible(true);
+		openPDF.setVisible(true);
+		openFolder.setVisible(true);
+
+	}
+	
+	
+	
 	public void browse() throws IOException, DocumentException {
 		
 		// file chooser
@@ -142,20 +142,16 @@ public class Controller {
 		GUI.outputName = GUI.inputPath.substring(GUI.inputPath.lastIndexOf('\\') + 1,GUI.inputPath.length() - 4);
 		GUI.outputPath = GUI.inputPath.substring(0,GUI.inputPath.lastIndexOf('\\') + 1)	+ GUI.outputName + ".pdf"; 
 		
-		// take the file that the user selected and extract relevant information
-		
 		inputField.setText(GUI.inputPath);
 		outputField.setText(GUI.inputPath.substring(GUI.inputPath.lastIndexOf('\\') + 1,GUI.inputPath.length() - 4));
 		destinationFolder.setText(GUI.inputPath.substring(0,GUI.inputPath.lastIndexOf('\\') + 1));
 	    
-		// if the gui is selected then render a preview of the pdf
-		
-			previewPage.setImage(PDFPreview.previewPDFDocumentInImage(new Tablature(GUI.inputPath,GUI.outputPath)));
+		previewPage.setImage(PDFPreview.previewPDFDocumentInImage(new Tablature(GUI.inputPath,GUI.outputPath)));
 			
-			//pageCounter.setText(Integer.toString(1));
+		//pageCounter.setText(Integer.toString(1));
 		//	maxPages.setText(Integer.toString(PDFPreview.getMaxPage()));
 			
-			//leftPage.setVisible(true);
+		//leftPage.setVisible(true);
 		//	leftPage.setDisable(true);
 		//	rightPage.setVisible(true);
 			
@@ -169,19 +165,22 @@ public class Controller {
 	//	convertButton.setDisable(false);
 	}	
 	public void selectMultiple() throws IOException{
+		
 		FileChooser fileChooser = new FileChooser();
 		fileChooser.setTitle("Open Text File");
 		List<File> dir = fileChooser.showOpenMultipleDialog(GUI.main);
 		GUI.dir = dir;
-		checkSelect.setVisible(true);
-		convertMultiple.setDisable(false);
+		
+		if (dir.size() > 0){
+			checkSelect.setVisible(true);
+			convertMultiple.setDisable(false);
+		}
 	}
 	
-	/* basic mode can convert multiple */
 	public void convertMultiple() throws IOException{
 		
 		ObservableList<String> choices = FXCollections.observableArrayList();
-		System.out.println("here");
+		
 		for(File f:GUI.dir){
 			String output = f.getPath().substring(0,f.getPath().length()-3) + "pdf";
 			Tablature tab = new Tablature(f.getPath(), output);
@@ -216,10 +215,11 @@ public class Controller {
 		
 		Tablature tab = new Tablature(GUI.inputPath, GUI.outputPath);
 		tab.setSpacing((float)spacingslider.getValue());
+		
+		//BaseColor f = new BaseColor();
+		
+	//	tab.setFontColor(ColorChooser.getValue());
 		DrawPDF.writePDF(tab);
-
-	//	PDFcomplete.setVisible(true);
-	//	openPDF.setVisible(true);
 		
 	}
 
@@ -246,7 +246,8 @@ public class Controller {
 		GUI.main.centerOnScreen();
 		GUI.main.show();
 		
-	}	
+	}
+	
 	
 	public void preview() throws IOException, DocumentException {
 		
