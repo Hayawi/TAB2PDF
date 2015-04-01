@@ -128,9 +128,7 @@ public class Controller {
 		openFolder.setVisible(true);
 
 	}
-	
-	
-	
+		
 	public void browse() throws IOException, DocumentException {
 		
 		// file chooser
@@ -216,9 +214,9 @@ public class Controller {
 		Tablature tab = new Tablature(GUI.inputPath, GUI.outputPath);
 		tab.setSpacing((float)spacingslider.getValue());
 		
-		//BaseColor f = new BaseColor();
+		BaseColor f = new BaseColor((float)ColorChooser.getValue().getRed(), (float)ColorChooser.getValue().getGreen(),(float)ColorChooser.getValue().getBlue());
 		
-	//	tab.setFontColor(ColorChooser.getValue());
+		tab.setFontColor(f);
 		DrawPDF.writePDF(tab);
 		
 	}
@@ -239,7 +237,7 @@ public class Controller {
 		
 		GUI.customizeSelected = true;
 		
-		Parent root = FXMLLoader.load(getClass().getResource("/fxml/BasicMode.fxml"));
+		Parent root = FXMLLoader.load(getClass().getResource("/fxml/BasicMode2.0.fxml"));
 		Scene scene = new Scene(root, 1046, 768);
 	
 		GUI.main.setScene(scene);
