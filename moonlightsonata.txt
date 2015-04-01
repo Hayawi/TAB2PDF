@@ -1,6 +1,6 @@
 TITLE=Moonlight Sonata
 SUBTITLE=Ludwig van Beethoven
-SPACING=5
+SPACING=12
 
 |-------------------------|-------------------------|
 |-----1-----1-----1-----1-|-----1-----1-----1-----1-|
