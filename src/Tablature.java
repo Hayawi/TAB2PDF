@@ -30,6 +30,7 @@ public class Tablature extends Object {
 	}
 	
 	public Tablature(String inputPath, String outputPath) throws IOException {
+		// System.out.println(inputPath + " " + outputPath);  //debug Chris
 		this.fontSize = 8;
 		String file = ParseFile.openFile(inputPath);
 		this.filepath = outputPath;

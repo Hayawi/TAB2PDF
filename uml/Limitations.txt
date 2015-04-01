@@ -1,4 +1,0 @@
-- maximum number of consecutive vertical bars is 3.
-- measures must be at least 10 characters in width (including the vertical bars)
-- each stave is seperated by a blank line.  In other words \n\n or \r\n for windows
-- All staves have 6 lines.

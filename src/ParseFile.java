@@ -156,7 +156,7 @@ public class ParseFile {
 		}
 		return newMeasures;
 	}
-	
+	/*
 	public static boolean unevenBlockLengthCheck(ArrayList<String> blockOfMeasures) {
 		HashSet<Integer> lengths = new HashSet<Integer>();
 		for (String s : blockOfMeasures) {
@@ -181,4 +181,5 @@ public class ParseFile {
 		}
 		return null; 
 	}
+	*/
 }

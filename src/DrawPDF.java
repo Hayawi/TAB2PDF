@@ -41,7 +41,7 @@ public class DrawPDF {
 	}
 	
 	@SuppressWarnings("unchecked")
-	public static void writePDF(Tablature tab) throws IOException{
+	public static boolean writePDF(Tablature tab) throws IOException{
 		Document document = new Document(PageSize.A4);
 		
 		try {
@@ -65,6 +65,7 @@ public class DrawPDF {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		return true;
 	}
 
 	public static ByteArrayOutputStream writePDFInMemory(Tablature tab)

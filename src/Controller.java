@@ -95,25 +95,41 @@ public class Controller {
 	@FXML
 	private Button convertMultiple;
 
-	public void openPDF() throws IOException{
-				
+	/* 
+	 * this was added to help with testing.
+	 * - chris
+	 */
+	public void setChoosePDF(ComboBox<String> b){
+		this.choosePDF = b;
+	}
+	
+	public  boolean openPDF() throws IOException {
+
 		if (Desktop.isDesktopSupported()) {
 		    File myFile = new File((String) choosePDF.getValue());
-		    
 		    //GUI.dir.indexOf(myFile);
 		    Desktop.getDesktop().open(myFile);
 		}
+		return true;
 	}
-	public void openFolder() throws IOException{
+	public boolean openFolder() throws IOException{
 		
 		if (Desktop.isDesktopSupported()) {
 			
 			String directoryname = (String) choosePDF.getValue();
+			//System.out.println(choosePDF.getValue());  //debug
+			try{ // the windows case
 		    File myFile = new File(directoryname.substring(0,directoryname.lastIndexOf('\\')+1));
-		    
-		    //GUI.dir.indexOf(myFile);
+		  //GUI.dir.indexOf(myFile);
 		    Desktop.getDesktop().open(myFile);
+			}
+			catch(IllegalArgumentException e){ // the linux case
+		    	File myFile = new File(directoryname.substring(0,directoryname.lastIndexOf('/')+1)); 
+		        Desktop.getDesktop().open(myFile);
+		    }
+		     
 		}
+		return true;
 	}
 	public void browse() throws IOException, DocumentException {
 		
@@ -161,10 +177,11 @@ public class Controller {
 		convertMultiple.setDisable(false);
 	}
 	
+	/* basic mode can convert multiple */
 	public void convertMultiple() throws IOException{
 		
 		ObservableList<String> choices = FXCollections.observableArrayList();
-		
+		System.out.println("here");
 		for(File f:GUI.dir){
 			String output = f.getPath().substring(0,f.getPath().length()-3) + "pdf";
 			Tablature tab = new Tablature(f.getPath(), output);
