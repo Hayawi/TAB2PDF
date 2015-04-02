@@ -186,7 +186,10 @@ public class Controller {
 	    
 		String outputPath = destinationFolder.getText() + outputField.getText() + ".pdf";
 		
-		previewPage.setImage(PDFPreview.previewPDFDocumentInImage(new Tablature(file.getPath(),outputPath)));
+		
+		Tablature tab = new Tablature(file.getPath(), outputPath);
+		spacingslider.setValue(tab.getSpacing());
+		previewPage.setImage(PDFPreview.previewPDFDocumentInImage(tab));
 		ColorChooser.setValue(javafx.scene.paint.Color.BLACK);
 		titleColor.setValue(javafx.scene.paint.Color.BLACK);
 		subtitleColor.setValue(javafx.scene.paint.Color.BLACK);
