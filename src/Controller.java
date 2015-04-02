@@ -209,6 +209,9 @@ public class Controller {
 	}	
 	public void selectMultiple() throws IOException{
 		
+		try {
+
+		
 		FileChooser fileChooser = new FileChooser();
 		fileChooser.setTitle("Open Text File");
 		List<File> dir = fileChooser.showOpenMultipleDialog(GUI.main);
@@ -220,6 +223,10 @@ public class Controller {
 		}
 		
 		checkConvert.setVisible(false);
+		} catch (NullPointerException name) {
+			
+		}
+		
 	}
 	
 	public void convertMultiple() throws IOException{

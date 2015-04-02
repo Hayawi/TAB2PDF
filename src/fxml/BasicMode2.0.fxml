@@ -20,7 +20,7 @@
             <Font name="Nirmala UI Bold" size="60.0" />
          </font>
       </Label>
-      <Label layoutX="33.0" layoutY="208.0" text="Enter the name of your destination PDF" textFill="WHITE">
+      <Label layoutX="33.0" layoutY="208.0" text="Enter the PDF name:" textFill="WHITE">
          <font>
             <Font name="Nirmala UI" size="18.0" />
          </font>
@@ -36,7 +36,7 @@
          </font>
       </Label>
       <Button blendMode="MULTIPLY" layoutX="34.0" layoutY="575.0" mnemonicParsing="false" onAction="#convert" prefHeight="43.0" prefWidth="343.0" text="Convert to PDF" />
-      <TextField fx:id="inputField" layoutX="33.0" layoutY="125.0" prefHeight="25.0" prefWidth="286.0" />
+      <TextField fx:id="inputField" editable="false" layoutX="33.0" layoutY="125.0" prefHeight="25.0" prefWidth="286.0" />
       <TextField fx:id="outputField" layoutX="35.0" layoutY="235.0" prefHeight="25.0" prefWidth="343.0" />
       <Button blendMode="MULTIPLY" layoutX="325.0" layoutY="125.0" mnemonicParsing="false" onAction="#browse" text="Browse" />
       <Label layoutX="33.0" layoutY="520.0" text="Spacing:" textFill="WHITE">
@@ -57,7 +57,7 @@
             <Font name="Nirmala UI" size="18.0" />
          </font>
       </Label>
-      <TextField fx:id="destinationFolder" layoutX="33.0" layoutY="177.0" prefHeight="25.0" prefWidth="286.0" />
+      <TextField fx:id="destinationFolder" editable="false" layoutX="33.0" layoutY="177.0" prefHeight="25.0" prefWidth="286.0" />
       <Button blendMode="MULTIPLY" layoutX="322.0" layoutY="177.0" mnemonicParsing="false" onAction="#selectFolder" prefHeight="25.0" prefWidth="61.0" text="Browse" />
       <ImageView fx:id="previewPage" fitHeight="590.0" fitWidth="626.0" layoutX="407.0" layoutY="91.0" pickOnBounds="true" preserveRatio="true" />
       <ColorPicker fx:id="ColorChooser" blendMode="MULTIPLY" layoutX="152.0" layoutY="382.0" onAction="#preview" prefHeight="25.0" prefWidth="228.0">
