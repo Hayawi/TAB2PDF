@@ -1,0 +1,187 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.*?>
+<?import java.net.*?>
+<?import javafx.scene.effect.*?>
+<?import javafx.scene.text.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.control.*?>
+<?import java.lang.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="768.0" prefWidth="1046.0" style="-fx-background-color: #4f4f4f;" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller">
+   <children>
+      <AnchorPane layoutX="648.0" layoutY="197.0" />
+      <AnchorPane prefHeight="51.0" prefWidth="1046.0" style="-fx-background-color: #30302f;">
+         <children>
+            <Label layoutX="446.0" layoutY="7.0" styleClass="Tab2PDF" text="Tab2PDF" textFill="WHITE">
+               <font>
+                  <Font name="Roboto Black" size="30.0" />
+               </font>
+            </Label>
+            <Button layoutX="22.0" layoutY="8.0" mnemonicParsing="false" onAction="#showMainMenu" prefHeight="34.0" prefWidth="67.0" style="-fx-border-width: 0.4; -fx-border-color: white; -fx-border-style: solid; -fx-border-radius: 5; left: 944; -fx-pref-height: 33; z-index: 16; -fx-background-color: #30302f;" text="Back" textFill="WHITE">
+               <font>
+                  <Font name="Roboto Light" size="16.0" />
+               </font>
+            </Button>
+         </children>
+      </AnchorPane>
+      <Label layoutX="34.0" layoutY="68.0" text="Advanced Mode:" textFill="WHITE">
+         <font>
+            <Font name="Roboto Regular" size="37.0" />
+         </font>
+      </Label>
+      <Separator fx:id="middle_separator" layoutX="509.0" layoutY="140.0" orientation="VERTICAL" prefHeight="534.0" prefWidth="28.0" />
+      <AnchorPane layoutY="717.0" prefHeight="51.0" prefWidth="1046.0" style="-fx-background-color: #30302f;">
+         <children>
+            <Button layoutX="978.0" layoutY="9.0" mnemonicParsing="false" onAction="#openWebsite" prefHeight="34.0" prefWidth="57.0" style="-fx-border-width: 0.4; -fx-border-color: white; -fx-border-style: solid; -fx-border-radius: 5; left: 944; -fx-pref-height: 33; z-index: 16; -fx-background-color: #30302f;" text="Help" textFill="WHITE">
+               <font>
+                  <Font name="Roboto Light" size="16.0" />
+               </font>
+            </Button>
+         </children>
+      </AnchorPane>
+      <Button layoutX="44.0" layoutY="607.0" mnemonicParsing="false" onAction="#convert" prefHeight="34.0" prefWidth="442.0" style="-fx-border-width: 0.4; -fx-border-style: solid; -fx-border-radius: 5; -fx-background-color: #0072bc;" text="Convert to PDF" textFill="WHITE">
+         <font>
+            <Font name="Roboto Light" size="14.0" />
+         </font>
+      </Button>
+      <Button layoutX="44.0" layoutY="645.0" mnemonicParsing="false" onAction="#advancedPDF" prefHeight="29.0" prefWidth="214.0" style="-fx-border-radius: 5; -fx-background-color: #30302f;" text="Open PDF" textFill="WHITE">
+         <font>
+            <Font name="Roboto Light" size="13.0" />
+         </font>
+      </Button>
+      <Button layoutX="273.0" layoutY="645.0" mnemonicParsing="false" onAction="#advancedFolder" prefHeight="29.0" prefWidth="214.0" style="-fx-border-radius: 5; -fx-background-color: #30302f;" text="Open Folder" textFill="WHITE">
+         <font>
+            <Font name="Roboto Light" size="13.0" />
+         </font>
+      </Button>
+      <Button fx:id="browsePDF" layoutX="394.0" layoutY="152.0" mnemonicParsing="false" onAction="#browse" prefHeight="34.0" prefWidth="92.0" style="-fx-border-radius: 5; -fx-background-color: #30302f; -fx-pref-height: 37;" text="Browse" textFill="WHITE">
+         <font>
+            <Font name="Roboto Light" size="13.0" />
+         </font>
+      </Button>
+      <TextField fx:id="inputField" editable="false" layoutX="42.0" layoutY="152.0" prefHeight="25.0" prefWidth="341.0" style="-fx-background-color: #636363; -fx-border-width: 1; -fx-border-color: #7d7d7d; -fx-border-style: solid; -fx-border-radius: 5; -fx-pref-height: 37;" />
+      <Label layoutX="42.0" layoutY="132.0" text="Tablature File" textFill="WHITE">
+         <font>
+            <Font name="Roboto Light" size="14.0" />
+         </font>
+      </Label>
+      <Label layoutX="42.0" layoutY="196.0" text="Destination Folder" textFill="WHITE">
+         <font>
+            <Font name="Roboto Light" size="14.0" />
+         </font>
+      </Label>
+      <TextField fx:id="destinationFolder" editable="false" layoutX="42.0" layoutY="215.0" prefHeight="25.0" prefWidth="341.0" style="-fx-background-color: #636363; -fx-border-width: 1; -fx-border-color: #7d7d7d; -fx-border-style: solid; -fx-border-radius: 5; -fx-pref-height: 37;" />
+      <Button layoutX="394.0" layoutY="215.0" mnemonicParsing="false" onAction="#selectFolder" prefHeight="34.0" prefWidth="92.0" style="-fx-border-radius: 5; -fx-background-color: #30302f; -fx-pref-height: 37;" text="Browse" textFill="WHITE">
+         <font>
+            <Font name="Roboto Light" size="13.0" />
+         </font>
+      </Button>
+      <Label layoutX="42.0" layoutY="258.0" text="PDF Name" textFill="WHITE">
+         <font>
+            <Font name="Roboto Light" size="14.0" />
+         </font>
+      </Label>
+      <TextField fx:id="outputField" layoutX="44.0" layoutY="278.0" prefHeight="25.0" prefWidth="442.0" style="-fx-background-color: #636363; -fx-border-width: 1; -fx-border-color: #7d7d7d; -fx-border-style: solid; -fx-border-radius: 5; -fx-pref-height: 37;" />
+      <Label layoutX="42.0" layoutY="325.0" text="PDF Title" textFill="WHITE">
+         <font>
+            <Font name="Roboto Light" size="14.0" />
+         </font>
+      </Label>
+      <TextField fx:id="titleField" layoutX="44.0" layoutY="345.0" onAction="#preview" prefHeight="25.0" prefWidth="442.0" style="-fx-background-color: #636363; -fx-border-width: 1; -fx-border-color: #7d7d7d; -fx-border-style: solid; -fx-border-radius: 5; -fx-pref-height: 37;" />
+      <Label layoutX="46.0" layoutY="384.0" text="PDF Subtitle" textFill="WHITE">
+         <font>
+            <Font name="Roboto Light" size="14.0" />
+         </font>
+      </Label>
+      <TextField fx:id="subtitleField" layoutX="44.0" layoutY="407.0" onAction="#preview" prefHeight="25.0" prefWidth="442.0" style="-fx-background-color: #636363; -fx-border-width: 1; -fx-border-color: #7d7d7d; -fx-border-style: solid; -fx-border-radius: 5; -fx-pref-height: 37;" />
+      <ColorPicker fx:id="ColorChooser" layoutX="46.0" layoutY="476.0" onAction="#preview" prefHeight="51.0" prefWidth="138.0" style="-fx-background-color: #636363;">
+         <opaqueInsets>
+            <Insets />
+         </opaqueInsets>
+      </ColorPicker>
+      <Label layoutX="46.0" layoutY="450.0" text="PDF Subtitle" textFill="WHITE">
+         <font>
+            <Font name="Roboto Light" size="14.0" />
+         </font>
+      </Label>
+      <ColorPicker fx:id="titleColor" layoutX="198.0" layoutY="476.0" onAction="#preview" prefHeight="51.0" prefWidth="138.0" style="-fx-background-color: #636363;">
+         <opaqueInsets>
+            <Insets />
+         </opaqueInsets>
+      </ColorPicker>
+      <ColorPicker fx:id="subtitleColor" layoutX="348.0" layoutY="476.0" onAction="#preview" prefHeight="51.0" prefWidth="138.0" style="-fx-background-color: #636363;">
+         <opaqueInsets>
+            <Insets />
+         </opaqueInsets>
+      </ColorPicker>
+      <Label layoutX="196.0" layoutY="450.0" text="Title Color" textFill="WHITE">
+         <font>
+            <Font name="Roboto Light" size="14.0" />
+         </font>
+      </Label>
+      <Label layoutX="348.0" layoutY="450.0" text="Subtitle Color" textFill="WHITE">
+         <font>
+            <Font name="Roboto Light" size="14.0" />
+         </font>
+      </Label>
+      <Button layoutX="390.0" layoutY="540.0" mnemonicParsing="false" onAction="#preview" prefHeight="29.0" prefWidth="92.0" style="-fx-border-radius: 5; -fx-pref-height: 33; -fx-background-color: #30302f;" text="Apply" textFill="WHITE">
+         <font>
+            <Font name="Roboto Light" size="16.0" />
+         </font>
+      </Button>
+      <Label layoutX="45.0" layoutY="546.0" text="Spacing" textFill="WHITE">
+         <font>
+            <Font name="Roboto Light" size="15.0" />
+         </font>
+      </Label>
+      <AnchorPane layoutX="44.0" layoutY="594.0" prefHeight="3.0" prefWidth="442.0" style="-fx-background-color: white;" />
+      <AnchorPane layoutX="558.0" layoutY="134.0" prefHeight="559.0" prefWidth="404.0" style="-fx-background-color: #30302f;">
+         <children>
+            <ImageView fx:id="previewPage" fitHeight="534.0" fitWidth="384.0" layoutX="16.0" layoutY="13.0" pickOnBounds="true" preserveRatio="true" />
+         </children>
+      </AnchorPane>
+      <Label layoutX="113.0" layoutY="567.0" text="1" textFill="WHITE" visible="false">
+         <font>
+            <Font name="Roboto Regular" size="12.0" />
+         </font>
+      </Label>
+      <Label layoutX="150.0" layoutY="567.0" text="3" textFill="WHITE" visible="false">
+         <font>
+            <Font name="Roboto Regular" size="12.0" />
+         </font>
+      </Label>
+      <Label layoutX="187.0" layoutY="567.0" text="5" textFill="WHITE" visible="false">
+         <font>
+            <Font name="Roboto Regular" size="12.0" />
+         </font>
+      </Label>
+      <Label layoutX="224.0" layoutY="567.0" prefHeight="17.0" prefWidth="0.0" text="7" textFill="WHITE" visible="false">
+         <font>
+            <Font name="Roboto Regular" size="12.0" />
+         </font>
+      </Label>
+      <Label layoutX="262.0" layoutY="567.0" prefHeight="17.0" prefWidth="0.0" text="9" textFill="WHITE" visible="false">
+         <font>
+            <Font name="Roboto Regular" size="12.0" />
+         </font>
+      </Label>
+      <Label layoutX="297.0" layoutY="567.0" prefHeight="17.0" prefWidth="17.0" text="11" textFill="WHITE" visible="false">
+         <font>
+            <Font name="Roboto Regular" size="12.0" />
+         </font>
+      </Label>
+      <Label layoutX="332.0" layoutY="567.0" prefHeight="17.0" prefWidth="17.0" text="13" textFill="WHITE" visible="false">
+         <font>
+            <Font name="Roboto Regular" size="12.0" />
+         </font>
+      </Label>
+      <Label layoutX="368.0" layoutY="567.0" prefHeight="17.0" prefWidth="17.0" text="15" textFill="WHITE" visible="false">
+         <font>
+            <Font name="Roboto Regular" size="12.0" />
+         </font>
+      </Label>
+      <Slider fx:id="spacingslider" blendMode="MULTIPLY" layoutX="113.0" layoutY="549.0" majorTickUnit="2.0" max="15.0" min="1.0" minorTickCount="1" prefHeight="29.0" prefWidth="272.0" showTickLabels="true" showTickMarks="true" value="5.0" />
+   </children>
+</AnchorPane>

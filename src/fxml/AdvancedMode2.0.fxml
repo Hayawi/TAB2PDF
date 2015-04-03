@@ -20,7 +20,7 @@
             <Font name="Nirmala UI Bold" size="60.0" />
          </font>
       </Label>
-      <Label layoutX="33.0" layoutY="208.0" text="Enter the PDF name:" textFill="WHITE">
+      <Label layoutX="33.0" layoutY="208.0" text="PDF filename:" textFill="WHITE">
          <font>
             <Font name="Nirmala UI" size="18.0" />
          </font>
@@ -52,7 +52,7 @@
             <Font name="Nirmala UI" size="18.0" />
          </font>
       </Label>
-      <Label layoutX="33.0" layoutY="150.0" text="Select the destination folder:" textFill="WHITE">
+      <Label layoutX="33.0" layoutY="150.0" text="Destination folder:" textFill="WHITE">
          <font>
             <Font name="Nirmala UI" size="18.0" />
          </font>
@@ -81,12 +81,12 @@
       <Button blendMode="MULTIPLY" layoutX="291.0" layoutY="521.0" mnemonicParsing="false" onAction="#preview" prefHeight="25.0" prefWidth="96.0" text="Apply Change" />
       <TextField fx:id="titleField" layoutX="37.0" layoutY="287.0" onAction="#preview" prefHeight="25.0" prefWidth="343.0" />
       <TextField fx:id="subtitleField" layoutX="37.0" layoutY="348.0" onAction="#preview" prefHeight="25.0" prefWidth="343.0" />
-      <Label layoutX="33.0" layoutY="260.0" text="Enter the new title of your PDF" textFill="WHITE">
+      <Label layoutX="33.0" layoutY="260.0" text="Song title:" textFill="WHITE">
          <font>
             <Font name="Nirmala UI" size="18.0" />
          </font>
       </Label>
-      <Label layoutX="33.0" layoutY="318.0" text="Enter the new subtitle of the PDF" textFill="WHITE">
+      <Label layoutX="33.0" layoutY="318.0" text="Subtitle" textFill="WHITE">
          <font>
             <Font name="Nirmala UI" size="18.0" />
          </font>

@@ -38,9 +38,9 @@ public class GUI extends Application {
 	public void start(Stage primaryStage) throws IOException {
 
 		Parent root = FXMLLoader
-				.load(getClass().getResource("/fxml/Main3.0.fxml"));
+				.load(getClass().getResource("/fxml/MainMenu5.0.fxml"));
 
-		Scene scene = new Scene(root, 527, 395);
+		Scene scene = new Scene(root, 1038, 758);
 
 		primaryStage.setScene(scene);
 		primaryStage.setTitle("Tab2PDF");
