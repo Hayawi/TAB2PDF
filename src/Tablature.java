@@ -16,6 +16,8 @@ public class Tablature extends Object {
 	private ArrayList<Measure> measures;
 	private String body;
 	private BaseColor fontColor;
+	private BaseColor titleColor;
+	private BaseColor subtitleColor;
 
 	public void draw() throws IOException {
 		DrawPDF.writePDF(this);
@@ -30,7 +32,6 @@ public class Tablature extends Object {
 	}
 	
 	public Tablature(String inputPath, String outputPath) throws IOException {
-		// System.out.println(inputPath + " " + outputPath);  //debug Chris
 		this.fontSize = 8;
 		String file = ParseFile.openFile(inputPath);
 		this.filepath = outputPath;
@@ -89,6 +90,22 @@ public class Tablature extends Object {
 	
 	public void setFontColor(BaseColor color) {
 		this.fontColor = color;
+	}
+	
+	public BaseColor getTitleColor() {
+		return this.titleColor;
+	}
+	
+	public void setTitleColor(BaseColor color) {
+		this.titleColor = color;
+	}
+	
+	public BaseColor getSubtitleColor() {
+		return this.subtitleColor;
+	}
+	
+	public void setSubtitleColor(BaseColor color) {
+		this.subtitleColor = color;
 	}
 	// fix later 
 	private void processFile(String file) {
