@@ -1,4 +1,4 @@
-import java.awt.Color;
+import javafx.scene.paint.Color;
 import java.awt.Desktop;
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -23,6 +23,8 @@ import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.ColorPicker;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
+import javafx.scene.control.ListCell;
+import javafx.scene.control.ListView;
 import javafx.scene.control.Pagination;
 import javafx.scene.control.Separator;
 import javafx.scene.control.Slider;
@@ -32,6 +34,7 @@ import javafx.scene.image.ImageView;
 import javafx.stage.DirectoryChooser;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
+import javafx.util.Callback;
 
 import javax.swing.JFileChooser;
 
@@ -183,11 +186,12 @@ public class Controller {
 		basicConvert.setEffect(null);
 	}
 	public void choosePDFHover(){
-		choosePDF.setStyle("-fx-background-color:#0072bc;-fx-border-width:0.4;-fx-border-color:white;-fx-border-style:solid;-fx-border-radius:5;-fx-pref-height:65");
+		choosePDF.setStyle("-fx-font: 22px \"Roboto Light\"; -fx-font-fill: white;-fx-background-color:#0072bc;-fx-border-width:0.4;-fx-border-color:white;-fx-border-style:solid;-fx-border-radius:5;-fx-pref-height:65");
 		choosePDF.setEffect(new DropShadow());
 	}
 	public void choosePDFUnhover(){
-		choosePDF.setStyle("-fx-background-color: #30302f;-fx-border-width:0.4;-fx-border-color:white;-fx-border-style:solid;-fx-border-radius:5;-fx-pref-height:65");
+		
+		choosePDF.setStyle("-fx-font: 22px \"Roboto Light\"; -fx-font-fill: white;-fx-background-color:#30302f;-fx-border-width:0.4;-fx-border-color:white;-fx-border-style:solid;-fx-border-radius:5;-fx-pref-height:65");
 		choosePDF.setEffect(null);
 	}
 	
@@ -375,7 +379,7 @@ public class Controller {
 	
 	public void convertMultiple() throws IOException{
 		
-		try{
+		//try{
 		ObservableList<String> choices = FXCollections.observableArrayList();
 		
 		for(File f:GUI.dir){
@@ -386,10 +390,11 @@ public class Controller {
 			choices.add(output);
 		}
 		
-		choosePDF.setItems(choices);
+        choosePDF.setItems(choices);
 		choosePDF.getSelectionModel().select(0);
+		choosePDF.setStyle("-fx-font: 16px \"Roboto Light\"; -fx-font-fill: white;-fx-background-color:#0072bc;-fx-border-width:0.4;-fx-border-color:white;-fx-border-style:solid;-fx-border-radius:5;-fx-pref-height:65");
 		
-		selectFile.setDisable(false);
+		selectFile.setVisible(false);
 	    choosePDF.setDisable(false);  
 	    basicopenFolder.setDisable(false);
 	    basicopenPDF.setDisable(false);
@@ -397,7 +402,7 @@ public class Controller {
 	    basicopenFolder.setStyle("-fx-background-color:#0072bc;-fx-border-width:0.4;-fx-border-color:white;-fx-border-style:solid;-fx-border-radius:5;-fx-pref-height:65");
 	    basicopenPDF.setStyle("-fx-background-color:#0072bc;-fx-border-width:0.4;-fx-border-color:white;-fx-border-style:solid;-fx-border-radius:5;-fx-pref-height:65");
 	    
-		} catch (NullPointerException name) {}
+		//} catch (NullPointerException name) {}
 		
 	}
 	
