@@ -394,6 +394,9 @@ public class Controller {
 	    basicopenFolder.setDisable(false);
 	    basicopenPDF.setDisable(false);
 	    
+	    basicopenFolder.setStyle("-fx-background-color:#0072bc;-fx-border-width:0.4;-fx-border-color:white;-fx-border-style:solid;-fx-border-radius:5;-fx-pref-height:65");
+	    basicopenPDF.setStyle("-fx-background-color:#0072bc;-fx-border-width:0.4;-fx-border-color:white;-fx-border-style:solid;-fx-border-radius:5;-fx-pref-height:65");
+	    
 		} catch (NullPointerException name) {}
 		
 	}
