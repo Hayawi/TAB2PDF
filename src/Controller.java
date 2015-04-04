@@ -109,6 +109,29 @@ public class Controller {
 	private TextField subtitleField;
 	@FXML
 	private Button browsePDF;
+	@FXML
+	private Button basicButton;
+	@FXML
+	private Button basicButtonhover;
+	@FXML
+	private Button advancedButtonhover;
+	
+	public void basicHover(){
+	
+		basicButtonhover.setVisible(true);
+		
+		
+	}
+	public void basicUnhover(){
+		basicButtonhover.setVisible(false);
+	}
+	
+	public void advancedHover(){
+		advancedButtonhover.setVisible(true);
+	}
+	public void advancedUnhover(){
+		advancedButtonhover.setVisible(false);
+	}
 	
 	public void openPDF() throws IOException{
 		try{		
