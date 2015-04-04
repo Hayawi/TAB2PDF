@@ -10,15 +10,15 @@
 
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="768.0" prefWidth="1046.0" style="-fx-background-color: #4f4f4f;" stylesheets="@flat-buttons/flat-buttons/style.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller">
    <children>
-      <AnchorPane layoutX="101.0" layoutY="197.0">
+      <AnchorPane layoutX="110.0" layoutY="196.0" style="-fx-border-color: #30302f; -fx-border-width: 0;">
          <children>
-            <Button fx:id="basicButtonhover" layoutX="-6.0" layoutY="-7.0" mnemonicParsing="false" prefHeight="375.0" prefWidth="304.0" style="-fx-background-color: #30302f;" visible="false" />
-            <ImageView fx:id="pdfLogo" fitHeight="296.0" fitWidth="319.0" layoutX="1.0" layoutY="1.0" pickOnBounds="true" preserveRatio="true">
+            <Button fx:id="basicButtonhover" layoutX="-6.0" layoutY="-7.0" mnemonicParsing="false" prefHeight="375.0" prefWidth="304.0" style="-fx-background-color: #30302f; -fx-border-width: 0.4; -fx-border-color: white; -fx-border-style: solid; -fx-border-radius: 5;" />
+            <ImageView fx:id="pdfLogo" fitHeight="296.0" fitWidth="310.0" layoutY="6.0" pickOnBounds="true" preserveRatio="true">
                <image>
                   <Image url="@images/pdf.png" />
                </image>
             </ImageView>
-            <Label fx:id="BasicLabel" layoutX="100.0" layoutY="311.0" text="Basic" textFill="WHITE">
+            <Label fx:id="BasicLabel" layoutX="98.0" layoutY="311.0" text="Basic" textFill="WHITE">
                <font>
                   <Font name="Roboto Light" size="40.0" />
                </font>
@@ -26,15 +26,15 @@
             <Button fx:id="basicButton" mnemonicParsing="false" onAction="#showBasic" onMouseEntered="#basicHover" onMouseExited="#basicUnhover" opacity="0.0" prefHeight="366.0" prefWidth="296.0" />
          </children>
       </AnchorPane>
-      <AnchorPane layoutX="648.0" layoutY="197.0">
+      <AnchorPane layoutX="639.0" layoutY="192.0" prefHeight="373.0" prefWidth="278.0" style="-fx-border-color: #30302f;">
          <children>
-            <Button fx:id="advancedButtonhover" layoutX="-4.0" layoutY="-4.0" mnemonicParsing="false" prefHeight="375.0" prefWidth="304.0" style="-fx-background-color: #30302f;" visible="false" />
-            <Label id="Advanced" layoutX="59.0" layoutY="310.0" prefHeight="58.0" prefWidth="178.0" style="-fx-font-size: 40;" text="Advanced" textAlignment="CENTER" textFill="WHITE">
+            <Button fx:id="advancedButtonhover" layoutX="-4.0" layoutY="-4.0" mnemonicParsing="false" prefHeight="375.0" prefWidth="304.0" style="-fx-background-color: #30302f; -fx-border-color: white; -fx-border-style: solid; -fx-border-radius: 5; -fx-border-width: 0.4;" />
+            <Label id="Advanced" layoutX="63.0" layoutY="308.0" prefHeight="58.0" prefWidth="176.0" text="Advanced" textAlignment="CENTER" textFill="WHITE">
                <font>
-                  <Font name="Roboto Light" size="35.0" />
+                  <Font name="Roboto Light" size="40.0" />
                </font>
             </Label>
-            <ImageView fitHeight="296.0" fitWidth="300.0" layoutY="1.0" pickOnBounds="true" preserveRatio="true">
+            <ImageView fitHeight="296.0" fitWidth="310.0" layoutX="3.0" pickOnBounds="true" preserveRatio="true">
                <image>
                   <Image url="@images/Settings-icon.png" />
                </image>
@@ -44,7 +44,7 @@
       </AnchorPane>
       <AnchorPane prefHeight="51.0" prefWidth="1046.0" style="-fx-background-color: #30302f;">
          <children>
-            <Label layoutX="446.0" layoutY="7.0" styleClass="Tab2PDF" text="Tab2PDF" textFill="WHITE">
+            <Label layoutX="461.0" layoutY="5.0" styleClass="Tab2PDF" text="Tab2PDF" textFill="WHITE">
                <font>
                   <Font name="Roboto Black" size="30.0" />
                </font>
@@ -56,7 +56,7 @@
             <Font name="Roboto Regular" size="37.0" />
          </font>
       </Label>
-      <Separator fx:id="middle_separator" layoutX="509.0" layoutY="197.0" orientation="VERTICAL" prefHeight="401.0" prefWidth="28.0" />
+      <Separator fx:id="middle_separator" layoutX="408.0" layoutY="192.0" orientation="VERTICAL" prefHeight="375.0" prefWidth="231.0" />
       <AnchorPane layoutY="717.0" prefHeight="51.0" prefWidth="1046.0" style="-fx-background-color: #30302f;">
          <children>
             <Button layoutX="978.0" layoutY="9.0" mnemonicParsing="false" onAction="#openWebsite" prefHeight="34.0" prefWidth="57.0" style="-fx-border-width: 0.4; -fx-border-color: white; -fx-border-style: solid; -fx-border-radius: 5; left: 944; -fx-pref-height: 33; z-index: 16; -fx-background-color: #30302f;" text="Help" textFill="WHITE">

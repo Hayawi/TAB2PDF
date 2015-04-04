@@ -12,17 +12,18 @@
    <children>
       <AnchorPane layoutX="648.0" layoutY="197.0">
          <children>
+            <Button fx:id="advancedButtonhover" layoutX="-4.0" layoutY="-4.0" mnemonicParsing="false" prefHeight="375.0" prefWidth="304.0" style="-fx-background-color: #0072bc;" visible="false" />
             <ImageView fitHeight="296.0" fitWidth="300.0" layoutY="1.0" pickOnBounds="true" preserveRatio="true">
                <image>
                   <Image url="@images/Settings-icon.png" />
                </image>
             </ImageView>
-            <Button mnemonicParsing="false" onAction="#showAdvancedMode" opacity="0.0" prefHeight="366.0" prefWidth="296.0" />
             <Label id="Advanced" layoutX="59.0" layoutY="297.0" prefHeight="58.0" prefWidth="178.0" style="-fx-font-size: 40;" text="Advanced" textAlignment="CENTER" textFill="WHITE">
                <font>
                   <Font name="Roboto Light" size="35.0" />
                </font>
             </Label>
+            <Button mnemonicParsing="false" onAction="#showAdvancedMode" onMouseEntered="#advancedHover" onMouseExited="#advancedUnhover" opacity="0.0" prefHeight="366.0" prefWidth="296.0" />
          </children>
       </AnchorPane>
       <AnchorPane prefHeight="51.0" prefWidth="1046.0" style="-fx-background-color: #30302f;">

@@ -37,6 +37,8 @@ public class Tablature extends Object {
 		this.filepath = outputPath;
 		this.processFile(file);
 		this.fontColor = BaseColor.BLACK;
+		this.titleColor = BaseColor.BLACK;
+		this.subtitleColor = BaseColor.BLACK;
 	}
 	
 	public boolean setAscii(String s){

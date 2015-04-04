@@ -27,6 +27,7 @@ import javafx.scene.control.Pagination;
 import javafx.scene.control.Separator;
 import javafx.scene.control.Slider;
 import javafx.scene.control.TextField;
+import javafx.scene.effect.DropShadow;
 import javafx.scene.image.ImageView;
 import javafx.stage.DirectoryChooser;
 import javafx.stage.FileChooser;
@@ -118,19 +119,23 @@ public class Controller {
 	
 	public void basicHover(){
 	
-		basicButtonhover.setVisible(true);
+		basicButtonhover.setStyle("-fx-background-color:#0072bc;-fx-border-width:0.4;-fx-border-color:white;-fx-border-style:solid;-fx-border-radius:5;");
+		basicButtonhover.setEffect(new DropShadow());
 		
 		
 	}
 	public void basicUnhover(){
-		basicButtonhover.setVisible(false);
+		basicButtonhover.setStyle("-fx-background-color: #30302f;-fx-border-width:0.4;-fx-border-color:white;-fx-border-style:solid;-fx-border-radius:5;");
+		basicButtonhover.setEffect(null);
 	}
 	
 	public void advancedHover(){
-		advancedButtonhover.setVisible(true);
+		advancedButtonhover.setStyle("-fx-background-color:#0072bc;-fx-border-width:0.4;-fx-border-color:white;-fx-border-style:solid;-fx-border-radius:5;");
+		advancedButtonhover.setEffect(new DropShadow());
 	}
 	public void advancedUnhover(){
-		advancedButtonhover.setVisible(false);
+		advancedButtonhover.setStyle("-fx-background-color: #30302f;-fx-border-width:0.4;-fx-border-color:white;-fx-border-style:solid;-fx-border-radius:5;");
+		advancedButtonhover.setEffect(null);
 	}
 	
 	public void openPDF() throws IOException{
