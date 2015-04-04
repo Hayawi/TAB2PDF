@@ -129,7 +129,18 @@ public class Controller {
 	private Button basicConvert;
 	@FXML
 	private Label selectFile;
-	
+	@FXML
+	private Button backButton;
+	@FXML
+	private Button folder;
+	@FXML
+	private Button apply;
+	@FXML
+	private Button advancedPDF;
+	@FXML
+	private Button advancedFolder;
+	@FXML
+	private Button advancedConvert;
 	public void basicHover(){
 	
 		basicButtonhover.setStyle("-fx-background-color:#0072bc;-fx-border-width:0.4;-fx-border-color:white;-fx-border-style:solid;-fx-border-radius:5;");
@@ -204,17 +215,81 @@ public class Controller {
 		tablature.setEffect(null);
 	}
 	
+	public void backHover(){
+		backButton.setStyle("-fx-background-color:#0072bc;-fx-border-width:0.4;-fx-border-color:white;-fx-border-style:solid;-fx-border-radius:5;");
+		backButton.setEffect(new DropShadow());
+	}
+	public void backUnhover(){
+		backButton.setStyle("-fx-background-color: #30302f;-fx-border-width:0.4;-fx-border-color:white;-fx-border-style:solid;-fx-border-radius:5;");
+		backButton.setEffect(null);
+	}
 	
+	public void titleColorHover(){
+		titleColor.setStyle("-fx-background-color:#0072bc;");
+		titleColor.setEffect(new DropShadow());
+	}
+	public void titleColorUnhover(){
+		titleColor.setStyle("-fx-background-color:#636363;");
+		titleColor.setEffect(null);
+	}
+	public void subtitleColorHover(){
+		subtitleColor.setStyle("-fx-background-color:#0072bc;");
+		subtitleColor.setEffect(new DropShadow());
+	}
+	public void subtitleColorUnhover(){
+		subtitleColor.setStyle("-fx-background-color:#636363;");
+		subtitleColor.setEffect(null);
+	}
+	public void colorHover(){
+		ColorChooser.setStyle("-fx-background-color:#0072bc;");
+		ColorChooser.setEffect(new DropShadow());
+	}
+	public void colorUnhover(){
+		ColorChooser.setStyle("-fx-background-color:#636363;");
+		ColorChooser.setEffect(null);
+	}
 	
+	public void browseHover(){
+		browsePDF.setStyle("-fx-background-color:#0072bc; -fx-border-radius:5; -fx-pref-height:37;");
+		browsePDF.setEffect(new DropShadow());
+	}
+	public void browseUnhover(){
+		browsePDF.setStyle("-fx-background-color:#30302f; -fx-border-radius:5; -fx-pref-height:37;");
+		browsePDF.setEffect(null);
+	}
+	public void folderHover(){
+		folder.setStyle("-fx-background-color:#0072bc; -fx-border-radius:5; -fx-pref-height:37;");
+		folder.setEffect(new DropShadow());
+	}
+	public void folderUnhover(){
+		folder.setStyle("-fx-background-color:#30302f; -fx-border-radius:5; -fx-pref-height:37;");
+		folder.setEffect(null);
+	}
 	
-	
-	
-	
-	
-	
-	
-	
-	
+	public void applyHover(){
+		apply.setStyle("-fx-background-color:#0072bc; -fx-border-radius:5; -fx-pref-height:33;");
+		apply.setEffect(new DropShadow());
+	}
+	public void applyUnhover(){
+		apply.setStyle("-fx-background-color:#30302f; -fx-border-radius:5; -fx-pref-height:33;");
+		apply.setEffect(null);
+	}
+	public void advancedPDFHover(){
+		advancedPDF.setStyle("-fx-background-color:#0072bc; -fx-border-radius:5;");
+		advancedPDF.setEffect(new DropShadow());
+	}
+	public void advancedPDFUnhover(){
+		advancedPDF.setStyle("-fx-background-color:#30302f; -fx-border-radius:5;");
+		advancedPDF.setEffect(null);
+	}
+	public void advancedFolderHover(){
+		advancedFolder.setStyle("-fx-background-color:#0072bc; -fx-border-radius:5;");
+		advancedFolder.setEffect(new DropShadow());
+	}
+	public void advancedFolderUnhover(){
+		advancedFolder.setStyle("-fx-background-color:#30302f; -fx-border-radius:5;");
+		advancedFolder.setEffect(null);
+	}
 	
 	
 	
@@ -336,6 +411,7 @@ public class Controller {
 		titleColor.setValue(javafx.scene.paint.Color.BLACK);
 		subtitleColor.setValue(javafx.scene.paint.Color.BLACK);
 		
+		advancedConvert.setDisable(false);
 		
 		}catch(NullPointerException e){	}
 		//pageCounter.setText(Integer.toString(1));
@@ -445,7 +521,9 @@ public class Controller {
 		}
 		
 		DrawPDF.writePDF(tab);
-
+		
+		advancedPDF.setDisable(false);
+		advancedFolder.setDisable(false);
 		}catch(FileNotFoundException e){}catch(NullPointerException e){}
 			
 	}
@@ -474,7 +552,8 @@ public class Controller {
 		GUI.main.setScene(scene);
 		GUI.main.centerOnScreen();
 		GUI.main.show();
-			
+		
+
 	}
 	
 	
