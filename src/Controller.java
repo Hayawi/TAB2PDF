@@ -116,6 +116,16 @@ public class Controller {
 	private Button basicButtonhover;
 	@FXML
 	private Button advancedButtonhover;
+	@FXML
+	private Button helpButton;
+	@FXML
+	private Button basicopenPDF;
+	@FXML
+	private Button basicopenFolder;
+	@FXML
+	private Button basicConvert;
+	@FXML
+	private Label selectFile;
 	
 	public void basicHover(){
 	
@@ -138,6 +148,98 @@ public class Controller {
 		advancedButtonhover.setEffect(null);
 	}
 	
+	public void helpHover(){
+		helpButton.setStyle("-fx-background-color:#0072bc;-fx-border-width:0.4;-fx-border-color:white;-fx-border-style:solid;-fx-border-radius:5;");
+		helpButton.setEffect(new DropShadow());
+	}
+	public void helpUnhover(){
+		helpButton.setStyle("-fx-background-color: #30302f;-fx-border-width:0.4;-fx-border-color:white;-fx-border-style:solid;-fx-border-radius:5;");
+		helpButton.setEffect(null);
+	}
+	
+	
+	public void basicopenPDFHover(){
+		basicopenPDF.setStyle("-fx-background-color:#0072bc;-fx-border-width:0.4;-fx-border-color:white;-fx-border-style:solid;-fx-border-radius:5;-fx-pref-height:65");
+		basicopenPDF.setEffect(new DropShadow());
+	}
+	public void basicopenPDFUnhover(){
+		basicopenPDF.setStyle("-fx-background-color: #30302f;-fx-border-width:0.4;-fx-border-color:white;-fx-border-style:solid;-fx-border-radius:5;-fx-pref-height:65");
+		basicopenPDF.setEffect(null);
+	}
+	public void basicopenFolderHover(){
+		basicopenFolder.setStyle("-fx-background-color:#0072bc;-fx-border-width:0.4;-fx-border-color:white;-fx-border-style:solid;-fx-border-radius:5;-fx-pref-height:65");
+		basicopenFolder.setEffect(new DropShadow());
+	}
+	public void basicopenFolderUnhover(){
+		basicopenFolder.setStyle("-fx-background-color: #30302f;-fx-border-width:0.4;-fx-border-color:white;-fx-border-style:solid;-fx-border-radius:5;-fx-pref-height:65");
+		basicopenFolder.setEffect(null);
+	}
+	public void basicConvertHover(){
+		basicConvert.setStyle("-fx-background-color:#0072bc;-fx-border-width:0.4;-fx-border-color:white;-fx-border-style:solid;-fx-border-radius:5;-fx-pref-height:65");
+		basicConvert.setEffect(new DropShadow());
+	}
+	public void basicConvertUnhover(){
+		basicConvert.setStyle("-fx-background-color: #30302f;-fx-border-width:0.4;-fx-border-color:white;-fx-border-style:solid;-fx-border-radius:5;-fx-pref-height:65");
+		basicConvert.setEffect(null);
+	}
+	public void choosePDFHover(){
+		choosePDF.setStyle("-fx-background-color:#0072bc;-fx-border-width:0.4;-fx-border-color:white;-fx-border-style:solid;-fx-border-radius:5;-fx-pref-height:65");
+		choosePDF.setEffect(new DropShadow());
+	}
+	public void choosePDFUnhover(){
+		choosePDF.setStyle("-fx-background-color: #30302f;-fx-border-width:0.4;-fx-border-color:white;-fx-border-style:solid;-fx-border-radius:5;-fx-pref-height:65");
+		choosePDF.setEffect(null);
+	}
+	
+	public void tablatureHover(){
+		tablature.setStyle("-fx-background-color:#0072bc;-fx-border-width:0.4;-fx-border-color:white;-fx-border-style:solid;-fx-border-radius:5;-fx-pref-height:65");
+		tablature.setEffect(new DropShadow());
+	}
+	public void tablatureUnhover(){
+		tablature.setStyle("-fx-background-color: #30302f;-fx-border-width:0.4;-fx-border-color:white;-fx-border-style:solid;-fx-border-radius:5;-fx-pref-height:65");
+		tablature.setEffect(null);
+	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 	public void openPDF() throws IOException{
 		try{		
 		if (Desktop.isDesktopSupported()) {
@@ -146,9 +248,7 @@ public class Controller {
 		    //GUI.dir.indexOf(myFile);
 		    Desktop.getDesktop().open(myFile);
 		}
-	} catch (NullPointerException name) {
-		
-	}
+	} catch (NullPointerException name) {}
 	}
 	public void openFolder() throws IOException{
 		try{
@@ -158,9 +258,7 @@ public class Controller {
 		    File myFile = new File(directoryname.substring(0,directoryname.lastIndexOf('\\')+1));
 		    Desktop.getDesktop().open(myFile);
 		}
-	} catch (NullPointerException name) {
-		
-	}
+	} catch (NullPointerException name) {}
 	}
 	public void openWebsite() throws IOException{
 		
@@ -183,9 +281,7 @@ public class Controller {
 		}
 	} catch (IllegalArgumentException name) {
 		
-	}catch(NullPointerException e){
-		
-	}
+	}catch(NullPointerException e){}
 	}
 	
 	public void advancedFolder() throws IOException{
@@ -196,11 +292,7 @@ public class Controller {
 		    File myFile = new File(directoryname.substring(0,directoryname.lastIndexOf('\\')+1));
 		    Desktop.getDesktop().open(myFile);
 		}
-} catch (IllegalArgumentException name) {
-		
-	}catch(NullPointerException e){
-		
-	}
+		} catch (IllegalArgumentException name) {}catch(NullPointerException e){}
 		}
 	
 	
@@ -239,9 +331,9 @@ public class Controller {
 		ColorChooser.setValue(javafx.scene.paint.Color.BLACK);
 		titleColor.setValue(javafx.scene.paint.Color.BLACK);
 		subtitleColor.setValue(javafx.scene.paint.Color.BLACK);
-		}catch(NullPointerException e){
-			
-		}
+		
+		
+		}catch(NullPointerException e){	}
 		//pageCounter.setText(Integer.toString(1));
 		//	maxPages.setText(Integer.toString(PDFPreview.getMaxPage()));
 			
@@ -269,18 +361,20 @@ public class Controller {
 		GUI.dir = dir;
 		
 		if (dir.size() > 0){
-			checkSelect.setVisible(true);
-			convertMultiple.setDisable(false);
+			
+			basicConvert.setDisable(false);
+			tablature.setStyle("-fx-background-color: #30302f;-fx-border-width:0.4;-fx-border-color:white;-fx-border-style:solid;-fx-border-radius:5;-fx-pref-height:65;"); 
+			basicConvert.setStyle("-fx-background-color:#0072bc;-fx-border-width:0.4;-fx-border-color:white;-fx-border-style:solid;-fx-border-radius:5;-fx-pref-height:65");
 		}
 		
-		checkConvert.setVisible(false);
-		} catch (NullPointerException name) {
-			
-		}
+		
+		
+		} catch (NullPointerException name) {}
 		
 	}
 	
 	public void convertMultiple() throws IOException{
+		
 		try{
 		ObservableList<String> choices = FXCollections.observableArrayList();
 		
@@ -294,10 +388,13 @@ public class Controller {
 		
 		choosePDF.setItems(choices);
 		choosePDF.getSelectionModel().select(0);
-	    choosePDF.setDisable(false);  
-		} catch (NullPointerException name) {
 		
-	}
+		selectFile.setDisable(false);
+	    choosePDF.setDisable(false);  
+	    basicopenFolder.setDisable(false);
+	    basicopenPDF.setDisable(false);
+	    
+		} catch (NullPointerException name) {}
 		
 	}
 	
@@ -307,9 +404,7 @@ public class Controller {
 		File directory = directoryChooser.showDialog(GUI.main);
 		
 		destinationFolder.setText(directory.getPath());
-	}catch(NullPointerException e){
-		
-	}
+	}catch(NullPointerException e){}
 		
 	}
 	public void convert() throws IOException, DocumentException {
@@ -343,10 +438,7 @@ public class Controller {
 		
 		DrawPDF.writePDF(tab);
 
-		}catch(FileNotFoundException e){
-	}catch(NullPointerException e){
-		
-	}
+		}catch(FileNotFoundException e){}catch(NullPointerException e){}
 			
 	}
 
@@ -405,9 +497,7 @@ public class Controller {
 		
 		previewPage.setImage(PDFPreview.previewPDFDocumentInImage(tab));
 		
-	} catch (FileNotFoundException name) {
-			
-		}
+	} catch (FileNotFoundException name) {}
 	}
 /*
 	public void turnRight() throws IOException, DocumentException {

@@ -10,22 +10,6 @@
 
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="768.0" prefWidth="1046.0" style="-fx-background-color: #4f4f4f;" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller">
    <children>
-      <AnchorPane layoutX="648.0" layoutY="197.0">
-         <children>
-            <Button fx:id="advancedButtonhover" layoutX="-4.0" layoutY="-4.0" mnemonicParsing="false" prefHeight="375.0" prefWidth="304.0" style="-fx-background-color: #0072bc;" visible="false" />
-            <ImageView fitHeight="296.0" fitWidth="300.0" layoutY="1.0" pickOnBounds="true" preserveRatio="true">
-               <image>
-                  <Image url="@images/Settings-icon.png" />
-               </image>
-            </ImageView>
-            <Label id="Advanced" layoutX="59.0" layoutY="297.0" prefHeight="58.0" prefWidth="178.0" style="-fx-font-size: 40;" text="Advanced" textAlignment="CENTER" textFill="WHITE">
-               <font>
-                  <Font name="Roboto Light" size="35.0" />
-               </font>
-            </Label>
-            <Button mnemonicParsing="false" onAction="#showAdvancedMode" onMouseEntered="#advancedHover" onMouseExited="#advancedUnhover" opacity="0.0" prefHeight="366.0" prefWidth="296.0" />
-         </children>
-      </AnchorPane>
       <AnchorPane prefHeight="51.0" prefWidth="1046.0" style="-fx-background-color: #30302f;">
          <children>
             <Label layoutX="446.0" layoutY="7.0" styleClass="Tab2PDF" text="Tab2PDF" textFill="WHITE">
@@ -40,41 +24,57 @@
             <Font name="Roboto Regular" size="37.0" />
          </font>
       </Label>
-      <Separator fx:id="middle_separator" layoutX="509.0" layoutY="197.0" orientation="VERTICAL" prefHeight="401.0" prefWidth="28.0" />
+      <Separator fx:id="middle_separator" layoutX="509.0" layoutY="202.0" orientation="VERTICAL" prefHeight="375.0" prefWidth="28.0" />
       <AnchorPane layoutY="717.0" prefHeight="51.0" prefWidth="1046.0" style="-fx-background-color: #30302f;">
          <children>
-            <Button layoutX="978.0" layoutY="9.0" mnemonicParsing="false" onAction="#openWebsite" prefHeight="34.0" prefWidth="57.0" style="-fx-border-width: 0.4; -fx-border-color: white; -fx-border-style: solid; -fx-border-radius: 5; left: 944; -fx-pref-height: 33; z-index: 16; -fx-background-color: #30302f;" styleClass="Help" text="Help" textFill="WHITE">
+            <Button fx:id="helpButton" layoutX="978.0" layoutY="9.0" mnemonicParsing="false" onAction="#openWebsite" onMouseEntered="#helpHover" onMouseExited="#helpUnhover" prefHeight="34.0" prefWidth="57.0" style="-fx-border-width: 0.4; -fx-border-color: white; -fx-border-style: solid; -fx-border-radius: 5; left: 944; -fx-pref-height: 33; z-index: 16; -fx-background-color: #30302f;" styleClass="Help" text="Help" textFill="WHITE">
                <font>
                   <Font name="Roboto Light" size="16.0" />
                </font>
             </Button>
          </children>
       </AnchorPane>
-      <Button layoutX="84.0" layoutY="319.0" mnemonicParsing="false" onAction="#convertMultiple" prefHeight="34.0" prefWidth="363.0" style="-fx-border-width: 0.4; -fx-border-color: white; -fx-border-style: solid; -fx-border-radius: 5; left: 944; -fx-pref-height: 65; z-index: 16; -fx-background-color: #30302f;" text="Convert to PDF" textFill="WHITE">
+      <Button fx:id="basicConvert" disable="true" layoutX="84.0" layoutY="319.0" mnemonicParsing="false" onAction="#convertMultiple" onMouseEntered="#basicConvertHover" onMouseExited="#basicConvertUnhover" prefHeight="34.0" prefWidth="363.0" style="-fx-border-width: 0.4; -fx-border-color: white; -fx-border-style: solid; -fx-border-radius: 5; left: 944; -fx-pref-height: 65; z-index: 16; -fx-background-color: #30302f;" text="Convert to PDF" textFill="WHITE">
          <font>
             <Font name="Roboto Light" size="22.0" />
          </font>
       </Button>
-      <Button layoutX="84.0" layoutY="463.0" mnemonicParsing="false" onAction="#openPDF" prefHeight="58.0" prefWidth="178.0" style="-fx-border-width: 0.4; -fx-border-color: white; -fx-border-style: solid; -fx-border-radius: 5; left: 944; z-index: 16; -fx-background-color: #30302f; -fx-pref-height: 65;" text="Open PDF" textFill="WHITE">
+      <Button fx:id="basicopenPDF" disable="true" layoutX="84.0" layoutY="463.0" mnemonicParsing="false" onAction="#openPDF" onMouseEntered="#basicopenPDFHover" onMouseExited="#basicopenPDFUnhover" prefHeight="58.0" prefWidth="178.0" style="-fx-border-width: 0.4; -fx-border-color: white; -fx-border-style: solid; -fx-border-radius: 5; -fx-background-color: #30302f; -fx-pref-height: 65;" text="Open PDF" textFill="WHITE">
          <font>
             <Font name="Roboto Light" size="22.0" />
          </font>
       </Button>
-      <Button layoutX="269.0" layoutY="463.0" mnemonicParsing="false" onAction="#openFolder" prefHeight="58.0" prefWidth="178.0" style="-fx-border-width: 0.4; -fx-border-color: white; -fx-border-style: solid; -fx-border-radius: 5; left: 944; z-index: 16; -fx-background-color: #30302f; -fx-pref-height: 65;" text="Open Folder" textFill="WHITE">
+      <Button fx:id="basicopenFolder" disable="true" layoutX="269.0" layoutY="463.0" mnemonicParsing="false" onAction="#openFolder" onMouseEntered="#basicopenFolderHover" onMouseExited="#basicopenFolderUnhover" prefHeight="58.0" prefWidth="178.0" style="-fx-border-width: 0.4; -fx-border-color: white; -fx-border-style: solid; -fx-border-radius: 5; left: 944; z-index: 16; -fx-background-color: #30302f; -fx-pref-height: 65;" text="Open Folder" textFill="WHITE">
          <font>
             <Font name="Roboto Light" size="22.0" />
          </font>
       </Button>
-      <ComboBox fx:id="choosePDF" layoutX="84.0" layoutY="390.0" prefHeight="30.0" prefWidth="363.0" promptText="Select a Converted File" style="-fx-border-width: 0.4; -fx-border-color: white; -fx-border-style: solid; -fx-background-color: #30302f; -fx-pref-height: 65;" />
-      <Label layoutX="156.0" layoutY="408.0" prefHeight="30.0" prefWidth="226.0" text="Select a Converted File:" textFill="WHITE">
+      <ComboBox fx:id="choosePDF" disable="true" layoutX="84.0" layoutY="390.0" prefHeight="30.0" prefWidth="363.0" style="-fx-border-width: 0.4; -fx-border-color: white; -fx-border-style: solid; -fx-background-color: #30302f; -fx-pref-height: 65;" />
+      <Label fx:id="selectFile" disable="true" layoutX="156.0" layoutY="408.0" prefHeight="30.0" prefWidth="226.0" text="Select a Converted File:" textFill="WHITE">
          <font>
             <Font name="Roboto Light" size="22.0" />
          </font>
       </Label>
-      <Button fx:id="tablature" layoutX="84.0" layoutY="245.0" mnemonicParsing="false" onAction="#selectMultiple" prefHeight="51.0" prefWidth="363.0" style="-fx-pref-height: 65; -fx-border-radius: 5; -fx-background-color: #0072bc;" text="Select Tablature Files" textFill="WHITE">
+      <Button fx:id="tablature" layoutX="84.0" layoutY="245.0" mnemonicParsing="false" onAction="#selectMultiple" onMouseEntered="#tablatureHover" onMouseExited="#tablatureUnhover" prefHeight="51.0" prefWidth="363.0" style="-fx-pref-height: 65; -fx-border-radius: 5; -fx-background-color: #0072bc; -fx-border-width: 0.4; -fx-border-color: white; -fx-border-style: solid;" text="Select Tablature Files" textFill="WHITE">
          <font>
             <Font name="Roboto Light" size="22.0" />
          </font>
       </Button>
+      <AnchorPane layoutX="649.0" layoutY="202.0" prefHeight="373.0" prefWidth="278.0" style="-fx-border-color: #30302f;">
+         <children>
+            <Button fx:id="advancedButtonhover" layoutX="-4.0" layoutY="-4.0" mnemonicParsing="false" prefHeight="375.0" prefWidth="304.0" style="-fx-background-color: #30302f; -fx-border-color: white; -fx-border-style: solid; -fx-border-radius: 5; -fx-border-width: 0.4;" />
+            <Label id="Advanced" layoutX="63.0" layoutY="308.0" prefHeight="58.0" prefWidth="176.0" text="Advanced" textAlignment="CENTER" textFill="WHITE">
+               <font>
+                  <Font name="Roboto Light" size="40.0" />
+               </font>
+            </Label>
+            <ImageView fitHeight="296.0" fitWidth="310.0" layoutX="3.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@images/Settings-icon.png" />
+               </image>
+            </ImageView>
+            <Button mnemonicParsing="false" onAction="#showAdvancedMode" onMouseEntered="#advancedHover" onMouseExited="#advancedUnhover" opacity="0.0" prefHeight="366.0" prefWidth="296.0" />
+         </children>
+      </AnchorPane>
    </children>
 </AnchorPane>
