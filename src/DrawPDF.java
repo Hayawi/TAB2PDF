@@ -49,7 +49,7 @@ public class DrawPDF {
 			PdfWriter writer = PdfWriter.getInstance(document, output);
 			document.open();
 			PdfContentByte cb = writer.getDirectContent();
-			drawHeader(cb, tab.getTitle(), tab.getSubtitle());
+			drawHeader(cb, tab.getTitle(), tab.getSubtitle(), tab.getTitleColor(), tab.getSubtitleColor());
 			ArrayList<Measure> measures = tab.getMeasures();
 			spacing = tab.getSpacing();
 			fontColor = tab.getFontColor();
@@ -58,9 +58,22 @@ public class DrawPDF {
 
 			document.close(); // no need to close PDFWriter?
 			} catch (FileNotFoundException e) {
-			e.printStackTrace();
-		    JOptionPane.showMessageDialog(null, "file cannot be found or is open", "Error",
+			System.out.println(e);
+			if (e.toString().contains("The process cannot access the file because it is being used by another process"))
+		    JOptionPane.showMessageDialog(null, "Please close the file before converting.", "Error",
 		                                    JOptionPane.ERROR_MESSAGE);
+			else if (e.toString().contains("Access is denied")) {
+			    JOptionPane.showMessageDialog(null, "Cannot output file to this directory, please select another directory.", "Error",
+                        JOptionPane.ERROR_MESSAGE);
+			}
+			else if (e.toString().contains("The system cannot find the path specified")) {
+			    JOptionPane.showMessageDialog(null, "The output directory does not exist.", "Error",
+                        JOptionPane.ERROR_MESSAGE);
+			}
+			else {
+			    JOptionPane.showMessageDialog(null, e, "Error",
+                        JOptionPane.ERROR_MESSAGE);
+			}
 			} catch (DocumentException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -76,7 +89,7 @@ public class DrawPDF {
 			PdfWriter writer = PdfWriter.getInstance(document, output);
 			document.open();
 			PdfContentByte cb = writer.getDirectContent();
-			drawHeader(cb, tab.getTitle(), tab.getSubtitle());
+			drawHeader(cb, tab.getTitle(), tab.getSubtitle(), tab.getTitleColor(), tab.getSubtitleColor());
 			ArrayList<Measure> measures = tab.getMeasures();
 			spacing = tab.getSpacing();
 			fontColor = tab.getFontColor();
@@ -93,14 +106,20 @@ public class DrawPDF {
 		return output;
 	}
 	
-	private static void drawHeader(PdfContentByte cb, String title, String subtitle) throws DocumentException, IOException {
+	private static void drawHeader(PdfContentByte cb, String title, String subtitle, BaseColor titleColor, BaseColor subtitleColor) throws DocumentException, IOException {
 		cb.beginText();
 		BaseFont bf = BaseFont.createFont();
-		cb.setFontAndSize(bf, 32);
-		cb.showTextAligned(PdfContentByte.ALIGN_CENTER, title, 300, 800, 0);
-		cb.setFontAndSize(bf, 14);
-		cb.showTextAligned(PdfContentByte.ALIGN_CENTER, subtitle, 300, 780, 0);
+		Font titleFont = new Font(bf, 32, 0, titleColor);
+		Font subtitleFont = new Font(bf, 14, 0, subtitleColor);
+		Chunk c = new Chunk(title, titleFont);
+		Phrase phrase = new Phrase(c);
+		ColumnText.showTextAligned(cb, Element.ALIGN_CENTER, phrase, 300, 800, 0);
+		c = new Chunk(subtitle, subtitleFont);
+		phrase = new Phrase(c);
+		ColumnText.showTextAligned(cb, Element.ALIGN_CENTER, phrase, 300, 780, 0);
 		cb.endText();
+
+		
 	}
 	
 	private static void processTablature(PdfContentByte cb, ArrayList<Measure> measures, Document document) throws DocumentException, IOException {
@@ -153,8 +172,6 @@ public class DrawPDF {
 		int index = 0;
 		
 		for (String s : tokens) {
-			System.out.print(s);
-			
 			if (s.equals("|")) {
 				drawVerticalBars(cb, horizontalShift, pageLocationY);
 				if (firstVerticalLine) {
