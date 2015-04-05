@@ -19,7 +19,7 @@
             </Label>
          </children>
       </AnchorPane>
-      <Label layoutX="52.0" layoutY="111.0" text="Select a Mode:" textFill="WHITE">
+      <Label layoutX="52.0" layoutY="111.0" text="Basic Mode:" textFill="WHITE">
          <font>
             <Font name="Roboto Regular" size="37.0" />
          </font>
