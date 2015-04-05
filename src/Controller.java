@@ -393,7 +393,14 @@ public class Controller {
 		
 		advancedConvert.setDisable(false);
 		
+		advancedPDF.setDisable(true);
+		advancedFolder.setDisable(true);
+		
+		advancedPDF.setStyle("-fx-background-color:#30302f; -fx-border-radius:5;");
+		advancedFolder.setStyle("-fx-background-color:#30302f; -fx-border-radius:5;");
+		
 		}catch(NullPointerException e){	}
+		
 		//pageCounter.setText(Integer.toString(1));
 		//	maxPages.setText(Integer.toString(PDFPreview.getMaxPage()));
 			
@@ -425,6 +432,17 @@ public class Controller {
 			basicConvert.setDisable(false);
 			tablature.setStyle("-fx-background-color: #30302f;-fx-border-width:0.4;-fx-border-color:white;-fx-border-style:solid;-fx-border-radius:5;-fx-pref-height:65;"); 
 			basicConvert.setStyle("-fx-background-color:#0072bc;-fx-border-width:0.4;-fx-border-color:white;-fx-border-style:solid;-fx-border-radius:5;-fx-pref-height:65");
+			
+			basicopenPDF.setDisable(true);
+			choosePDF.setDisable(true);  
+		    basicopenFolder.setDisable(true);
+		    
+		    selectFile.setVisible(true);
+		    basicopenPDF.setStyle("-fx-background-color: #30302f;-fx-border-width:0.4;-fx-border-color:white;-fx-border-style:solid;-fx-border-radius:5;-fx-pref-height:65");
+		    basicopenFolder.setStyle("-fx-background-color: #30302f;-fx-border-width:0.4;-fx-border-color:white;-fx-border-style:solid;-fx-border-radius:5;-fx-pref-height:65");
+			choosePDF.setStyle("-fx-font: 22px \"Roboto Light\"; -fx-font-fill: white;-fx-background-color:#30302f;-fx-border-width:0.4;-fx-border-color:white;-fx-border-style:solid;-fx-border-radius:5;-fx-pref-height:65");
+
+		    
 		}
 		
 		
