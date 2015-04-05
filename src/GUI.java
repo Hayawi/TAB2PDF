@@ -4,7 +4,6 @@ import java.io.IOException;
 import java.util.List;
 
 import javafx.application.Application;
-
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -39,8 +38,8 @@ public class GUI extends Application {
 
 		Parent root = FXMLLoader.load(getClass().getResource("/fxml/BasicMode5.0.fxml"));
 
-		Scene scene = new Scene(root, 1046, 768);
-
+		Scene scene = new Scene(root, 1036, 758);
+		
 		primaryStage.setScene(scene);
 		primaryStage.setTitle("Tab2PDF");
 		primaryStage.setResizable(false);
@@ -48,6 +47,9 @@ public class GUI extends Application {
 		primaryStage.show();
 
 		main = primaryStage;
+
+
+		
 		
 		
 	}
