@@ -497,7 +497,7 @@ public class Controller {
 //		openPDF.setDisable(false);
 		try{
 			
-		if(destinationFolder.getText().charAt(destinationFolder.getText().length()) != '\\')	{
+		if(destinationFolder.getText().charAt(destinationFolder.getText().length()-1) != '\\')	{
 			destinationFolder.setText(destinationFolder.getText()+ "\\");
 		}
 		String inputPath = inputField.getText();
