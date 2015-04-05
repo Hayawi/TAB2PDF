@@ -34,7 +34,7 @@
       <Separator fx:id="middle_separator" layoutX="509.0" layoutY="140.0" orientation="VERTICAL" prefHeight="534.0" prefWidth="28.0" />
       <AnchorPane layoutY="717.0" prefHeight="51.0" prefWidth="1046.0" style="-fx-background-color: #30302f;">
          <children>
-            <Button fx:id="helpButton" layoutX="968.0" layoutY="9.0" mnemonicParsing="false" onAction="#openWebsite" onMouseEntered="#helpHover" onMouseExited="#helpUnhover" prefHeight="34.0" prefWidth="67.0" style="-fx-border-width: 0.4; -fx-border-color: white; -fx-border-style: solid; -fx-border-radius: 5; left: 944; -fx-pref-height: 33; z-index: 16; -fx-background-color: #30302f;" text="Help" textFill="WHITE">
+            <Button fx:id="helpButton" layoutX="967.0" layoutY="9.0" mnemonicParsing="false" onAction="#openWebsite" onMouseEntered="#helpHover" onMouseExited="#helpUnhover" prefHeight="34.0" prefWidth="67.0" style="-fx-border-width: 0.4; -fx-border-color: white; -fx-border-style: solid; -fx-border-radius: 5; left: 944; -fx-pref-height: 33; z-index: 16; -fx-background-color: #30302f; -fx-pref-width: 65;" text="Help" textFill="WHITE">
                <font>
                   <Font name="Roboto Light" size="16.0" />
                </font>

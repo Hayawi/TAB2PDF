@@ -39,7 +39,7 @@ public class GUI extends Application {
 
 		Parent root = FXMLLoader.load(getClass().getResource("/fxml/BasicMode5.0.fxml"));
 
-		Scene scene = new Scene(root, 1038, 758);
+		Scene scene = new Scene(root, 1046, 768);
 
 		primaryStage.setScene(scene);
 		primaryStage.setTitle("Tab2PDF");
