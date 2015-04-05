@@ -290,35 +290,15 @@ public class Controller {
 		advancedFolder.setStyle("-fx-background-color:#30302f; -fx-border-radius:5;");
 		advancedFolder.setEffect(null);
 	}
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
+	public void advancedConvertHover(){
+		
+		advancedConvert.setEffect(new DropShadow());
+	}
+	public void advancedConvertUnhover(){
+		
+		advancedConvert.setEffect(null);
+	}
+		
 	public void openPDF() throws IOException{
 		try{		
 		if (Desktop.isDesktopSupported()) {
@@ -528,6 +508,10 @@ public class Controller {
 		
 		advancedPDF.setDisable(false);
 		advancedFolder.setDisable(false);
+		
+		advancedPDF.setStyle("-fx-background-color:#0072bc; -fx-border-radius:5;");
+		advancedFolder.setStyle("-fx-background-color:#0072bc; -fx-border-radius:5;");
+		
 		}catch(FileNotFoundException e){}catch(NullPointerException e){}
 			
 	}
@@ -536,8 +520,7 @@ public class Controller {
 	
 		GUI.customizeSelected = false;
 		
-		Parent root = FXMLLoader
-				.load(getClass().getResource("/fxml/MainMenu5.0.fxml"));
+		Parent root = FXMLLoader.load(getClass().getResource("/fxml/BasicMode5.0.fxml"));
 
 		Scene scene = new Scene(root, 1046, 768);
 	

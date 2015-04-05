@@ -34,14 +34,14 @@
       <Separator fx:id="middle_separator" layoutX="509.0" layoutY="140.0" orientation="VERTICAL" prefHeight="534.0" prefWidth="28.0" />
       <AnchorPane layoutY="717.0" prefHeight="51.0" prefWidth="1046.0" style="-fx-background-color: #30302f;">
          <children>
-            <Button fx:id="helpButton" layoutX="978.0" layoutY="9.0" mnemonicParsing="false" onAction="#openWebsite" onMouseEntered="#helpHover" onMouseExited="#helpUnhover" prefHeight="34.0" prefWidth="57.0" style="-fx-border-width: 0.4; -fx-border-color: white; -fx-border-style: solid; -fx-border-radius: 5; left: 944; -fx-pref-height: 33; z-index: 16; -fx-background-color: #30302f;" text="Help" textFill="WHITE">
+            <Button fx:id="helpButton" layoutX="968.0" layoutY="9.0" mnemonicParsing="false" onAction="#openWebsite" onMouseEntered="#helpHover" onMouseExited="#helpUnhover" prefHeight="34.0" prefWidth="67.0" style="-fx-border-width: 0.4; -fx-border-color: white; -fx-border-style: solid; -fx-border-radius: 5; left: 944; -fx-pref-height: 33; z-index: 16; -fx-background-color: #30302f;" text="Help" textFill="WHITE">
                <font>
                   <Font name="Roboto Light" size="16.0" />
                </font>
             </Button>
          </children>
       </AnchorPane>
-      <Button fx:id="advancedConvert" disable="true" layoutX="44.0" layoutY="607.0" mnemonicParsing="false" onAction="#convert" prefHeight="34.0" prefWidth="442.0" style="-fx-border-width: 0.4; -fx-border-style: solid; -fx-border-radius: 5; -fx-background-color: #0072bc;" text="Convert to PDF" textFill="WHITE">
+      <Button fx:id="advancedConvert" disable="true" layoutX="44.0" layoutY="607.0" mnemonicParsing="false" onAction="#convert" onMouseEntered="#advancedConvertHover" onMouseExited="#advancedConvertUnhover" prefHeight="34.0" prefWidth="442.0" style="-fx-border-width: 0.4; -fx-border-style: solid; -fx-border-radius: 5; -fx-background-color: #0072bc;" text="Convert to PDF" textFill="WHITE">
          <font>
             <Font name="Roboto Light" size="14.0" />
          </font>
