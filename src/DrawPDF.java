@@ -58,7 +58,6 @@ public class DrawPDF {
 
 			document.close(); // no need to close PDFWriter?
 			} catch (FileNotFoundException e) {
-			System.out.println(e);
 			if (e.toString().contains("The process cannot access the file because it is being used by another process"))
 		    JOptionPane.showMessageDialog(null, "Please close the file before converting.", "Error",
 		                                    JOptionPane.ERROR_MESSAGE);
@@ -75,8 +74,8 @@ public class DrawPDF {
                         JOptionPane.ERROR_MESSAGE);
 			}
 			} catch (DocumentException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			    JOptionPane.showMessageDialog(null, e, "Error",
+                        JOptionPane.ERROR_MESSAGE);
 		}
 		return true;
 	}
@@ -97,11 +96,12 @@ public class DrawPDF {
 			
 			document.close(); 
 		} catch (FileNotFoundException e) {
-			// TODO Auto-generated catch block
+		    JOptionPane.showMessageDialog(null, e, "Error",
+                    JOptionPane.ERROR_MESSAGE);
 			e.printStackTrace();
 		} catch (DocumentException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+		    JOptionPane.showMessageDialog(null, e, "Error",
+                    JOptionPane.ERROR_MESSAGE);
 		}
 		return output;
 	}
