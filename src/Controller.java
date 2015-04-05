@@ -496,6 +496,10 @@ public class Controller {
 	//	openFolder.setDisable(false);
 //		openPDF.setDisable(false);
 		try{
+			
+		if(destinationFolder.getText().charAt(destinationFolder.getText().length()) != '\\')	{
+			destinationFolder.setText(destinationFolder.getText()+ "\\");
+		}
 		String inputPath = inputField.getText();
 		String outputPath = destinationFolder.getText() + outputField.getText() + ".pdf";
 		
