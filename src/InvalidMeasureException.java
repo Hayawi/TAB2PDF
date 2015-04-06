@@ -1,6 +1,7 @@
 
 public class InvalidMeasureException extends RuntimeException {
 	
+	
 	public InvalidMeasureException() {
 		super();
 	}

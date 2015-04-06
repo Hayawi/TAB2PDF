@@ -56,7 +56,9 @@ public class DrawPDF {
 			
 			processTablature(cb, measures, document);
 
-			document.close(); // no need to close PDFWriter?
+			document.close(); 
+			output.close();
+			writer.close();
 			} catch (FileNotFoundException e) {
 			if (e.toString().contains("The process cannot access the file because it is being used by another process"))
 		    JOptionPane.showMessageDialog(null, "Please close the file before converting.", "Error",
@@ -95,6 +97,8 @@ public class DrawPDF {
 			processTablature(cb, measures, document);
 			
 			document.close(); 
+			output.close();
+			writer.close();
 		} catch (FileNotFoundException e) {
 		    JOptionPane.showMessageDialog(null, e, "Error",
                     JOptionPane.ERROR_MESSAGE);

@@ -50,9 +50,9 @@ public class ParseFile {
 					blockOfMeasures.clear();
 					break;
 				}
-				line = body.substring(indexOfVerticalLine, indexOfNewLine).trim(); // this takes the entire line
+				line = body.substring(indexOfVerticalLine, indexOfNewLine).trim(); 
 				if (line.lastIndexOf("-| ") > 0) 
-					line = line.substring(0, line.lastIndexOf("-| ") + 2).trim(); // quick and dirty fix
+					line = line.substring(0, line.lastIndexOf("-| ") + 2).trim(); 
 				body = body.substring(indexOfNewLine + 1); 
 				blockOfMeasures.add(line);
 				}
