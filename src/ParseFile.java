@@ -51,13 +51,14 @@ public class ParseFile {
 					break;
 				}
 				line = body.substring(indexOfVerticalLine, indexOfNewLine).trim(); 
-				if (line.lastIndexOf("-| ") > 0) 
-					line = line.substring(0, line.lastIndexOf("-| ") + 2).trim(); 
+				System.out.println(line);
+				if (line.lastIndexOf("| ") > 0) 
+					line = line.substring(0, line.lastIndexOf("| ") + 2).trim(); 
 				body = body.substring(indexOfNewLine + 1); 
 				blockOfMeasures.add(line);
 				}
 			}
-			if (!unevenBlockLengthCheck(blockOfMeasures)) {
+			if (unevenBlockLengthCheck(blockOfMeasures)) {
 				String message = "";
 				for (String s : blockOfMeasures) {
 					message = message + s + '\n';
