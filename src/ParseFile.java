@@ -29,7 +29,9 @@ public class ParseFile {
 		int indexOfNewLine = 0;
 		int indexOfVerticalLine = 0;
 		int lineLength = 0;
+		String checkString = "";
 		Pattern pattern = Pattern.compile("\\|?(\\||(\n[0-9]))(-|\\*)");
+		
 		ArrayList<String> blockOfMeasures = new ArrayList<String>();
 		ArrayList<Measure> measures = new ArrayList<Measure>();
 		
@@ -38,22 +40,34 @@ public class ParseFile {
 			for (int i = 0; i < 6; i ++) { 
 				Matcher matcher = pattern.matcher(body);
 				if (matcher.find()) {
-					indexOfVerticalLine = matcher.start();					
-				}
+					indexOfVerticalLine = matcher.start();
+					
 				indexOfNewLine = body.indexOf('\n', indexOfVerticalLine + 1);
+				int check2 = body.indexOf('\n', indexOfNewLine + 1);
+				checkString = body.substring(indexOfNewLine, check2).trim();
+				Matcher check = pattern.matcher(checkString);
+				if (!check.find() && i != 5) {
+					blockOfMeasures.clear();
+					break;
+				}
 				line = body.substring(indexOfVerticalLine, indexOfNewLine).trim(); // this takes the entire line
-				if (line.lastIndexOf("| ") > 0) 
-					line = line.substring(0, line.lastIndexOf("| ") + 1).trim(); // quick and dirty fix
+				if (line.lastIndexOf("-| ") > 0) 
+					line = line.substring(0, line.lastIndexOf("-| ") + 2).trim(); // quick and dirty fix
 				body = body.substring(indexOfNewLine + 1); 
 				blockOfMeasures.add(line);
+				}
 			}
-//			if (!unevenBlockLengthCheck(blockOfMeasures)) {
-	//			blockOfMeasures = reconstruct(blockOfMeasures);
-		//	}
-			measures.addAll(convertToMeasures(blockOfMeasures));
+			if (!unevenBlockLengthCheck(blockOfMeasures)) {
+				String message = "";
+				for (String s : blockOfMeasures) {
+					message = message + s + '\n';
+				}
+				throw new InvalidMeasureException("This measure is formatted incorrectly.");
+			}
+			if (blockOfMeasures.size() > 0)
+				measures.addAll(convertToMeasures(blockOfMeasures));
 			blockOfMeasures.clear();
 			body = body.substring(body.indexOf('\n') + 1);
-			
 			if (body.indexOf('\n') <= 1) { // something idk check again later
 				while (body.indexOf('\n') >= 0 && body.indexOf('\n') <= 1)
 				body = body.substring(body.indexOf('\n') + 1);
@@ -69,6 +83,7 @@ public class ParseFile {
 		
 		for (int i = 0; i < string.length(); i++) {
 			Matcher matcher = isDigit.matcher(string);
+			
 			if (string.charAt(i) == '|') {
 				if ((i + 1 < string.length()) && (i + 2 < string.length()) && string.charAt(i+1) == '|' && string.charAt(i+2) == '|') {
 					token.add("|||");
@@ -92,6 +107,18 @@ public class ParseFile {
 			else if (string.charAt(i) == '-') {
 				while (string.charAt(i) == '-') {
 					hyphen = hyphen + "-"; // use stringbuilder or something for this later
+					i++;
+					if (i == string.length())
+						break;
+				}
+				token.add(hyphen);
+				hyphen = "";
+				i--;
+			}
+			else if (string.charAt(i) == ' ') {
+				i++;
+				while (string.charAt(i) == ' ') {
+					hyphen = hyphen + "-";
 					i++;
 					if (i == string.length())
 						break;
@@ -135,6 +162,10 @@ public class ParseFile {
 			else if (matcher.find()) {
 				token.add("" + string.charAt(i));
 			}
+			else {
+				if (string.charAt(i) != '>' && string.charAt(i) != '<')
+				token.add("-");
+			}
 		}
 		return token;
 	}
@@ -156,7 +187,7 @@ public class ParseFile {
 		}
 		return newMeasures;
 	}
-	/*
+	
 	public static boolean unevenBlockLengthCheck(ArrayList<String> blockOfMeasures) {
 		HashSet<Integer> lengths = new HashSet<Integer>();
 		for (String s : blockOfMeasures) {
@@ -166,6 +197,7 @@ public class ParseFile {
 			return true;
 		return false;
 	}
+	/*
 	public static ArrayList<String> reconstruct(ArrayList<String> block) {
 		StringBuilder string = new StringBuilder();
 		ArrayList<ArrayList<String>> tokens = new ArrayList<ArrayList<String>>();

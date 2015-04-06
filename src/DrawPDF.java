@@ -172,6 +172,7 @@ public class DrawPDF {
 		int index = 0;
 		
 		for (String s : tokens) {
+			System.out.print(s);
 			if (s.equals("|")) {
 				drawVerticalBars(cb, horizontalShift, pageLocationY);
 				if (firstVerticalLine) {
@@ -259,6 +260,7 @@ public class DrawPDF {
 			}
 			index++; 
 		}
+		System.out.println();
 	}
 	
 
@@ -326,6 +328,7 @@ public class DrawPDF {
 		cb.lineTo(x + 4, y);
 		cb.lineTo(x + 2, y - 2);
 		cb.closePathFillStroke();
+		cb.setColorFill(BaseColor.BLACK);
 	}
 	
 	private static void newPage(Document document) {
