@@ -617,6 +617,10 @@ public class Controller {
 		}
 		pageCounter.setText(Integer.toString(Integer.parseInt(pageCounter.getText()) - 1));
 		
+		if (PDFPreview.getCurrentPage() == 1) {
+			leftPage.setDisable(true);
+		}
+
 		preview();
 
 	}
