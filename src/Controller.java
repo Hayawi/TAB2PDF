@@ -583,7 +583,7 @@ public class Controller {
 		if(subtitleField.getText().length() >0){
 			tab.setSubtitle(subtitleField.getText());
 		}
-		
+		PDFPreview.setCurrentPage(1);
 		previewPage.setImage(PDFPreview.previewPDFDocumentInImage(tab));
 		
 		
@@ -593,7 +593,8 @@ public class Controller {
 		if(PDFPreview.getMaxPage() > 1){
 			rightPage.setDisable(false);
 		}
-
+		leftPage.setDisable(true);
+		pageCounter.setText(Integer.toString(1));
 		maxPages.setText(Integer.toString(PDFPreview.getMaxPage()));
 		
 	} catch (FileNotFoundException name) {}
