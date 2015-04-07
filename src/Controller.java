@@ -299,6 +299,23 @@ public class Controller {
 		advancedConvert.setEffect(null);
 	}
 		
+	public void leftHover(){
+		leftPage.setStyle("-fx-background-color:#0072bc; -fx-border-radius:5; ");
+		leftPage.setEffect(new DropShadow());
+	}
+	public void leftUnhover(){
+		leftPage.setStyle("-fx-background-color:#30302f; -fx-border-radius:5; ");
+		leftPage.setEffect(null);
+	}
+	public void rightHover(){
+		rightPage.setStyle("-fx-background-color:#0072bc; -fx-border-radius:5; ");
+		rightPage.setEffect(new DropShadow());
+	}
+	public void rightUnhover(){
+		rightPage.setStyle("-fx-background-color:#30302f; -fx-border-radius:5; ");
+		rightPage.setEffect(null);
+	}
+	
 	public void openPDF() throws IOException{
 		try{		
 		if (Desktop.isDesktopSupported()) {
@@ -403,7 +420,9 @@ public class Controller {
 		pageCounter.setText(Integer.toString(1));
 		
 		leftPage.setDisable(true);
-				
+		if(PDFPreview.getMaxPage() > 1){
+			rightPage.setDisable(false);
+		}
 //		if(PDFPreview.getCurrentPage() < PDFPreview.getMaxPage()){
 //			rightPage.setDisable(false);	
 //		}
