@@ -384,7 +384,6 @@ public class Controller {
 	    
 		String outputPath = destinationFolder.getText() + outputField.getText() + ".pdf";
 		
-		
 		Tablature tab = new Tablature(file.getPath(), outputPath);
 		spacingslider.setValue(tab.getSpacing());
 		previewPage.setImage(PDFPreview.previewPDFDocumentInImage(tab));
@@ -400,19 +399,19 @@ public class Controller {
 		advancedPDF.setStyle("-fx-background-color:#30302f; -fx-border-radius:5;");
 		advancedFolder.setStyle("-fx-background-color:#30302f; -fx-border-radius:5;");
 		
+		pageCounter.setText(Integer.toString(1));
+		maxPages.setText(Integer.toString(PDFPreview.getMaxPage()));
+					
+		leftPage.setDisable(true);
+				
+		if(PDFPreview.getCurrentPage() == PDFPreview.getMaxPage()){
+			rightPage.setDisable(true);	
+		}
+		
+		
 		}catch(NullPointerException e){	}
 		
-		//pageCounter.setText(Integer.toString(1));
-		//	maxPages.setText(Integer.toString(PDFPreview.getMaxPage()));
-			
-		//leftPage.setVisible(true);
-		//	leftPage.setDisable(true);
-		//	rightPage.setVisible(true);
-			
-		//	if(PDFPreview.getCurrentPage() == PDFPreview.getMaxPage()){
-		//		rightPage.setDisable(true);
-			
-	//	}
+		
 		
 		// enable the user to press the convert button
 		
@@ -601,8 +600,7 @@ public class Controller {
 			rightPage.setDisable(true);
 		}
 
-		pageCounter.setText(Integer.toString(Integer.parseInt(pageCounter
-				.getText()) + 1));
+		pageCounter.setText(Integer.toString(Integer.parseInt(pageCounter.getText()) + 1));
 
 		if (PDFPreview.getCurrentPage() < PDFPreview.getMaxPage()) {
 			PDFPreview.rightPage();
@@ -618,8 +616,7 @@ public class Controller {
 		if (PDFPreview.getCurrentPage() > 1) {
 			PDFPreview.leftPage();
 		}
-		pageCounter.setText(Integer.toString(Integer.parseInt(pageCounter
-				.getText()) - 1));
+		pageCounter.setText(Integer.toString(Integer.parseInt(pageCounter.getText()) - 1));
 		
 		preview();
 

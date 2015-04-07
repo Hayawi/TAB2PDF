@@ -197,5 +197,24 @@
             <Slider fx:id="zoomSlider" blendMode="MULTIPLY" layoutX="97.0" layoutY="6.0" max="200.0" min="50.0" minorTickCount="0" onMouseReleased="#preview" prefHeight="29.0" prefWidth="204.0" showTickLabels="true" showTickMarks="true" value="100.0" />
          </children>
       </AnchorPane>
+      <AnchorPane layoutX="558.0" layoutY="85.0" prefHeight="37.0" prefWidth="404.0" style="-fx-background-color: #636363;">
+         <children>
+            <Label layoutX="199.0" layoutY="9.0" text="/" textFill="WHITE">
+               <font>
+                  <Font name="Roboto Light" size="14.0" />
+               </font>
+            </Label>
+            <Label fx:id="pageCounter" layoutX="178.0" layoutY="10.0" text="1" textFill="WHITE">
+               <font>
+                  <Font name="Roboto Light" size="14.0" />
+               </font>
+            </Label>
+            <Label fx:id="maxPages" layoutX="216.0" layoutY="10.0" text="1" textFill="WHITE">
+               <font>
+                  <Font name="Roboto Light" size="14.0" />
+               </font>
+            </Label>
+         </children>
+      </AnchorPane>
    </children>
 </AnchorPane>
