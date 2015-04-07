@@ -586,6 +586,7 @@ public class Controller {
 		
 		
 		previewPage.setImage(PDFPreview.previewPDFDocumentInImage(tab));
+		maxPages.setText(Integer.toString(PDFPreview.getMaxPage()));
 		
 	} catch (FileNotFoundException name) {}
 	}
