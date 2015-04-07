@@ -400,13 +400,14 @@ public class Controller {
 		advancedFolder.setStyle("-fx-background-color:#30302f; -fx-border-radius:5;");
 		
 		maxPages.setText(Integer.toString(PDFPreview.getMaxPage()));
-					
+		pageCounter.setText(Integer.toString(1));
+		
 		leftPage.setDisable(true);
 				
-		if(PDFPreview.getCurrentPage() < PDFPreview.getMaxPage()){
-			rightPage.setDisable(false);	
-		}
-		
+//		if(PDFPreview.getCurrentPage() < PDFPreview.getMaxPage()){
+//			rightPage.setDisable(false);	
+//		}
+//		
 		}catch(NullPointerException e){	}
 		
 		
@@ -499,7 +500,6 @@ public class Controller {
 		String inputPath = inputField.getText();
 		String outputPath = destinationFolder.getText() + outputField.getText() + ".pdf";
 		
-	
 		GUI.outputPath = outputPath;
 		BaseColor f = new BaseColor((float)ColorChooser.getValue().getRed(), (float)ColorChooser.getValue().getGreen(),(float)ColorChooser.getValue().getBlue());
 		BaseColor t = new BaseColor((float)titleColor.getValue().getRed(), (float)titleColor.getValue().getGreen(),(float)titleColor.getValue().getBlue());
@@ -577,22 +577,23 @@ public class Controller {
 		tab.setSpacing((float)spacingslider.getValue());
 		
 		if(titleField.getText().length() >0){
-			tab.setTitle(titleField.getText());
+			tab.setTitle(titleField.getText());	
 		}
 		
 		if(subtitleField.getText().length() >0){
 			tab.setSubtitle(subtitleField.getText());
 		}
+		
 		previewPage.setImage(PDFPreview.previewPDFDocumentInImage(tab));
+		
+		
 		if(PDFPreview.getMaxPage() == 1){
 			rightPage.setDisable(true);
 		}
-		if(PDFPreview.getMaxPage() >1){
+		if(PDFPreview.getMaxPage() > 1){
 			rightPage.setDisable(false);
 		}
-		
-		
-		
+
 		maxPages.setText(Integer.toString(PDFPreview.getMaxPage()));
 		
 	} catch (FileNotFoundException name) {}
@@ -612,7 +613,7 @@ public class Controller {
 			PDFPreview.rightPage();
 		}
 		
-		preview();
+		previewPage.setImage(PDFPreview.updatePreviewPDFDocument());
 	}
 
 	public void turnLeft() throws IOException, DocumentException {
@@ -628,7 +629,7 @@ public class Controller {
 			leftPage.setDisable(true);
 		}
 
-		preview();
+		previewPage.setImage(PDFPreview.updatePreviewPDFDocument());
 
 	}
 	
