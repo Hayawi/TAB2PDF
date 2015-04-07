@@ -583,7 +583,9 @@ public class Controller {
 		if(subtitleField.getText().length() >0){
 			tab.setSubtitle(subtitleField.getText());
 		}
-		
+		if(PDFPreview.getMaxPage() == 1){
+			rightPage.setDisable(true);
+		}
 		
 		previewPage.setImage(PDFPreview.previewPDFDocumentInImage(tab));
 		maxPages.setText(Integer.toString(PDFPreview.getMaxPage()));
