@@ -399,15 +399,13 @@ public class Controller {
 		advancedPDF.setStyle("-fx-background-color:#30302f; -fx-border-radius:5;");
 		advancedFolder.setStyle("-fx-background-color:#30302f; -fx-border-radius:5;");
 		
-		pageCounter.setText(Integer.toString(1));
 		maxPages.setText(Integer.toString(PDFPreview.getMaxPage()));
 					
 		leftPage.setDisable(true);
 				
-		if(PDFPreview.getCurrentPage() == PDFPreview.getMaxPage()){
-			rightPage.setDisable(true);	
+		if(PDFPreview.getCurrentPage() < PDFPreview.getMaxPage()){
+			rightPage.setDisable(false);	
 		}
-		
 		
 		}catch(NullPointerException e){	}
 		
