@@ -126,7 +126,7 @@
             <Font name="Roboto Light" size="14.0" />
          </font>
       </Label>
-      <Button fx:id="apply" layoutX="390.0" layoutY="540.0" mnemonicParsing="false" onAction="#preview" onMouseEntered="#applyHover" onMouseExited="#applyUnhover" prefHeight="29.0" prefWidth="92.0" style="-fx-border-radius: 5; -fx-pref-height: 33; -fx-background-color: #30302f;" text="Apply" textFill="WHITE">
+      <Button fx:id="apply" layoutX="390.0" layoutY="540.0" mnemonicParsing="false" onAction="#preview" onMouseEntered="#applyHover" onMouseExited="#applyUnhover" prefHeight="29.0" prefWidth="92.0" style="-fx-border-radius: 5; -fx-pref-height: 33; -fx-background-color: #30302f;" text="Apply" textFill="WHITE" visible="false">
          <font>
             <Font name="Roboto Light" size="16.0" />
          </font>
@@ -182,6 +182,6 @@
             <Font name="Roboto Regular" size="12.0" />
          </font>
       </Label>
-      <Slider fx:id="spacingslider" blendMode="MULTIPLY" layoutX="113.0" layoutY="549.0" majorTickUnit="2.0" max="15.0" min="1.0" minorTickCount="1" prefHeight="29.0" prefWidth="272.0" showTickLabels="true" showTickMarks="true" value="5.0" />
+      <Slider fx:id="spacingslider" blendMode="MULTIPLY" layoutX="113.0" layoutY="549.0" majorTickUnit="2.0" max="15.0" min="1.0" minorTickCount="1" onMouseReleased="#preview" prefHeight="29.0" prefWidth="374.0" showTickLabels="true" showTickMarks="true" value="5.0" />
    </children>
 </AnchorPane>
