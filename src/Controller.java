@@ -371,6 +371,7 @@ public class Controller {
 		
 	public void browse() throws IOException, DocumentException {
 		try{
+			
 		// file chooser
 		FileChooser fileChooser = new FileChooser();
 		fileChooser.setTitle("Open Text File");
@@ -591,7 +592,7 @@ public class Controller {
 		
 	} catch (FileNotFoundException name) {}
 	}
-/*
+
 	public void turnRight() throws IOException, DocumentException {
 
 		leftPage.setDisable(false);
@@ -623,5 +624,5 @@ public class Controller {
 		preview();
 
 	}
-	*/
+	
 }

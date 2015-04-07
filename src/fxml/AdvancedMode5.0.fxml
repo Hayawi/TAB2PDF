@@ -11,7 +11,6 @@
 
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="768.0" prefWidth="1046.0" style="-fx-background-color: #4f4f4f;" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller">
    <children>
-      <AnchorPane layoutX="648.0" layoutY="197.0" />
       <AnchorPane prefHeight="51.0" prefWidth="1046.0" style="-fx-background-color: #30302f;">
          <children>
             <Label layoutX="446.0" layoutY="7.0" styleClass="Tab2PDF" text="Tab2PDF" textFill="WHITE">
@@ -137,9 +136,9 @@
          </font>
       </Label>
       <AnchorPane layoutX="44.0" layoutY="594.0" prefHeight="3.0" prefWidth="442.0" style="-fx-background-color: white;" />
-      <AnchorPane layoutX="558.0" layoutY="134.0" prefHeight="559.0" prefWidth="404.0" style="-fx-background-color: #30302f;">
+      <AnchorPane layoutX="558.0" layoutY="134.0" prefHeight="491.0" prefWidth="404.0" style="-fx-background-color: #30302f;">
          <children>
-            <ImageView fx:id="previewPage" fitHeight="534.0" fitWidth="384.0" layoutX="16.0" layoutY="13.0" pickOnBounds="true" preserveRatio="true" />
+            <ImageView fx:id="previewPage" fitHeight="503.0" fitWidth="384.0" layoutX="16.0" layoutY="13.0" pickOnBounds="true" preserveRatio="true" />
          </children>
       </AnchorPane>
       <Label layoutX="113.0" layoutY="567.0" text="1" textFill="WHITE" visible="false">
@@ -183,5 +182,20 @@
          </font>
       </Label>
       <Slider fx:id="spacingslider" blendMode="MULTIPLY" layoutX="113.0" layoutY="549.0" majorTickUnit="2.0" max="15.0" min="1.0" minorTickCount="1" onMouseReleased="#preview" prefHeight="29.0" prefWidth="374.0" showTickLabels="true" showTickMarks="true" value="5.0" />
+      <AnchorPane layoutX="558.0" layoutY="656.0" prefHeight="37.0" prefWidth="404.0" style="-fx-background-color: #636363;">
+         <children>
+            <Button fx:id="leftPage" layoutX="4.0" layoutY="4.0" mnemonicParsing="false" onAction="#turnLeft" onMouseEntered="#folderHover" onMouseExited="#folderUnhover" prefHeight="21.0" prefWidth="83.0" style="-fx-border-radius: 5; -fx-background-color: #30302f;" text="Left Page" textFill="WHITE">
+               <font>
+                  <Font name="Roboto Light" size="13.0" />
+               </font>
+            </Button>
+            <Button fx:id="rightPage" layoutX="307.0" layoutY="4.0" mnemonicParsing="false" onAction="#turnRight" onMouseEntered="#folderHover" onMouseExited="#folderUnhover" prefHeight="29.0" prefWidth="92.0" style="-fx-border-radius: 5; -fx-background-color: #30302f;" text="Right Page" textFill="WHITE">
+               <font>
+                  <Font name="Roboto Light" size="13.0" />
+               </font>
+            </Button>
+            <Slider fx:id="zoomSlider" blendMode="MULTIPLY" layoutX="97.0" layoutY="6.0" max="200.0" min="50.0" minorTickCount="0" onMouseReleased="#preview" prefHeight="29.0" prefWidth="204.0" showTickLabels="true" showTickMarks="true" value="100.0" />
+         </children>
+      </AnchorPane>
    </children>
 </AnchorPane>
