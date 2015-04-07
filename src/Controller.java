@@ -586,6 +586,9 @@ public class Controller {
 		if(PDFPreview.getMaxPage() == 1){
 			rightPage.setDisable(true);
 		}
+		if(PDFPreview.getMaxPage() >1){
+			rightPage.setDisable(false);
+		}
 		
 		previewPage.setImage(PDFPreview.previewPDFDocumentInImage(tab));
 		maxPages.setText(Integer.toString(PDFPreview.getMaxPage()));
