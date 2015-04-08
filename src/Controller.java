@@ -1,4 +1,5 @@
 import javafx.scene.paint.Color;
+
 import java.awt.Desktop;
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -26,6 +27,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
 import javafx.scene.control.Pagination;
+import javafx.scene.control.ScrollPane;
 import javafx.scene.control.Separator;
 import javafx.scene.control.Slider;
 import javafx.scene.control.TextField;
@@ -143,6 +145,8 @@ public class Controller {
 	private Button advancedFolder;
 	@FXML
 	private Button advancedConvert;
+	@FXML
+	private ScrollPane scroll;
 	public void basicHover(){
 	
 		basicButtonhover.setStyle("-fx-background-color:#0072bc;-fx-border-width:0.4;-fx-border-color:white;-fx-border-style:solid;-fx-border-radius:5;");
@@ -426,11 +430,10 @@ public class Controller {
 			rightPage.setDisable(false);
 		}
 		
-		previewPage.setScaleX(zoomSlider.getValue()/100);
-	    previewPage.setScaleY(zoomSlider.getValue() / 100);
 	    
 	    previewPage.setFitWidth(zoomSlider.getValue()*5.5);
 	    previewPage.setFitHeight(zoomSlider.getValue()*5.5);
+	    
 //		if(PDFPreview.getCurrentPage() < PDFPreview.getMaxPage()){
 //			rightPage.setDisable(false);	
 //		}
@@ -629,11 +632,12 @@ public class Controller {
 	}
 
 	public void zoom(){
-		previewPage.setScaleX(zoomSlider.getValue()/100);
-	    previewPage.setScaleY(zoomSlider.getValue() / 100);
+		
+		//previewPage.setScaleX((-25 +zoomSlider.getValue()) /100);
+	   // previewPage.setScaleY((-25+zoomSlider.getValue()) / 100);
 	    
-	    previewPage.setFitWidth(zoomSlider.getValue()*10);
-	    previewPage.setFitHeight(zoomSlider.getValue()*10);
+		previewPage.setFitWidth(zoomSlider.getValue()*5.5);
+	    previewPage.setFitHeight(zoomSlider.getValue()*5.5);
 	}
 	
 	
