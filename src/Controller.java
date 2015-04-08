@@ -54,6 +54,8 @@ public class Controller {
 	@FXML
 	private Slider spacingslider;
 	@FXML
+	private Slider zoomSlider;
+	@FXML
 	private ColorPicker ColorChooser;
 	@FXML
 	private Button leftPage;
@@ -612,6 +614,7 @@ public class Controller {
 		if(PDFPreview.getMaxPage() > 1){
 			rightPage.setDisable(false);
 		}
+		
 		leftPage.setDisable(true);
 		pageCounter.setText(Integer.toString(1));
 		maxPages.setText(Integer.toString(PDFPreview.getMaxPage()));
@@ -619,6 +622,18 @@ public class Controller {
 	} catch (FileNotFoundException name) {}
 	}
 
+	public void zoom(){
+		previewPage.setScaleX(previewPage.getScaleX() * zoomSlider.getValue()/100);
+	    previewPage.setScaleY(previewPage.getScaleY() * zoomSlider.getValue() / 100);
+	}
+	
+	
+	
+	
+	
+	
+	
+	
 	public void turnRight() throws IOException, DocumentException {
 
 		leftPage.setDisable(false);
@@ -652,5 +667,9 @@ public class Controller {
 		previewPage.setImage(PDFPreview.updatePreviewPDFDocument());
 
 	}
+	
+	
+	
+	
 	
 }

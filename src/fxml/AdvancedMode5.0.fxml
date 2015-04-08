@@ -136,46 +136,6 @@
          </font>
       </Label>
       <AnchorPane layoutX="44.0" layoutY="594.0" prefHeight="3.0" prefWidth="442.0" style="-fx-background-color: white;" />
-      <Label layoutX="113.0" layoutY="567.0" text="1" textFill="WHITE" visible="false">
-         <font>
-            <Font name="Roboto Regular" size="12.0" />
-         </font>
-      </Label>
-      <Label layoutX="150.0" layoutY="567.0" text="3" textFill="WHITE" visible="false">
-         <font>
-            <Font name="Roboto Regular" size="12.0" />
-         </font>
-      </Label>
-      <Label layoutX="187.0" layoutY="567.0" text="5" textFill="WHITE" visible="false">
-         <font>
-            <Font name="Roboto Regular" size="12.0" />
-         </font>
-      </Label>
-      <Label layoutX="224.0" layoutY="567.0" prefHeight="17.0" prefWidth="0.0" text="7" textFill="WHITE" visible="false">
-         <font>
-            <Font name="Roboto Regular" size="12.0" />
-         </font>
-      </Label>
-      <Label layoutX="262.0" layoutY="567.0" prefHeight="17.0" prefWidth="0.0" text="9" textFill="WHITE" visible="false">
-         <font>
-            <Font name="Roboto Regular" size="12.0" />
-         </font>
-      </Label>
-      <Label layoutX="297.0" layoutY="567.0" prefHeight="17.0" prefWidth="17.0" text="11" textFill="WHITE" visible="false">
-         <font>
-            <Font name="Roboto Regular" size="12.0" />
-         </font>
-      </Label>
-      <Label layoutX="332.0" layoutY="567.0" prefHeight="17.0" prefWidth="17.0" text="13" textFill="WHITE" visible="false">
-         <font>
-            <Font name="Roboto Regular" size="12.0" />
-         </font>
-      </Label>
-      <Label layoutX="368.0" layoutY="567.0" prefHeight="17.0" prefWidth="17.0" text="15" textFill="WHITE" visible="false">
-         <font>
-            <Font name="Roboto Regular" size="12.0" />
-         </font>
-      </Label>
       <Slider fx:id="spacingslider" blendMode="MULTIPLY" layoutX="113.0" layoutY="549.0" majorTickUnit="2.0" max="15.0" min="1.0" minorTickCount="1" onMouseReleased="#preview" prefHeight="29.0" prefWidth="374.0" showTickLabels="true" showTickMarks="true" value="5.0" />
       <AnchorPane layoutX="558.0" layoutY="656.0" prefHeight="37.0" prefWidth="404.0" style="-fx-background-color: #636363;">
          <children>
@@ -189,7 +149,7 @@
                   <Font name="Roboto Light" size="13.0" />
                </font>
             </Button>
-            <Slider fx:id="zoomSlider" blendMode="MULTIPLY" layoutX="97.0" layoutY="6.0" max="200.0" min="50.0" minorTickCount="0" onMouseReleased="#preview" prefHeight="29.0" prefWidth="204.0" showTickLabels="true" showTickMarks="true" value="100.0" />
+            <Slider fx:id="zoomSlider" blendMode="MULTIPLY" layoutX="97.0" layoutY="6.0" max="200.0" min="50.0" minorTickCount="0" onMouseReleased="#zoom" prefHeight="29.0" prefWidth="204.0" showTickLabels="true" showTickMarks="true" value="100.0" />
          </children>
       </AnchorPane>
       <AnchorPane layoutX="558.0" layoutY="85.0" prefHeight="37.0" prefWidth="404.0" style="-fx-background-color: #636363;">
@@ -211,14 +171,10 @@
             </Label>
          </children>
       </AnchorPane>
-      <ScrollPane layoutX="558.0" layoutY="142.0" prefHeight="503.0" prefWidth="404.0">
-        <content>
-          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="508.0" prefWidth="388.0">
-               <children>
-                  <ImageView fx:id="previewPage" fitHeight="579.0" fitWidth="530.0" layoutX="2.0" pickOnBounds="true" preserveRatio="true" />
-               </children>
-            </AnchorPane>
-        </content>
+      <ScrollPane layoutX="558.0" layoutY="134.0" prefHeight="472.0" prefWidth="354.0">
+         <content>
+            <ImageView fx:id="previewPage" fitHeight="463.0" fitWidth="402.0" pickOnBounds="true" preserveRatio="true" />
+         </content>
       </ScrollPane>
    </children>
 </AnchorPane>
