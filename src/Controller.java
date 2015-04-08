@@ -425,6 +425,12 @@ public class Controller {
 		if(PDFPreview.getMaxPage() > 1){
 			rightPage.setDisable(false);
 		}
+		
+		previewPage.setScaleX(zoomSlider.getValue()/100);
+	    previewPage.setScaleY(zoomSlider.getValue() / 100);
+	    
+	    previewPage.setFitWidth(zoomSlider.getValue()*10);
+	    previewPage.setFitHeight(zoomSlider.getValue()*10);
 //		if(PDFPreview.getCurrentPage() < PDFPreview.getMaxPage()){
 //			rightPage.setDisable(false);	
 //		}
@@ -626,8 +632,8 @@ public class Controller {
 		previewPage.setScaleX(zoomSlider.getValue()/100);
 	    previewPage.setScaleY(zoomSlider.getValue() / 100);
 	    
-	    previewPage.setFitWidth(zoomSlider.getValue()*5);
-	    previewPage.setFitHeight(zoomSlider.getValue()*5);
+	    previewPage.setFitWidth(zoomSlider.getValue()*10);
+	    previewPage.setFitHeight(zoomSlider.getValue()*10);
 	}
 	
 	
