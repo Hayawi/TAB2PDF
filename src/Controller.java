@@ -625,6 +625,9 @@ public class Controller {
 	public void zoom(){
 		previewPage.setScaleX(zoomSlider.getValue()/100);
 	    previewPage.setScaleY(zoomSlider.getValue() / 100);
+	    
+	    previewPage.setFitWidth(zoomSlider.getValue()*5);
+	    previewPage.setFitHeight(zoomSlider.getValue()*5);
 	}
 	
 	
