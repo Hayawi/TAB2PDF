@@ -623,15 +623,9 @@ public class Controller {
 	}
 
 	public void zoom(){
-		previewPage.setScaleX(previewPage.getScaleX() * zoomSlider.getValue()/100);
-	    previewPage.setScaleY(previewPage.getScaleY() * zoomSlider.getValue() / 100);
+		previewPage.setScaleX(zoomSlider.getValue()/100);
+	    previewPage.setScaleY(zoomSlider.getValue() / 100);
 	}
-	
-	
-	
-	
-	
-	
 	
 	
 	public void turnRight() throws IOException, DocumentException {

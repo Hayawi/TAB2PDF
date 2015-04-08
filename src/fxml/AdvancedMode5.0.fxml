@@ -171,7 +171,7 @@
             </Label>
          </children>
       </AnchorPane>
-      <ScrollPane layoutX="558.0" layoutY="134.0" prefHeight="472.0" prefWidth="354.0">
+      <ScrollPane layoutX="558.0" layoutY="134.0" prefHeight="514.0" prefWidth="404.0" style="-fx-background-color: #30302f;">
          <content>
             <ImageView fx:id="previewPage" fitHeight="463.0" fitWidth="402.0" pickOnBounds="true" preserveRatio="true" />
          </content>
