@@ -19,8 +19,9 @@ public class Tablature extends Object {
 	private BaseColor titleColor;
 	private BaseColor subtitleColor;
 
-	public void draw() throws IOException {
+	public boolean draw() throws IOException {
 		DrawPDF.writePDF(this);
+		return true;
 	}
 	
 	public void setOutputPath(String filepath) {
