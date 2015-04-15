@@ -569,7 +569,26 @@ public class Controller {
 			tab.setSubtitle(subtitleField.getText());
 		}
 		
-		DrawPDF.writePDF(tab);
+		try{
+			DrawPDF.writePDF(tab);
+			}catch(FileNotFoundException e){
+				if (e.toString().contains("The process cannot access the file because it is being used by another process"))
+				    JOptionPane.showMessageDialog(null, "Please close the file before converting.", "Error",
+				                                    JOptionPane.ERROR_MESSAGE);
+					else if (e.toString().contains("Access is denied")) {
+					    JOptionPane.showMessageDialog(null, "Cannot output file to this directory, please select another directory.", "Error",
+		                        JOptionPane.ERROR_MESSAGE);
+					}
+					else if (e.toString().contains("The system cannot find the path specified")) {
+					    JOptionPane.showMessageDialog(null, "The output directory does not exist.", "Error",
+		                        JOptionPane.ERROR_MESSAGE);
+					}
+					else {
+					    JOptionPane.showMessageDialog(null, e, "Error",
+		                        JOptionPane.ERROR_MESSAGE);
+					}
+					return;
+			}
 		
 		advancedPDF.setDisable(false);
 		advancedFolder.setDisable(false);
