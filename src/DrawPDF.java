@@ -59,22 +59,22 @@ public class DrawPDF {
 			document.close(); 
 			output.close();
 			writer.close();
-			} catch (FileNotFoundException e) {
-			if (e.toString().contains("The process cannot access the file because it is being used by another process"))
-		    JOptionPane.showMessageDialog(null, "Please close the file before converting.", "Error",
-		                                    JOptionPane.ERROR_MESSAGE);
-			else if (e.toString().contains("Access is denied")) {
-			    JOptionPane.showMessageDialog(null, "Cannot output file to this directory, please select another directory.", "Error",
-                        JOptionPane.ERROR_MESSAGE);
-			}
-			else if (e.toString().contains("The system cannot find the path specified")) {
-			    JOptionPane.showMessageDialog(null, "The output directory does not exist.", "Error",
-                        JOptionPane.ERROR_MESSAGE);
-			}
-			else {
-			    JOptionPane.showMessageDialog(null, e, "Error",
-                        JOptionPane.ERROR_MESSAGE);
-			}
+//			} catch (FileNotFoundException e) {		
+//			if (e.toString().contains("The process cannot access the file because it is being used by another process"))
+//		    JOptionPane.showMessageDialog(null, "Please close the file before converting.", "Error",
+//		                                    JOptionPane.ERROR_MESSAGE);
+//			else if (e.toString().contains("Access is denied")) {
+//			    JOptionPane.showMessageDialog(null, "Cannot output file to this directory, please select another directory.", "Error",
+//                        JOptionPane.ERROR_MESSAGE);
+//			}
+//			else if (e.toString().contains("The system cannot find the path specified")) {
+//			    JOptionPane.showMessageDialog(null, "The output directory does not exist.", "Error",
+//                        JOptionPane.ERROR_MESSAGE);
+//			}
+//			else {
+//			    JOptionPane.showMessageDialog(null, e, "Error",
+//                        JOptionPane.ERROR_MESSAGE);
+//			}
 			} catch (DocumentException e) {
 			    JOptionPane.showMessageDialog(null, e, "Error",
                         JOptionPane.ERROR_MESSAGE);
@@ -83,10 +83,10 @@ public class DrawPDF {
 	}
 
 	public static ByteArrayOutputStream writePDFInMemory(Tablature tab)
-			throws IOException {
+			throws IOException, DocumentException {
 		ByteArrayOutputStream output = new ByteArrayOutputStream();
 		Document document = new Document(PageSize.A4);
-		try {
+//		try {
 			PdfWriter writer = PdfWriter.getInstance(document, output);
 			document.open();
 			PdfContentByte cb = writer.getDirectContent();
@@ -99,14 +99,12 @@ public class DrawPDF {
 			document.close(); 
 			output.close();
 			writer.close();
-		} catch (FileNotFoundException e) {
-		    JOptionPane.showMessageDialog(null, e, "Error",
-                    JOptionPane.ERROR_MESSAGE);
-			e.printStackTrace();
-		} catch (DocumentException e) {
-		    JOptionPane.showMessageDialog(null, e, "Error",
-                    JOptionPane.ERROR_MESSAGE);
-		}
+//		} catch (FileNotFoundException e) {
+//		    JOptionPane.showMessageDialog(null, e, "Error",JOptionPane.ERROR_MESSAGE);
+//			e.printStackTrace();
+//		} catch (DocumentException e) {
+//		    JOptionPane.showMessageDialog(null, e, "Error",JOptionPane.ERROR_MESSAGE);
+//		}
 		return output;
 	}
 	

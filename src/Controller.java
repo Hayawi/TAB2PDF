@@ -39,6 +39,7 @@ import javafx.stage.Stage;
 import javafx.util.Callback;
 
 import javax.swing.JFileChooser;
+import javax.swing.JOptionPane;
 
 import com.itextpdf.text.BaseColor;
 import com.itextpdf.text.DocumentException;
@@ -482,14 +483,32 @@ public class Controller {
 	
 	public void convertMultiple() throws IOException{
 		
-		//try{
+		
 		ObservableList<String> choices = FXCollections.observableArrayList();
 		
 		for(File f:GUI.dir){
 			String output = f.getPath().substring(0,f.getPath().length()-3) + "pdf";
 			Tablature tab = new Tablature(f.getPath(), output);
+			try{
 			DrawPDF.writePDF(tab);
-			
+			}catch(FileNotFoundException e){
+				if (e.toString().contains("The process cannot access the file because it is being used by another process"))
+				    JOptionPane.showMessageDialog(null, "Please close the file before converting.", "Error",
+				                                    JOptionPane.ERROR_MESSAGE);
+					else if (e.toString().contains("Access is denied")) {
+					    JOptionPane.showMessageDialog(null, "Cannot output file to this directory, please select another directory.", "Error",
+		                        JOptionPane.ERROR_MESSAGE);
+					}
+					else if (e.toString().contains("The system cannot find the path specified")) {
+					    JOptionPane.showMessageDialog(null, "The output directory does not exist.", "Error",
+		                        JOptionPane.ERROR_MESSAGE);
+					}
+					else {
+					    JOptionPane.showMessageDialog(null, e, "Error",
+		                        JOptionPane.ERROR_MESSAGE);
+					}
+					return;
+			}
 			choices.add(output);
 		}
 		
@@ -505,7 +524,7 @@ public class Controller {
 	    basicopenFolder.setStyle("-fx-background-color:#0072bc;-fx-border-width:0.4;-fx-border-color:white;-fx-border-style:solid;-fx-border-radius:5;-fx-pref-height:65");
 	    basicopenPDF.setStyle("-fx-background-color:#0072bc;-fx-border-width:0.4;-fx-border-color:white;-fx-border-style:solid;-fx-border-radius:5;-fx-pref-height:65");
 	    
-		//} catch (NullPointerException name) {}
+
 		
 	}
 	
