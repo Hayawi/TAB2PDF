@@ -3,6 +3,7 @@ import java.util.ArrayList;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import com.itextpdf.text.BaseColor;
+import com.itextpdf.text.DocumentException;
 
 public class Tablature extends Object {
 	
@@ -19,7 +20,8 @@ public class Tablature extends Object {
 	private BaseColor titleColor;
 	private BaseColor subtitleColor;
 
-	public boolean draw() throws IOException {
+	public boolean draw() throws IOException, DocumentException {
+
 		DrawPDF.writePDF(this);
 		return true;
 	}
@@ -41,8 +43,11 @@ public class Tablature extends Object {
 	}
 	
 	public boolean setAscii(String s){
+		if(!s.equals("")){
 		this.s = s;
 		return true;
+		}else
+			return false;
 	}
 	
 	public String getAscii(){
@@ -61,7 +66,8 @@ public class Tablature extends Object {
 		return this.spacing;
 	}
 	
-	public int getFontSize() {
+	public int getFontSize() 
+	{
 		return this.fontSize;
 	}
 	
@@ -77,20 +83,31 @@ public class Tablature extends Object {
 		this.subtitle = subtitle;
 	}
 	
-	public void setSpacing(float spacing) {
+	public boolean setSpacing(float spacing) {
+		if(spacing > 0){
 		this.spacing = spacing;
+		return true;
+		}
+		else
+		return false;
 	}
 	
-	public void setFontSize(int fontSize) {
+	public boolean setFontSize(int fontSize) {
+		if(fontSize > 0){
 		this.fontSize = fontSize;
+		return true;
+		}
+		else
+		return false;
 	}
 
 	public BaseColor getFontColor() {
 		return this.fontColor;
 	}
 	
-	public void setFontColor(BaseColor color) {
+	public boolean setFontColor(BaseColor color) {
 		this.fontColor = color;
+		return true;
 	}
 	
 	public BaseColor getTitleColor() {

@@ -57,7 +57,7 @@ public class TablatureTest {
 
 	@Test
 	public void testDraw() throws IOException, DocumentException {
-		assertTrue(true);
+		t = new Tablature("testin.txt","testout.pdf");
 		assertTrue(t.draw());
 	}
 
@@ -78,16 +78,38 @@ public class TablatureTest {
 
 	@Test 
 	public void testTablature() throws IOException {
+		
+		// should throw exception
 		try{
+		t = null;
 		t = new Tablature("","");  // supposed to fail.
 		}
 		catch(FileNotFoundException e){
 			assertTrue(true);   
 		}
 		
-		t = new Tablature("testin.txt","testout.txt");
-		assertTrue(t != null);
+		// should not throw exception
+		try{
+			t = null;
+			t = new Tablature("testin.txt","testout.pdf");  // supposed to succeed
+			}
+			catch(FileNotFoundException e){
+				assertTrue(true);   
+			}
 		
+		// should succeed
+		assertTrue((t instanceof Tablature) == true);
+		
+		// should fail
+		try{
+		
+		t = null;
+		t = new Tablature(null,null); // should fail  input file cant be null
+			assertTrue(t instanceof Tablature);
+		}
+		catch(NullPointerException e){
+			assert(true);
+		}
 	}
 
 	@Test
@@ -128,6 +150,7 @@ public class TablatureTest {
 
 	@Test
 	public void testGetFontSize() {
+		t.setFontSize(8);
 		assertTrue(t.getFontSize() == 8);
 	}
 

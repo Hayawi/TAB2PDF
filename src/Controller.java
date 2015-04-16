@@ -480,7 +480,7 @@ public class Controller {
 		
 	}
 	
-	public void convertMultiple() throws IOException{
+	public void convertMultiple() throws IOException, DocumentException{
 		
 		//try{
 		ObservableList<String> choices = FXCollections.observableArrayList();
@@ -590,7 +590,7 @@ public class Controller {
 	}
 	
 	
-	public void preview() throws IOException, DocumentException {
+	public void preview() throws Exception {
 		
 			
 		try{

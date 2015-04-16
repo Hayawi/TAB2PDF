@@ -15,6 +15,7 @@ import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
+import com.itextpdf.text.DocumentException;
 import com.itextpdf.text.pdf.PdfContentByte;
 import com.itextpdf.text.pdf.parser.ContentByteUtils;
 
@@ -83,7 +84,7 @@ public class DrawPDFTest {
 
 	@AfterClass
 	public static void tearDownAfterClass() throws Exception {	
-		//file.delete();
+		file.delete();
 	}
 
 	@Before
@@ -92,15 +93,38 @@ public class DrawPDFTest {
 	}
 
 	@Test
-	public void testWritePDF() throws IOException {
+	public void testWritePDF() throws IOException, DocumentException {
 		Boolean result = DrawPDF.writePDF(t);
 		assertTrue(result);
+		try {
+		DrawPDF.writePDF(null); // supposed to fail.
+		}
+		catch(NullPointerException e){
+			assertTrue(true);
+		}
 	}
 
 	@Test
-	public void testWritePDFInMemory() throws IOException, NoSuchMethodException, SecurityException {
+	public void testWritePDFInMemory() throws IOException, NoSuchMethodException, SecurityException, DocumentException {
 		ByteArrayOutputStream result = DrawPDF.writePDFInMemory(t);
-		assertTrue(result != null);	
+		assertTrue(result instanceof ByteArrayOutputStream);	
+		try{
+		DrawPDF.writePDFInMemory(null); // supposed to fail.
+		}
+		catch(NullPointerException e){
+			assertTrue(true);
+		}
+		
 	}
-
+	
+	@Test
+	public void testDrawPDFConstructor(){
+		try{
+		DrawPDF p = new DrawPDF(); // should fail.
+		}
+		catch(Exception e){
+			assertTrue(true);   // exception should be thrown, DrawPDF must should not be instantiated.
+		}
+		
+	}
 }

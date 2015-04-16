@@ -23,7 +23,7 @@ import com.itextpdf.text.pdf.PdfContentByte;
 import com.itextpdf.text.pdf.PdfPatternPainter;
 import com.itextpdf.text.pdf.PdfWriter;
 
-public class DrawPDF {
+public final class DrawPDF {
 	
 	private final static int STAFFHEIGHT = 35;
 	private final static int HEIGHTSPACING = 7;
@@ -37,14 +37,15 @@ public class DrawPDF {
 	private static int[] previousNoteY = new int[6];
 	private static int[] previousNoteLine = new int[6];
 	
-	private DrawPDF () {
-		
+	public DrawPDF () throws Exception {
+		throw new Exception("DrawPDF is utility and should not be instantiated.");
 	}
 	
-	public static boolean writePDF(Tablature tab) throws IOException{
+	public static boolean writePDF(Tablature tab) throws IOException, DocumentException{
+		if(!(tab instanceof Tablature)){
+			throw new NullPointerException();
+		}
 		Document document = new Document(PageSize.A4);
-		
-		try {
 			FileOutputStream output = new FileOutputStream(tab.getOutputPath());
 			PdfWriter writer = PdfWriter.getInstance(document, output);
 			document.open();
@@ -53,40 +54,17 @@ public class DrawPDF {
 			ArrayList<Measure> measures = tab.getMeasures();
 			spacing = tab.getSpacing();
 			fontColor = tab.getFontColor();
-			
 			processTablature(cb, measures, document);
-
 			document.close(); 
 			output.close();
 			writer.close();
-			} catch (FileNotFoundException e) {
-			if (e.toString().contains("The process cannot access the file because it is being used by another process"))
-		    JOptionPane.showMessageDialog(null, "Please close the file before converting.", "Error",
-		                                    JOptionPane.ERROR_MESSAGE);
-			else if (e.toString().contains("Access is denied")) {
-			    JOptionPane.showMessageDialog(null, "Cannot output file to this directory, please select another directory.", "Error",
-                        JOptionPane.ERROR_MESSAGE);
-			}
-			else if (e.toString().contains("The system cannot find the path specified")) {
-			    JOptionPane.showMessageDialog(null, "The output directory does not exist.", "Error",
-                        JOptionPane.ERROR_MESSAGE);
-			}
-			else {
-			    JOptionPane.showMessageDialog(null, e, "Error",
-                        JOptionPane.ERROR_MESSAGE);
-			}
-			} catch (DocumentException e) {
-			    JOptionPane.showMessageDialog(null, e, "Error",
-                        JOptionPane.ERROR_MESSAGE);
-		}
 		return true;
 	}
 
-	public static ByteArrayOutputStream writePDFInMemory(Tablature tab)
-			throws IOException {
+	public static ByteArrayOutputStream writePDFInMemory(Tablature tab) throws DocumentException, IOException{
 		ByteArrayOutputStream output = new ByteArrayOutputStream();
 		Document document = new Document(PageSize.A4);
-		try {
+
 			PdfWriter writer = PdfWriter.getInstance(document, output);
 			document.open();
 			PdfContentByte cb = writer.getDirectContent();
@@ -99,14 +77,6 @@ public class DrawPDF {
 			document.close(); 
 			output.close();
 			writer.close();
-		} catch (FileNotFoundException e) {
-		    JOptionPane.showMessageDialog(null, e, "Error",
-                    JOptionPane.ERROR_MESSAGE);
-			e.printStackTrace();
-		} catch (DocumentException e) {
-		    JOptionPane.showMessageDialog(null, e, "Error",
-                    JOptionPane.ERROR_MESSAGE);
-		}
 		return output;
 	}
 	
@@ -172,8 +142,6 @@ public class DrawPDF {
 		String letter = "";
 		
 		float verticalShift = pageLocationY - (HEIGHTSPACING * currentLine);
-
-		int index = 0;
 		
 		for (String s : tokens) {
 			System.out.print(s);
@@ -232,8 +200,6 @@ public class DrawPDF {
 					hold = true;
 					letter = s;
 				}
-				else if (index == 0 || index == tokens.size())
-					;
 				else
 				{
 					drawText(cb, s, horizontalShift, verticalShift);
@@ -262,7 +228,6 @@ public class DrawPDF {
 				previousNoteX[currentLine] = horizontalShift;
 				previousNoteY[currentLine] = (int)verticalShift;
 			}
-			index++; 
 		}
 		System.out.println();
 	}

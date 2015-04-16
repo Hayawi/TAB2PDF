@@ -16,11 +16,8 @@ public class ParseFile {
 	public static String openFile(String filePath) throws IOException{
 		  FileInputStream inputStream = new FileInputStream(filePath);
 		  String file;
-		    try {
 		        file = IOUtils.toString(inputStream);
-		    } finally {
 		        inputStream.close();
-		    }
 		    return file;
 	}
 	
@@ -46,7 +43,7 @@ public class ParseFile {
 				int check2 = body.indexOf('\n', indexOfNewLine + 1);
 				checkString = body.substring(indexOfNewLine, check2).trim();
 				Matcher check = pattern.matcher(checkString);
-				if (!check.find() && i != 5) {
+				if (!check.find() && i != 5) { // measure isn't right size.
 					blockOfMeasures.clear();
 					break;
 				}
@@ -63,7 +60,7 @@ public class ParseFile {
 				for (String s : blockOfMeasures) {
 					message = message + s + '\n';
 				}
-				throw new InvalidMeasureException("This measure is formatted incorrectly.");
+				System.out.println("This measure is formatted incorrectly.");
 			}
 			if (blockOfMeasures.size() > 0)
 				measures.addAll(convertToMeasures(blockOfMeasures));
@@ -72,6 +69,11 @@ public class ParseFile {
 			if (body.indexOf('\n') <= 1) { // something idk check again later
 				while (body.indexOf('\n') >= 0 && body.indexOf('\n') <= 1)
 				body = body.substring(body.indexOf('\n') + 1);
+				/*
+				 * the only time this would be used is when there is no newline in the string,
+				 * then it searches for newlines which are either the 1st or 2nd char in the 
+				 * string.  (don't really understand this part).
+				 */
 			}
 		}
 		return measures;
@@ -94,10 +96,6 @@ public class ParseFile {
 					token.add("||");
 					i++;
 				}
-				else if ((i + 1 < string.length()) && (i + 2 < string.length()) && string.charAt(i+1) == '|' && string.charAt(i+2) == '|') {
-					token.add("|||");
-					i = i + 2;
-				}
 				else if ((i + 1 < string.length()) && (string.charAt(i+1) >= '0' && (string.charAt(i+1) <= '9'))) {
 					token.add("|" + string.charAt(i+1));
 					i++;
@@ -106,23 +104,19 @@ public class ParseFile {
 					token.add("|");
 			}
 			else if (string.charAt(i) == '-') {
-				while (string.charAt(i) == '-') {
+				while (i < string.length() && string.charAt(i) == '-') {
 					hyphen = hyphen + "-"; // use stringbuilder or something for this later
 					i++;
-					if (i == string.length())
-						break;
 				}
 				token.add(hyphen);
 				hyphen = "";
 				i--;
 			}
-			else if (string.charAt(i) == ' ') {
+			else if (string.charAt(i) == ' ') { // not only entered if there is more than 1 blank space.
 				i++;
-				while (string.charAt(i) == ' ') {
+				while (i < string.length() && string.charAt(i) == ' ') {
 					hyphen = hyphen + "-";
 					i++;
-					if (i == string.length())
-						break;
 				}
 				token.add(hyphen);
 				hyphen = "";
@@ -160,9 +154,11 @@ public class ParseFile {
 				token.add("h");
 			else if (string.charAt(i) == 'p')
 				token.add("p");
+			/*
 			else if (matcher.find()) {
-				token.add("" + string.charAt(i));
+				token.add("" + string.charAt(i)); // adds the number to the list.
 			}
+			*/
 			else {
 				if (string.charAt(i) != '>' && string.charAt(i) != '<')
 				token.add("-");
