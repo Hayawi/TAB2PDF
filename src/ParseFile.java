@@ -13,6 +13,9 @@ import com.itextpdf.text.DocumentException;
 
 public class ParseFile {
 	
+	public static String badMeasureMessage = "";
+	public static boolean hasBadMeasure = false;
+	
 	public static String openFile(String filePath) throws IOException{
 		  FileInputStream inputStream = new FileInputStream(filePath);
 		  String file;
@@ -55,12 +58,14 @@ public class ParseFile {
 				blockOfMeasures.add(line);
 				}
 			}
+
 			if (unevenBlockLengthCheck(blockOfMeasures)) {
-				String message = "";
+				
 				for (String s : blockOfMeasures) {
-					message = message + s + '\n';
+					badMeasureMessage = badMeasureMessage  + s + '\n';
 				}
-				System.out.println("This measure is formatted incorrectly.");
+				hasBadMeasure = true;
+				continue;
 			}
 			if (blockOfMeasures.size() > 0)
 				measures.addAll(convertToMeasures(blockOfMeasures));
@@ -76,6 +81,7 @@ public class ParseFile {
 				 */
 			}
 		}
+
 		return measures;
 	}
 	public static ArrayList<String> parse(String string) {

@@ -399,10 +399,22 @@ public class Controller {
 			inputField.setText(file.getPath());
 			outputField.setText(file.getPath().substring(file.getPath().lastIndexOf('\\') + 1,file.getPath().length() - 4));
 			destinationFolder.setText(file.getPath().substring(0,file.getPath().lastIndexOf('\\') + 1));
-		    
+			Tablature tab = null;
 			String outputPath = destinationFolder.getText() + outputField.getText() + ".pdf";
 			
-			Tablature tab = new Tablature(file.getPath(), outputPath);
+			tab = new Tablature(file.getPath(), outputPath);
+			//System.out.println(ParseFile.hasBadMeasure);
+			if(ParseFile.hasBadMeasure){
+				Alert t = new Alert(Alert.AlertType.WARNING, 
+						"The file you selected contains parts which are too corrupt\n" +
+						"to convert, in particular the following measure was unreadable\n" +
+						"and will not be included in the output:\n\n" +
+						ParseFile.badMeasureMessage);
+				t.setResizable(true);
+				t.getDialogPane().setPrefSize(480, 320);
+				Optional<ButtonType> b = t.showAndWait();
+				ParseFile.hasBadMeasure = false;
+			}
 			spacingslider.setValue(tab.getSpacing());
 			previewPage.setImage(PDFPreview.previewPDFDocumentInImage(tab));
 			ColorChooser.setValue(javafx.scene.paint.Color.BLACK);
@@ -454,7 +466,7 @@ public class Controller {
 		for(File file : dir){
 			String extension = file.getPath().substring(file.getPath().lastIndexOf('.'), file.getPath().length());
 			if(!extension.equals(".txt")){
-				Alert t = new Alert(Alert.AlertType.WARNING, "Some of the files you selected are not .txt files. \nPlease select again.");
+				Alert t = new Alert(Alert.AlertType.WARNING, "The file(s) you selected are not ascii text files. \nPlease only select files which are in ascii text format.");
 				Optional<ButtonType> b = t.showAndWait();
 				validFiles = false;
 				
@@ -495,6 +507,18 @@ public class Controller {
 			DrawPDF.writePDF(tab);
 			
 			choices.add(output);
+		}
+		
+		if(ParseFile.hasBadMeasure){
+			Alert t = new Alert(Alert.AlertType.WARNING, 
+					"The file(s) you selected contain parts which are too corrupt\n" +
+					"to convert, in particular the following measure was unreadable\n" +
+					"and was not included in the output:\n\n" +
+					ParseFile.badMeasureMessage);
+			t.setResizable(true);
+			t.getDialogPane().setPrefSize(480, 320);
+			Optional<ButtonType> b = t.showAndWait();
+			ParseFile.hasBadMeasure = false;
 		}
 		
         choosePDF.setItems(choices);
@@ -540,6 +564,18 @@ public class Controller {
 		BaseColor s = new BaseColor((float)subtitleColor.getValue().getRed(), (float)subtitleColor.getValue().getGreen(),(float)subtitleColor.getValue().getBlue());
 		
 		Tablature tab = new Tablature(inputPath, outputPath);
+		
+		if(ParseFile.hasBadMeasure){
+			Alert q = new Alert(Alert.AlertType.WARNING, 
+					"The file you selected contained \n" +
+					"unreadable measures,  all unreadable measures were skipped\n" +
+					"one of these included:\n\n" +
+					ParseFile.badMeasureMessage);
+			q.setResizable(true);
+			q.getDialogPane().setPrefSize(480, 320);
+			Optional<ButtonType> b = q.showAndWait();
+			ParseFile.hasBadMeasure = false;
+		}
 		
 		tab.setSpacing((float)spacingslider.getValue());
 		tab.setFontColor(f);

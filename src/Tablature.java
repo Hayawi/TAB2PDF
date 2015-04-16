@@ -126,7 +126,7 @@ public class Tablature extends Object {
 		this.subtitleColor = color;
 	}
 	// fix later 
-	private void processFile(String file) {
+	private void processFile(String file)  {
 		char newLine = '\n';
 		int indexOfTitle = file.indexOf("TITLE="); 
 		
