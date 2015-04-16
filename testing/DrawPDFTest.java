@@ -1,23 +1,16 @@
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertTrue;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;
-import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.io.Writer;
-import java.lang.reflect.Method;
-import java.util.ArrayList;
 
-import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
 import com.itextpdf.text.DocumentException;
-import com.itextpdf.text.pdf.PdfContentByte;
-import com.itextpdf.text.pdf.parser.ContentByteUtils;
 
 
 public class DrawPDFTest {
@@ -120,7 +113,7 @@ public class DrawPDFTest {
 	@Test
 	public void testDrawPDFConstructor(){
 		try{
-		DrawPDF p = new DrawPDF(); // should fail.
+		new DrawPDF(); // should fail.
 		}
 		catch(Exception e){
 			assertTrue(true);   // exception should be thrown, DrawPDF must should not be instantiated.

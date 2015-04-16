@@ -8,6 +8,8 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.layout.StackPane;
+import javafx.scene.layout.StackPaneBuilder;
 import javafx.stage.Stage;
 
 
@@ -35,9 +37,10 @@ public class GUI extends Application {
 	}
 
 	public void start(Stage primaryStage) throws IOException {
-
+		
+		
+		
 		Parent root = FXMLLoader.load(getClass().getResource("/fxml/BasicMode5.0.fxml"));
-
 		Scene scene = new Scene(root, 1036, 758);
 		
 		primaryStage.setScene(scene);

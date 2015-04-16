@@ -139,12 +139,12 @@
       <Slider fx:id="spacingslider" blendMode="MULTIPLY" layoutX="113.0" layoutY="549.0" majorTickUnit="2.0" max="15.0" min="1.0" minorTickCount="1" onMouseReleased="#preview" prefHeight="29.0" prefWidth="374.0" showTickLabels="true" showTickMarks="true" value="5.0" />
       <AnchorPane layoutX="558.0" layoutY="656.0" prefHeight="37.0" prefWidth="404.0" style="-fx-background-color: #636363;">
          <children>
-            <Button fx:id="leftPage" disable="true" layoutX="4.0" layoutY="4.0" mnemonicParsing="false" onAction="#turnLeft" onMouseEntered="#leftHover" onMouseExited="#leftUnhover" prefHeight="21.0" prefWidth="83.0" style="-fx-border-radius: 5; -fx-background-color: #30302f;" text="Left Page" textFill="WHITE">
+            <Button fx:id="leftPage" disable="true" layoutX="4.0" layoutY="4.0" mnemonicParsing="false" onAction="#turnLeft" onMouseEntered="#leftHover" onMouseExited="#leftUnhover" prefHeight="21.0" prefWidth="83.0" style="-fx-border-radius: 5; -fx-background-color: #30302f;" text="Previous" textFill="WHITE">
                <font>
                   <Font name="Roboto Light" size="13.0" />
                </font>
             </Button>
-            <Button fx:id="rightPage" disable="true" layoutX="307.0" layoutY="4.0" mnemonicParsing="false" onAction="#turnRight" onMouseEntered="#rightHover" onMouseExited="#rightUnhover" prefHeight="29.0" prefWidth="92.0" style="-fx-border-radius: 5; -fx-background-color: #30302f;" text="Right Page" textFill="WHITE">
+            <Button fx:id="rightPage" disable="true" layoutX="307.0" layoutY="4.0" mnemonicParsing="false" onAction="#turnRight" onMouseEntered="#rightHover" onMouseExited="#rightUnhover" prefHeight="29.0" prefWidth="92.0" style="-fx-border-radius: 5; -fx-background-color: #30302f;" text="Next" textFill="WHITE">
                <font>
                   <Font name="Roboto Light" size="13.0" />
                </font>

@@ -7,6 +7,7 @@ import java.io.FilenameFilter;
 import java.io.IOException;
 import java.net.URI;
 import java.util.List;
+import java.util.Optional;
 
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
@@ -18,19 +19,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.control.CheckBox;
-import javafx.scene.control.ChoiceBox;
-import javafx.scene.control.ColorPicker;
-import javafx.scene.control.ComboBox;
-import javafx.scene.control.Label;
-import javafx.scene.control.ListCell;
-import javafx.scene.control.ListView;
-import javafx.scene.control.Pagination;
-import javafx.scene.control.ScrollPane;
-import javafx.scene.control.Separator;
-import javafx.scene.control.Slider;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.scene.effect.DropShadow;
 import javafx.scene.image.ImageView;
 import javafx.stage.DirectoryChooser;
@@ -326,7 +315,6 @@ public class Controller {
 		try{		
 		if (Desktop.isDesktopSupported()) {
 		    File myFile = new File((String) choosePDF.getValue());
-		    
 		    //GUI.dir.indexOf(myFile);
 		    Desktop.getDesktop().open(myFile);
 		}
@@ -391,6 +379,7 @@ public class Controller {
 		GUI.main.show();
 
 	}
+	
 		
 	public void browse() throws IOException, DocumentException {
 		try{
@@ -401,38 +390,44 @@ public class Controller {
 		
 		File file = fileChooser.showOpenDialog(GUI.main);
 		
-		inputField.setText(file.getPath());
-		outputField.setText(file.getPath().substring(file.getPath().lastIndexOf('\\') + 1,file.getPath().length() - 4));
-		destinationFolder.setText(file.getPath().substring(0,file.getPath().lastIndexOf('\\') + 1));
-	    
-		String outputPath = destinationFolder.getText() + outputField.getText() + ".pdf";
-		
-		Tablature tab = new Tablature(file.getPath(), outputPath);
-		spacingslider.setValue(tab.getSpacing());
-		previewPage.setImage(PDFPreview.previewPDFDocumentInImage(tab));
-		ColorChooser.setValue(javafx.scene.paint.Color.BLACK);
-		titleColor.setValue(javafx.scene.paint.Color.BLACK);
-		subtitleColor.setValue(javafx.scene.paint.Color.BLACK);
-		
-		advancedConvert.setDisable(false);
-		
-		advancedPDF.setDisable(true);
-		advancedFolder.setDisable(true);
-		
-		advancedPDF.setStyle("-fx-background-color:#30302f; -fx-border-radius:5;");
-		advancedFolder.setStyle("-fx-background-color:#30302f; -fx-border-radius:5;");
-		
-		maxPages.setText(Integer.toString(PDFPreview.getMaxPage()));
-		pageCounter.setText(Integer.toString(1));
-		
-		leftPage.setDisable(true);
-		if(PDFPreview.getMaxPage() > 1){
-			rightPage.setDisable(false);
-		}
-		
-	    
-	    previewPage.setFitWidth(zoomSlider.getValue()*5.5);
-	    previewPage.setFitHeight(zoomSlider.getValue()*5.5);
+		String extension = file.getPath().substring(file.getPath().lastIndexOf('.'), file.getPath().length());
+		if(!extension.equals(".txt")){
+			Alert t = new Alert(Alert.AlertType.WARNING, "You have opened a file that is not a ascii text file.\n    Please select another file.");
+			Optional<ButtonType> b = t.showAndWait();
+		}else
+		{
+			inputField.setText(file.getPath());
+			outputField.setText(file.getPath().substring(file.getPath().lastIndexOf('\\') + 1,file.getPath().length() - 4));
+			destinationFolder.setText(file.getPath().substring(0,file.getPath().lastIndexOf('\\') + 1));
+		    
+			String outputPath = destinationFolder.getText() + outputField.getText() + ".pdf";
+			
+			Tablature tab = new Tablature(file.getPath(), outputPath);
+			spacingslider.setValue(tab.getSpacing());
+			previewPage.setImage(PDFPreview.previewPDFDocumentInImage(tab));
+			ColorChooser.setValue(javafx.scene.paint.Color.BLACK);
+			titleColor.setValue(javafx.scene.paint.Color.BLACK);
+			subtitleColor.setValue(javafx.scene.paint.Color.BLACK);
+			
+			advancedConvert.setDisable(false);
+			
+			advancedPDF.setDisable(true);
+			advancedFolder.setDisable(true);
+			
+			advancedPDF.setStyle("-fx-background-color:#30302f; -fx-border-radius:5;");
+			advancedFolder.setStyle("-fx-background-color:#30302f; -fx-border-radius:5;");
+			
+			maxPages.setText(Integer.toString(PDFPreview.getMaxPage()));
+			pageCounter.setText(Integer.toString(1));
+			
+			leftPage.setDisable(true);
+			if(PDFPreview.getMaxPage() > 1){
+				rightPage.setDisable(false);
+			}
+		    previewPage.setFitWidth(zoomSlider.getValue()*5.5);
+		    previewPage.setFitHeight(zoomSlider.getValue()*5.5);
+		    
+		}// end else
 	    
 //		if(PDFPreview.getCurrentPage() < PDFPreview.getMaxPage()){
 //			rightPage.setDisable(false);	
@@ -447,35 +442,44 @@ public class Controller {
 	//	convertButton.setDisable(false);
 	}	
 	public void selectMultiple() throws IOException{
-		
+		boolean validFiles = true;
 		try {
 
 		
 		FileChooser fileChooser = new FileChooser();
 		fileChooser.setTitle("Open Text File");
 		List<File> dir = fileChooser.showOpenMultipleDialog(GUI.main);
-		GUI.dir = dir;
 		
-		if (dir.size() > 0){
-			
-			basicConvert.setDisable(false);
-			tablature.setStyle("-fx-background-color: #30302f;-fx-border-width:0.4;-fx-border-color:white;-fx-border-style:solid;-fx-border-radius:5;-fx-pref-height:65;"); 
-			basicConvert.setStyle("-fx-background-color:#0072bc;-fx-border-width:0.4;-fx-border-color:white;-fx-border-style:solid;-fx-border-radius:5;-fx-pref-height:65");
-			
-			basicopenPDF.setDisable(true);
-			choosePDF.setDisable(true);  
-		    basicopenFolder.setDisable(true);
-		    
-		    selectFile.setVisible(true);
-		    basicopenPDF.setStyle("-fx-background-color: #30302f;-fx-border-width:0.4;-fx-border-color:white;-fx-border-style:solid;-fx-border-radius:5;-fx-pref-height:65");
-		    basicopenFolder.setStyle("-fx-background-color: #30302f;-fx-border-width:0.4;-fx-border-color:white;-fx-border-style:solid;-fx-border-radius:5;-fx-pref-height:65");
-			choosePDF.setStyle("-fx-font: 22px \"Roboto Light\"; -fx-font-fill: white;-fx-background-color:#30302f;-fx-border-width:0.4;-fx-border-color:white;-fx-border-style:solid;-fx-border-radius:5;-fx-pref-height:65");
-
-		    
+		// check that all selected files are text files.
+		for(File file : dir){
+			String extension = file.getPath().substring(file.getPath().lastIndexOf('.'), file.getPath().length());
+			if(!extension.equals(".txt")){
+				Alert t = new Alert(Alert.AlertType.WARNING, "Some of the files you selected are not .txt files. \nPlease select again.");
+				Optional<ButtonType> b = t.showAndWait();
+				validFiles = false;
+				
+				break;
+			}		
 		}
+		if(validFiles){
 		
-		
-		
+			GUI.dir = dir;
+			if (dir.size() > 0){
+				
+				basicConvert.setDisable(false);
+				tablature.setStyle("-fx-background-color: #30302f;-fx-border-width:0.4;-fx-border-color:white;-fx-border-style:solid;-fx-border-radius:5;-fx-pref-height:65;"); 
+				basicConvert.setStyle("-fx-background-color:#0072bc;-fx-border-width:0.4;-fx-border-color:white;-fx-border-style:solid;-fx-border-radius:5;-fx-pref-height:65");
+				
+				basicopenPDF.setDisable(true);
+				choosePDF.setDisable(true);  
+			    basicopenFolder.setDisable(true);
+			    
+			    selectFile.setVisible(true);
+			    basicopenPDF.setStyle("-fx-background-color: #30302f;-fx-border-width:0.4;-fx-border-color:white;-fx-border-style:solid;-fx-border-radius:5;-fx-pref-height:65");
+			    basicopenFolder.setStyle("-fx-background-color: #30302f;-fx-border-width:0.4;-fx-border-color:white;-fx-border-style:solid;-fx-border-radius:5;-fx-pref-height:65");
+				choosePDF.setStyle("-fx-font: 22px \"Roboto Light\"; -fx-font-fill: white;-fx-background-color:#30302f;-fx-border-width:0.4;-fx-border-color:white;-fx-border-style:solid;-fx-border-radius:5;-fx-pref-height:65");		    
+			}
+		}	
 		} catch (NullPointerException name) {}
 		
 	}
