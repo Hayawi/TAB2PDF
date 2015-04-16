@@ -131,14 +131,14 @@ public class Tablature extends Object {
 		int indexOfTitle = file.indexOf("TITLE="); 
 		
 		if (indexOfTitle >= 0) {
-			this.title = file.substring(indexOfTitle + "TITLE=".length() , file.indexOf(newLine, indexOfTitle) - 1).trim();
+			this.title = file.substring(indexOfTitle + "TITLE=".length() , file.indexOf(newLine, indexOfTitle)).trim();
 		}
 		
 
 		int indexOfSubtitle = file.indexOf("SUBTITLE=");
 		
 		if (indexOfSubtitle >= 0) {
-			this.subtitle = file.substring(indexOfSubtitle + "SUBTITLE=".length() , file.indexOf(newLine, indexOfSubtitle) - 1).trim();
+			this.subtitle = file.substring(indexOfSubtitle + "SUBTITLE=".length() , file.indexOf(newLine, indexOfSubtitle)).trim();
 		}
 		
 
