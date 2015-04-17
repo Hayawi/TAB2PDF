@@ -561,7 +561,9 @@ public class Controller {
 			}catch(InvalidMeasureException e){
 				showError(e.getMessage());
 				return;
-
+			}catch(EmptyTablatureException e){
+				showError(e.getMessage());
+				return;
 			}
 			choices.add(output);
 		}
@@ -648,6 +650,9 @@ public class Controller {
 			showError( "Document Exception");
 			return;
 		}catch(InvalidMeasureException e){
+			showError(e.getMessage());
+			return;
+		}catch(EmptyTablatureException e){
 			showError(e.getMessage());
 			return;
 		}
