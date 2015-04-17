@@ -117,6 +117,9 @@ public class DrawPDF {
 			if (measure.leftRepeat()) {
 				measureLength += 15F;
 			}
+			if (measure.endLine()) {
+				measureLength += 12F;
+			}
 			if (measureLength < remainingSpace)
 				remainingSpace = remainingSpace - measureLength;
 			else {
@@ -144,13 +147,13 @@ public class DrawPDF {
 	private static void processMeasure(PdfContentByte cb, Measure measure, int pageLine, float pageLocationX, float pageLocationY) throws DocumentException, IOException {
 		int currentLine = 0;
 		for (ArrayList<String> tokens : measure.getTokens()) {
-			draw(cb, tokens, pageLocationX, pageLocationY, currentLine, pageLine, measure.leftRepeat(), measure.rightRepeat(), measure.numberOfRepeats()); 
+			draw(cb, tokens, pageLocationX, pageLocationY, currentLine, pageLine, measure.leftRepeat(), measure.rightRepeat(), measure.endLine(), measure.numberOfRepeats()); 
 			currentLine++;
 		}
 	}
 
 	private static void draw(PdfContentByte cb, ArrayList<String> tokens, float horizontalShift, float pageLocationY, 
-			int currentLine, int pageLine, boolean leftRepeat, boolean rightRepeat, int numberOfRepeats) throws DocumentException, IOException {
+			int currentLine, int pageLine, boolean leftRepeat, boolean rightRepeat, boolean endLine, int numberOfRepeats) throws DocumentException, IOException {
 		boolean firstVerticalLine = true;
 		boolean hold = false;
 		String previousToken = "";
@@ -161,8 +164,7 @@ public class DrawPDF {
 		int index = 0;
 		
 		for (String s : tokens) {
-			//System.out.print(s);
-			System.out.println(horizontalShift);
+			System.out.print(s);
 			if (index == 0 && leftRepeat) {
 				drawLeftRepeatBar(cb, horizontalShift, pageLocationY);
 				horizontalShift += 15F;
@@ -197,8 +199,9 @@ public class DrawPDF {
 					firstVerticalLine = false;
 				}
 				else {
+					horizontalShift += spacing;
 					drawText(cb, s, horizontalShift, verticalShift, fontSize);
-					horizontalShift += (2F * spacing);
+					horizontalShift += spacing;
 				}
 			}
 			else if (s.length() == 1) {
@@ -237,6 +240,12 @@ public class DrawPDF {
 					drawText(cb, "Repeat " + numberOfRepeats + " times", horizontalShift - 6 * spacing, pageLocationY + HEIGHTSPACING * 1.5F, fontSize);
 				}
 			}
+			if (endLine && index == tokens.size() - 1) {
+				for (int i = 0; i < 3; i++) {
+					drawVerticalBars(cb, horizontalShift, pageLocationY);
+					horizontalShift += 4F;
+				}
+			}
 
 			if (hold && Pattern.matches("[0-9]+", s)) {
 				if (previousNoteLine[currentLine] != pageLine) {
@@ -244,14 +253,12 @@ public class DrawPDF {
 					drawHold(cb, letter, 5, verticalShift + 4F, horizontalShift - s.length() * spacing, verticalShift + 4F);
 				}
 				else {
-					drawHold(cb, letter, previousNoteX[currentLine] - previousToken.length() * spacing, (previousNoteY[currentLine]) + 4F, horizontalShift - s.length() * spacing, verticalShift + 4F);
+					drawHold(cb, letter, previousNoteX[currentLine] - spacing, (previousNoteY[currentLine]) + 4F, horizontalShift - spacing, verticalShift + 4F);
 				}
 				hold = false;
 			}  
-
-			if (!s.contains("-")) 
-				previousToken = s;
 			if (Pattern.matches("[0-9]+", s)) { 
+				previousToken = s;
 				previousNoteX[currentLine] = horizontalShift;
 				previousNoteY[currentLine] = (int)verticalShift;
 				previousNoteLine[currentLine] = pageLine;

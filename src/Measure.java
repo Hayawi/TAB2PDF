@@ -6,18 +6,21 @@ public class Measure extends Object {
 	private int length;
 	private boolean leftRepeatBarLine;
 	private boolean rightRepeatBarLine;
+	private boolean endLine;
 	private int numberOfRepeats;
 	
 	public Measure(ArrayList<String> measure) {
 		this.measure = measure;
 		this.rightRepeatBarLine = false;
 		this.leftRepeatBarLine = false;
+		this.endLine = false;
 		this.numberOfRepeats = 0;
 		tokens = new ArrayList<ArrayList<String>>();
 		for (String s: measure) {
 			this.tokens.add(ParseFile.parse(s));
 		}
 		repeatCheck(tokens);
+		endCheck(tokens);
 		this.length = getMeasureLength(tokens);
 	}
 	
@@ -27,6 +30,10 @@ public class Measure extends Object {
 	
 	public boolean leftRepeat() {
 		return this.leftRepeatBarLine;
+	}
+	
+	public boolean endLine() {
+		return this.endLine;
 	}
 	
 	public int numberOfRepeats() {
@@ -75,6 +82,24 @@ public class Measure extends Object {
 				}
 				rightRepeatBarLine = true;
 			}
+	}
+	
+	private void endCheck (ArrayList<ArrayList<String>> tokens) {
+		boolean exists = true;
+		for (ArrayList<String> lines : tokens) {
+			if (!lines.get(lines.size() - 1).contains("|") | !lines.get(lines.size() - 2).contains("*")){
+				exists = false;
+				break;
+			}
+		}
+		if (exists){
+			for (ArrayList<String> lines : tokens) {
+				
+					lines.remove(lines.size() - 1);
+					lines.remove(lines.size() - 1);
+			}
+			endLine = true;
+		}
 	}
 
 	private int getMeasureLength(ArrayList<ArrayList<String>> tokens) {
