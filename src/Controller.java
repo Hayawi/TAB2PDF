@@ -430,6 +430,8 @@ public class Controller {
 		String outputPath = destinationFolder.getText() + outputField.getText() + ".pdf";
 		
 		Tablature tab = new Tablature(file.getPath(), outputPath);
+		
+		
 		spacingslider.setValue(tab.getSpacing());
 		spacingLabel.setText(Float.toString(tab.getSpacing()));
 		previewPage.setImage(PDFPreview.previewPDFDocumentInImage(tab));
@@ -463,6 +465,10 @@ public class Controller {
 //		
 		}catch(NullPointerException e){	}
 		
+		catch(InvalidMeasureException e){
+			showError(e.getMessage());
+			return;
+		}
 		
 		
 		// enable the user to press the convert button
@@ -535,8 +541,12 @@ public class Controller {
 					return;
 			}catch(DocumentException e){
 				showError( "Document Exception");
+				return;
+
 			}catch(InvalidMeasureException e){
 				showError(e.getMessage());
+				return;
+
 			}
 			choices.add(output);
 		}
@@ -621,8 +631,10 @@ public class Controller {
 			return;
 		}catch(DocumentException e){
 			showError( "Document Exception");
+			return;
 		}catch(InvalidMeasureException e){
 			showError(e.getMessage());
+			return;
 		}
 		
 		advancedPDF.setDisable(false);
