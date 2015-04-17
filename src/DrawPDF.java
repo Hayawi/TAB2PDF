@@ -238,7 +238,7 @@ public class DrawPDF {
 			if (hold && Pattern.matches("[0-9]+", s)) {
 				if (previousNoteLine[currentLine] != pageLine) {
 					drawHold(cb, letter, previousNoteX[currentLine] - previousToken.length() * spacing, 500, horizontalShift - s.length() * spacing, verticalShift + 4F);
-					drawHold(cb, letter, 5 - s.length() * spacing, verticalShift + 4F, horizontalShift - s.length() * spacing, verticalShift + 4F);
+					drawHold(cb, letter, 5, verticalShift + 4F, horizontalShift - s.length() * spacing, verticalShift + 4F);
 				}
 				else {
 					drawHold(cb, letter, previousNoteX[currentLine] - previousToken.length() * spacing, (previousNoteY[currentLine]) + 4F, horizontalShift - s.length() * spacing, verticalShift + 4F);

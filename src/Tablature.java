@@ -38,6 +38,9 @@ public class Tablature extends Object {
 		this.filepath = outputPath;
 		this.processFile(file);
 		this.fontColor = BaseColor.BLACK;
+		if(measures.size() == 0) {
+			throw new EmptyTablatureException("No measures were detected during the conversion of the tablature.");
+		}
 	}
 	
 	public boolean setAscii(String s){
