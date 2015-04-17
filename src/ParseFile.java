@@ -65,6 +65,7 @@ public class ParseFile {
 					badMeasureMessage = badMeasureMessage  + s + '\n';
 				}
 				hasBadMeasure = true;
+				body = body.substring(body.indexOf('\n') + 1);
 				continue;
 			}
 			if (blockOfMeasures.size() > 0)
@@ -74,11 +75,6 @@ public class ParseFile {
 			if (body.indexOf('\n') <= 1) { // something idk check again later
 				while (body.indexOf('\n') >= 0 && body.indexOf('\n') <= 1)
 				body = body.substring(body.indexOf('\n') + 1);
-				/*
-				 * the only time this would be used is when there is no newline in the string,
-				 * then it searches for newlines which are either the 1st or 2nd char in the 
-				 * string.  (don't really understand this part).
-				 */
 			}
 		}
 
@@ -188,7 +184,7 @@ public class ParseFile {
 			measure.clear();
 			indexOfBeginningStaff = matcher.start();
 		}
-		return newMeasures;
+		return newMeasures; 
 	}
 	
 	public static boolean unevenBlockLengthCheck(ArrayList<String> blockOfMeasures) {
