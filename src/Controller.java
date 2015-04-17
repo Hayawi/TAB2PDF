@@ -6,6 +6,7 @@ import java.io.FileNotFoundException;
 import java.io.FilenameFilter;
 import java.io.IOException;
 import java.net.URI;
+import java.text.DecimalFormat;
 import java.util.List;
 
 import javafx.beans.value.ChangeListener;
@@ -148,6 +149,9 @@ public class Controller {
 	private Button advancedConvert;
 	@FXML
 	private ScrollPane scroll;
+	@FXML
+	private Label spacingLabel;
+	
 	public void basicHover(){
 	
 		basicButtonhover.setStyle("-fx-background-color:#0072bc;-fx-border-width:0.4;-fx-border-color:white;-fx-border-style:solid;-fx-border-radius:5;");
@@ -410,6 +414,7 @@ public class Controller {
 		
 		Tablature tab = new Tablature(file.getPath(), outputPath);
 		spacingslider.setValue(tab.getSpacing());
+		spacingLabel.setText(Float.toString(tab.getSpacing()));
 		previewPage.setImage(PDFPreview.previewPDFDocumentInImage(tab));
 		ColorChooser.setValue(javafx.scene.paint.Color.BLACK);
 		titleColor.setValue(javafx.scene.paint.Color.BLACK);
@@ -712,7 +717,18 @@ public class Controller {
 		previewPage.setImage(PDFPreview.updatePreviewPDFDocument());
 
 	}
-	
+	public void spacingLabel(){
+		
+		DecimalFormat oneDigit = new DecimalFormat("#,##0.0");//format to 1 decimal place
+
+		String rounded = oneDigit.format(spacingslider.getValue());
+				
+				
+		
+		spacingLabel.setText(rounded);
+		
+		
+	}
 	
 	
 	
