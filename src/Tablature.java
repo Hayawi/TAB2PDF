@@ -19,6 +19,7 @@ public class Tablature extends Object {
 	private BaseColor fontColor;
 	private BaseColor titleColor;
 	private BaseColor subtitleColor;
+	private boolean numberedMeasures;
 
 	public void draw() throws IOException, DocumentException {
 		DrawPDF.writePDF(this);
@@ -32,12 +33,21 @@ public class Tablature extends Object {
 		return this.filepath;
 	}
 	
+	public boolean numberMeasures() {
+		return numberedMeasures;
+	}
+	
+	public void setNumberMeasures(boolean numberMeasures) {
+		this.numberedMeasures = numberMeasures;
+	}
+	
 	public Tablature(String inputPath, String outputPath) throws IOException {
 		this.fontSize = 8;
 		String file = ParseFile.openFile(inputPath);
 		this.filepath = outputPath;
 		this.processFile(file);
 		this.fontColor = BaseColor.BLACK;
+		this.numberedMeasures = false;
 		if(measures.size() == 0) {
 			throw new EmptyTablatureException("No measures were detected during the conversion of the tablature.");
 		}
