@@ -14,6 +14,7 @@ import javafx.stage.Stage;
 public class GUI extends Application {
 
 	public static Stage main;
+	public static Stage error;
 	public static String inputPath;
 	public static String outputName;
 	public static String outputPath;
@@ -48,8 +49,17 @@ public class GUI extends Application {
 
 		main = primaryStage;
 
-
+		Stage secondaryStage = new Stage();
 		
+		Parent roots = FXMLLoader.load(getClass().getResource("/fxml/Error.fxml"));
+		Scene scenes = new Scene(roots, 500, 250);
+	
+		secondaryStage.setScene(scenes);
+		secondaryStage.setTitle("Tab2PDF");
+		secondaryStage.setResizable(false);
+		secondaryStage.centerOnScreen();
+		
+		error = secondaryStage;
 		
 		
 	}
