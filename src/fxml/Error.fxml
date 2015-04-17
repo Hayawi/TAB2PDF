@@ -19,5 +19,15 @@
             </Label>
          </children>
       </AnchorPane>
+      <Label fx:id="errorMessage" layoutX="8.0" layoutY="61.0" text="Error Message" textFill="WHITE">
+         <font>
+            <Font name="Roboto Light" size="20.0" />
+         </font>
+      </Label>
+      <Button fx:id="okay" layoutX="186.0" layoutY="183.0" mnemonicParsing="false" onAction="#closeError" prefHeight="28.0" prefWidth="129.0" style="-fx-border-radius: 5; -fx-background-color: #FF0000; -fx-border-width: 0.4; -fx-border-color: white; -fx-border-style: solid;" text="Okay" textFill="WHITE">
+         <font>
+            <Font name="Roboto Light" size="22.0" />
+         </font>
+      </Button>
    </children>
 </AnchorPane>

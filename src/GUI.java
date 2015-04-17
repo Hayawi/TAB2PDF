@@ -14,6 +14,7 @@ import javafx.stage.Stage;
 public class GUI extends Application {
 
 	public static Stage main;
+	public static Stage error;
 	public static String inputPath;
 	public static String outputName;
 	public static String outputPath;
@@ -47,10 +48,7 @@ public class GUI extends Application {
 		primaryStage.show();
 
 		main = primaryStage;
-
-
-		
-		
+	
 		
 	}
 }

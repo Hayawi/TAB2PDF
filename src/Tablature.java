@@ -2,14 +2,15 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+
 import com.itextpdf.text.BaseColor;
+import com.itextpdf.text.DocumentException;
 
 public class Tablature extends Object {
 	
 	private String s;
 	private String title = "";
 	private String subtitle = "";
-	private String filename;
 	private String filepath;
 	private float spacing;
 	private int fontSize;
@@ -18,8 +19,9 @@ public class Tablature extends Object {
 	private BaseColor fontColor;
 	private BaseColor titleColor;
 	private BaseColor subtitleColor;
+	private boolean numberedMeasures;
 
-	public void draw() throws IOException {
+	public void draw() throws IOException, DocumentException {
 		DrawPDF.writePDF(this);
 	}
 	
@@ -31,12 +33,24 @@ public class Tablature extends Object {
 		return this.filepath;
 	}
 	
+	public boolean numberMeasures() {
+		return numberedMeasures;
+	}
+	
+	public void setNumberMeasures(boolean numberMeasures) {
+		this.numberedMeasures = numberMeasures;
+	}
+	
 	public Tablature(String inputPath, String outputPath) throws IOException {
 		this.fontSize = 8;
 		String file = ParseFile.openFile(inputPath);
 		this.filepath = outputPath;
 		this.processFile(file);
 		this.fontColor = BaseColor.BLACK;
+		this.numberedMeasures = false;
+		if(measures.size() == 0) {
+			throw new EmptyTablatureException("No measures were detected during the conversion of the tablature.");
+		}
 	}
 	
 	public boolean setAscii(String s){
@@ -111,21 +125,15 @@ public class Tablature extends Object {
 	private void processFile(String file) {
 		char newLine = '\n';
 		int indexOfTitle = file.indexOf("TITLE="); 
-		
-		if (indexOfTitle >= 0) {
-			this.title = file.substring(indexOfTitle + "TITLE=".length() , file.indexOf(newLine, indexOfTitle) - 1).trim();
-		}
-		
-
 		int indexOfSubtitle = file.indexOf("SUBTITLE=");
-		
-		if (indexOfSubtitle >= 0) {
-			this.subtitle = file.substring(indexOfSubtitle + "SUBTITLE=".length() , file.indexOf(newLine, indexOfSubtitle) - 1).trim();
-		}
-		
-
 		int indexOfSpacing= file.indexOf("SPACING=");
 		
+		if (indexOfTitle >= 0) {
+			this.title = file.substring(indexOfTitle + "TITLE=".length() , file.indexOf(newLine, indexOfTitle)).trim();
+		}
+		if (indexOfSubtitle >= 0) {
+			this.subtitle = file.substring(indexOfSubtitle + "SUBTITLE=".length() , file.indexOf(newLine, indexOfSubtitle)).trim();
+		}
 		if (indexOfSpacing >= 0) {
 			this.spacing = Float.parseFloat(file.substring(indexOfSpacing + "SPACING=".length() , file.indexOf(newLine, indexOfSpacing)).trim()); 
 		}

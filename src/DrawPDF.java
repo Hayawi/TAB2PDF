@@ -41,10 +41,9 @@ public class DrawPDF {
 		
 	}
 	
-	public static boolean writePDF(Tablature tab) throws IOException{
-		Document document = new Document(PageSize.A4);
+	public static void writePDF(Tablature tab) throws IOException, DocumentException{
+		Document document = new Document();
 		
-		try {
 			FileOutputStream output = new FileOutputStream(tab.getOutputPath());
 			PdfWriter writer = PdfWriter.getInstance(document, output);
 			document.open();
@@ -59,34 +58,12 @@ public class DrawPDF {
 			document.close(); 
 			output.close();
 			writer.close();
-//			} catch (FileNotFoundException e) {		
-//			if (e.toString().contains("The process cannot access the file because it is being used by another process"))
-//		    JOptionPane.showMessageDialog(null, "Please close the file before converting.", "Error",
-//		                                    JOptionPane.ERROR_MESSAGE);
-//			else if (e.toString().contains("Access is denied")) {
-//			    JOptionPane.showMessageDialog(null, "Cannot output file to this directory, please select another directory.", "Error",
-//                        JOptionPane.ERROR_MESSAGE);
-//			}
-//			else if (e.toString().contains("The system cannot find the path specified")) {
-//			    JOptionPane.showMessageDialog(null, "The output directory does not exist.", "Error",
-//                        JOptionPane.ERROR_MESSAGE);
-//			}
-//			else {
-//			    JOptionPane.showMessageDialog(null, e, "Error",
-//                        JOptionPane.ERROR_MESSAGE);
-//			}
-			} catch (DocumentException e) {
-			    JOptionPane.showMessageDialog(null, e, "Error",
-                        JOptionPane.ERROR_MESSAGE);
-		}
-		return true;
 	}
 
 	public static ByteArrayOutputStream writePDFInMemory(Tablature tab)
 			throws IOException, DocumentException {
 		ByteArrayOutputStream output = new ByteArrayOutputStream();
 		Document document = new Document(PageSize.A4);
-//		try {
 			PdfWriter writer = PdfWriter.getInstance(document, output);
 			document.open();
 			PdfContentByte cb = writer.getDirectContent();
@@ -99,26 +76,21 @@ public class DrawPDF {
 			document.close(); 
 			output.close();
 			writer.close();
-//		} catch (FileNotFoundException e) {
-//		    JOptionPane.showMessageDialog(null, e, "Error",JOptionPane.ERROR_MESSAGE);
-//			e.printStackTrace();
-//		} catch (DocumentException e) {
-//		    JOptionPane.showMessageDialog(null, e, "Error",JOptionPane.ERROR_MESSAGE);
-//		}
+
 		return output;
 	}
 	
 	private static void drawHeader(PdfContentByte cb, String title, String subtitle, BaseColor titleColor, BaseColor subtitleColor) throws DocumentException, IOException {
 		cb.beginText();
 		BaseFont bf = BaseFont.createFont();
-		Font titleFont = new Font(bf, 32, 0, titleColor);
-		Font subtitleFont = new Font(bf, 14, 0, subtitleColor);
+		Font titleFont = new Font(bf, 30, 0, titleColor);
+		Font subtitleFont = new Font(bf, 12, 0, subtitleColor);
 		Chunk c = new Chunk(title, titleFont);
 		Phrase phrase = new Phrase(c);
-		ColumnText.showTextAligned(cb, Element.ALIGN_CENTER, phrase, 300, 800, 0);
+		ColumnText.showTextAligned(cb, Element.ALIGN_CENTER, phrase, 300, 780, 0);
 		c = new Chunk(subtitle, subtitleFont);
 		phrase = new Phrase(c);
-		ColumnText.showTextAligned(cb, Element.ALIGN_CENTER, phrase, 300, 780, 0);
+		ColumnText.showTextAligned(cb, Element.ALIGN_CENTER, phrase, 300, 760, 0);
 		cb.endText();
 
 		
@@ -126,15 +98,21 @@ public class DrawPDF {
 	
 	private static void processTablature(PdfContentByte cb, ArrayList<Measure> measures, Document document) throws DocumentException, IOException {
 		float pageLocationX = STARTMARGIN;
-		float remainingSpace = 550f;
+		float remainingSpace = 550F;
 		float measureLength = 0;
-		float pageLocationY = 750;
+		float pageLocationY = 725F;
 		int pageLine = 0;
 		cb.setLineWidth(0.2F);
 		drawHorizontalLines(cb, pageLocationY);
 		
 		for (Measure measure: measures) {
 			measureLength = measure.getLength() * spacing;
+			if (measure.rightRepeat()) {
+				measureLength += 10F + spacing;
+			}
+			if (measure.leftRepeat()) {
+				measureLength += 15F;
+			}
 			if (measureLength < remainingSpace)
 				remainingSpace = remainingSpace - measureLength;
 			else {
@@ -143,27 +121,28 @@ public class DrawPDF {
 				pageLocationY = pageLocationY - (2 * STAFFHEIGHT);
 				if (pageLine == 9) {
 					newPage(document);
-					cb.setLineWidth(.5F);
-					pageLocationY = 810;
+					cb.setLineWidth(.2F);
+					pageLocationY = 800;
 					pageLine = 0;
 				}
 				pageLocationX = STARTMARGIN;
 				drawHorizontalLines(cb, pageLocationY);
 			}
-			processMeasure(cb, measure, pageLocationX, pageLocationY);
+			processMeasure(cb, measure, pageLine, pageLocationX, pageLocationY);
 			pageLocationX += measureLength;
 		}
 	}
 	
-	private static void processMeasure(PdfContentByte cb, Measure measure, float pageLocationX, float pageLocationY) throws DocumentException, IOException {
+	private static void processMeasure(PdfContentByte cb, Measure measure, int pageLine, float pageLocationX, float pageLocationY) throws DocumentException, IOException {
 		int currentLine = 0;
 		for (ArrayList<String> tokens : measure.getTokens()) {
-			draw(cb, tokens, pageLocationX, pageLocationY, currentLine); 
+			draw(cb, tokens, pageLocationX, pageLocationY, currentLine, pageLine, measure.leftRepeat(), measure.rightRepeat(), measure.numberOfRepeats()); 
 			currentLine++;
 		}
 	}
 
-	private static void draw(PdfContentByte cb, ArrayList<String> tokens, float horizontalShift, float pageLocationY, int currentLine) throws DocumentException, IOException {
+	private static void draw(PdfContentByte cb, ArrayList<String> tokens, float horizontalShift, float pageLocationY, 
+			int currentLine, int pageLine, boolean leftRepeat, boolean rightRepeat, int numberOfRepeats) throws DocumentException, IOException {
 		boolean firstVerticalLine = true;
 		boolean hold = false;
 		String previousToken = "";
@@ -174,7 +153,14 @@ public class DrawPDF {
 		int index = 0;
 		
 		for (String s : tokens) {
-			System.out.print(s);
+			//System.out.print(s);
+			System.out.println(horizontalShift);
+			if (index == 0 && leftRepeat) {
+				drawLeftRepeatBar(cb, horizontalShift, pageLocationY);
+				drawVerticalBars(cb, horizontalShift, pageLocationY + 5);
+				horizontalShift += 15F;
+				firstVerticalLine = false;
+			}
 			if (s.equals("|")) {
 				drawVerticalBars(cb, horizontalShift, pageLocationY);
 				if (firstVerticalLine) {
@@ -183,47 +169,34 @@ public class DrawPDF {
 				}
 			}
 			else if (s.equals("||")) {
-				if (previousToken.equals("*")) {
-					drawVerticalBars(cb, horizontalShift - spacing/2, pageLocationY);
-					drawThickVerticalBars(cb, horizontalShift, pageLocationY);
-				}
-				else
-					drawVerticalBars(cb, horizontalShift, pageLocationY);
+				drawVerticalBars(cb, horizontalShift, pageLocationY);
 				if (firstVerticalLine) {
 					horizontalShift += spacing; ;
 					firstVerticalLine = false;
 				}
-			}
+			}  
 			else if (s.equals("|||")) {
 				for (int i = 0; i < s.length(); i++) {
 					drawVerticalBars(cb, horizontalShift, pageLocationY);
-					horizontalShift += spacing;
+					horizontalShift += 4F;
 				}
 			}
 			else if (s.contains("-"))
-				horizontalShift += (s.length() * spacing);
+				horizontalShift += ((float)(s.length()) * spacing);
 			else if (s.length() == 2) {
 				if (s.contains("|")) {
 					if (firstVerticalLine) 	
 						horizontalShift += spacing;
-					else
-						drawText(cb, "Repeat " + s.substring(1) + " times", horizontalShift - 6 * spacing, pageLocationY + HEIGHTSPACING * 1.5F);
 					firstVerticalLine = false;
 				}
 				else {
 					drawText(cb, s, horizontalShift, verticalShift);
-					horizontalShift += (2 * spacing);
+					drawVerticalBars(cb, horizontalShift, pageLocationY);
+					horizontalShift += (2F * spacing);
 				}
 			}
 			else if (s.length() == 1) {
-				if (s.contains("*")) {
-					drawCircle(cb, horizontalShift, verticalShift);					
-					if (previousToken.equals("||")) {
-						drawVerticalBars(cb, horizontalShift - spacing/2, pageLocationY);
-						drawThickVerticalBars(cb, horizontalShift - spacing, pageLocationY);
-					}
-				}
-				else if (s.contains("s")) {
+				if (s.contains("s")) {
 					drawSlash(cb, horizontalShift, verticalShift);
 				}
 				else if (s.contains("h") || s.contains("p")) {
@@ -235,22 +208,41 @@ public class DrawPDF {
 				else
 				{
 					drawText(cb, s, horizontalShift, verticalShift);
+					drawVerticalBars(cb, horizontalShift, pageLocationY);
 				}
 				horizontalShift += spacing;
 			}
 			else if (s.length() == 3) {
 				drawText(cb, s.substring(1, 2), horizontalShift, verticalShift);
 				drawDiamond(cb, horizontalShift + spacing - 1, verticalShift);
-				horizontalShift += (3 * spacing);
+				drawVerticalBars(cb, horizontalShift, pageLocationY);
+				horizontalShift += (3F * spacing);
+
 			}
 			else if (s.length() == 4) {
 				drawText(cb, s.substring(1, 3), horizontalShift, verticalShift);
 				drawDiamond(cb, horizontalShift + spacing + 1 , verticalShift);
-				horizontalShift += (4 * spacing);
+				drawVerticalBars(cb, horizontalShift, pageLocationY);
+				horizontalShift += (4F * spacing);
+
+			}
+			if (index == tokens.size() - 1 && rightRepeat) {
+				drawRightRepeatBar(cb, horizontalShift, pageLocationY);
+				drawVerticalBars(cb, horizontalShift, pageLocationY);
+
+				if (numberOfRepeats > 1) {
+					drawText(cb, "Repeat " + numberOfRepeats + " times", horizontalShift - 6 * spacing, pageLocationY + HEIGHTSPACING * 1.5F);
+				}
 			}
 
 			if (hold && Pattern.matches("[0-9]+", s)) {
-				drawHold(cb, letter, previousNoteX[currentLine] - spacing, (previousNoteY[currentLine]) + 4F, horizontalShift - spacing, verticalShift + 4F);
+				if (previousNoteLine[currentLine] != pageLine) {
+					drawHold(cb, letter, previousNoteX[currentLine] - previousToken.length() * spacing, 500, horizontalShift - s.length() * spacing, verticalShift + 4F);
+					drawHold(cb, letter, 5, verticalShift + 4F, horizontalShift - s.length() * spacing, verticalShift + 4F);
+				}
+				else {
+					drawHold(cb, letter, previousNoteX[currentLine] - previousToken.length() * spacing, (previousNoteY[currentLine]) + 4F, horizontalShift - s.length() * spacing, verticalShift + 4F);
+				}
 				hold = false;
 			}  
 
@@ -259,7 +251,8 @@ public class DrawPDF {
 			if (Pattern.matches("[0-9]+", s)) { 
 				previousNoteX[currentLine] = horizontalShift;
 				previousNoteY[currentLine] = (int)verticalShift;
-			}
+				previousNoteLine[currentLine] = pageLine;
+				}
 			index++; 
 		}
 		System.out.println();
@@ -284,11 +277,25 @@ public class DrawPDF {
 		cb.stroke();
 	}
 	
-	private static void drawThickVerticalBars(PdfContentByte cb, float xShift, float yStart) {
+	private static void drawLeftRepeatBar (PdfContentByte cb, float xShift, float yStart) {
 		cb.setLineWidth(2F);
 		cb.moveTo(xShift, yStart);
 		cb.lineTo(xShift, yStart - STAFFHEIGHT);
 		cb.stroke();
+		drawCircle(cb, xShift + 5F, yStart - HEIGHTSPACING * 2);
+		drawCircle(cb, xShift + 5F, yStart - HEIGHTSPACING * 3);
+		drawVerticalBars(cb, xShift + 2.5F, yStart);
+		cb.setLineWidth(0.2F);
+	}
+	
+	private static void drawRightRepeatBar (PdfContentByte cb, float xShift, float yStart) {
+		cb.setLineWidth(2F);
+		cb.moveTo(xShift + 10F, yStart);
+		cb.lineTo(xShift + 10F, yStart - STAFFHEIGHT);
+		cb.stroke();
+		drawCircle(cb, xShift + 5F, yStart - HEIGHTSPACING * 2);
+		drawCircle(cb, xShift + 5F, yStart - HEIGHTSPACING * 3);
+		drawVerticalBars(cb, xShift + 7.5f, yStart);
 		cb.setLineWidth(0.2F);
 	}
 	
@@ -299,6 +306,7 @@ public class DrawPDF {
 		c.setBackground(BaseColor.WHITE);
 		Phrase phrase = new Phrase(c);
 		ColumnText.showTextAligned(cb, Element.ALIGN_CENTER, phrase, x, y - 3, 0);
+		
 	}
 	
 	

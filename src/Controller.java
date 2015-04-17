@@ -1,4 +1,6 @@
 import javafx.scene.paint.Color;
+import javafx.scene.shape.Circle;
+import javafx.scene.text.Text;
 
 import java.awt.Desktop;
 import java.io.File;
@@ -17,13 +19,18 @@ import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.geometry.Insets;
+import javafx.geometry.Pos;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.ColorPicker;
 import javafx.scene.control.ComboBox;
+import javafx.scene.control.Dialog;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
@@ -34,8 +41,12 @@ import javafx.scene.control.Slider;
 import javafx.scene.control.TextField;
 import javafx.scene.effect.DropShadow;
 import javafx.scene.image.ImageView;
+import javafx.scene.layout.HBox;
+import javafx.scene.layout.VBoxBuilder;
 import javafx.stage.DirectoryChooser;
 import javafx.stage.FileChooser;
+import javafx.stage.Modality;
+import javafx.stage.Popup;
 import javafx.stage.Stage;
 import javafx.util.Callback;
 
@@ -151,6 +162,12 @@ public class Controller {
 	private ScrollPane scroll;
 	@FXML
 	private Label spacingLabel;
+	@FXML
+	private Label errorMessage;
+	@FXML
+	private Label error;
+	@FXML
+	private Button okay;
 	
 	public void basicHover(){
 	
@@ -402,9 +419,16 @@ public class Controller {
 			
 		// file chooser
 		FileChooser fileChooser = new FileChooser();
+		FileChooser.ExtensionFilter extFilter = new FileChooser.ExtensionFilter("TXT files (*.txt)", "*.txt");
+		fileChooser.getExtensionFilters().add(extFilter);
 		fileChooser.setTitle("Open Text File");
 		
 		File file = fileChooser.showOpenDialog(GUI.main);
+		
+		if(!file.getAbsolutePath().endsWith(".txt")){
+			showError("Please only select text files (.txt)");
+			return;
+		}
 		
 		inputField.setText(file.getPath());
 		outputField.setText(file.getPath().substring(file.getPath().lastIndexOf('\\') + 1,file.getPath().length() - 4));
@@ -413,6 +437,8 @@ public class Controller {
 		String outputPath = destinationFolder.getText() + outputField.getText() + ".pdf";
 		
 		Tablature tab = new Tablature(file.getPath(), outputPath);
+		
+		
 		spacingslider.setValue(tab.getSpacing());
 		spacingLabel.setText(Float.toString(tab.getSpacing()));
 		previewPage.setImage(PDFPreview.previewPDFDocumentInImage(tab));
@@ -447,6 +473,13 @@ public class Controller {
 //		
 		}catch(NullPointerException e){	}
 		
+		catch(InvalidMeasureException e){
+			showError(e.getMessage());
+			return;
+		}catch(EmptyTablatureException e){
+			showError(e.getMessage());
+			return;
+		}
 		
 		
 		// enable the user to press the convert button
@@ -459,10 +492,17 @@ public class Controller {
 
 		
 		FileChooser fileChooser = new FileChooser();
+		FileChooser.ExtensionFilter extFilter = new FileChooser.ExtensionFilter("TXT files (*.txt)", "*.txt");
+		fileChooser.getExtensionFilters().add(extFilter);
 		fileChooser.setTitle("Open Text File");
 		List<File> dir = fileChooser.showOpenMultipleDialog(GUI.main);
 		GUI.dir = dir;
-		
+		for(File f :dir){
+			if(!f.getAbsolutePath().endsWith(".txt")){
+				showError("Please only select text files (.txt)");
+				return;
+			}
+		}
 		if (dir.size() > 0){
 			
 			basicConvert.setDisable(false);
@@ -493,27 +533,41 @@ public class Controller {
 		ObservableList<String> choices = FXCollections.observableArrayList();
 		
 		for(File f:GUI.dir){
+					
 			String output = f.getPath().substring(0,f.getPath().length()-3) + "pdf";
-			Tablature tab = new Tablature(f.getPath(), output);
+			
 			try{
+			Tablature tab = new Tablature(f.getPath(), output);
 			DrawPDF.writePDF(tab);
 			}catch(FileNotFoundException e){
-				if (e.toString().contains("The process cannot access the file because it is being used by another process"))
-				    JOptionPane.showMessageDialog(null, "Please close the file before converting.", "Error",
-				                                    JOptionPane.ERROR_MESSAGE);
+					if (e.toString().contains("The process cannot access the file because it is being used by another process")){
+				   // JOptionPane.showMessageDialog(null, "Please close the file before converting.", "Error",JOptionPane.ERROR_MESSAGE);
+						showError( "Please close the file before converting.");
+					}
 					else if (e.toString().contains("Access is denied")) {
-					    JOptionPane.showMessageDialog(null, "Cannot output file to this directory, please select another directory.", "Error",
-		                        JOptionPane.ERROR_MESSAGE);
+					    
+						showError( "Cannot output file to this directory, please select another directory.");
 					}
 					else if (e.toString().contains("The system cannot find the path specified")) {
-					    JOptionPane.showMessageDialog(null, "The output directory does not exist.", "Error",
-		                        JOptionPane.ERROR_MESSAGE);
+	
+						showError( "The output directory does not exist.");
+
 					}
 					else {
-					    JOptionPane.showMessageDialog(null, e, "Error",
-		                        JOptionPane.ERROR_MESSAGE);
+						showError( "Error");
+					
 					}
 					return;
+			}catch(DocumentException e){
+				showError( "Document Exception");
+				return;
+
+			}catch(InvalidMeasureException e){
+				showError(e.getMessage());
+				return;
+			}catch(EmptyTablatureException e){
+				showError(e.getMessage());
+				return;
 			}
 			choices.add(output);
 		}
@@ -543,7 +597,7 @@ public class Controller {
 	}catch(NullPointerException e){}
 		
 	}
-	public void convert() throws IOException, DocumentException {
+	public void convert() throws IOException {
 		
 	//	openFolder.setDisable(false);
 //		openPDF.setDisable(false);
@@ -559,7 +613,7 @@ public class Controller {
 		BaseColor f = new BaseColor((float)ColorChooser.getValue().getRed(), (float)ColorChooser.getValue().getGreen(),(float)ColorChooser.getValue().getBlue());
 		BaseColor t = new BaseColor((float)titleColor.getValue().getRed(), (float)titleColor.getValue().getGreen(),(float)titleColor.getValue().getBlue());
 		BaseColor s = new BaseColor((float)subtitleColor.getValue().getRed(), (float)subtitleColor.getValue().getGreen(),(float)subtitleColor.getValue().getBlue());
-		
+		try{
 		Tablature tab = new Tablature(inputPath, outputPath);
 		
 		tab.setSpacing((float)spacingslider.getValue());
@@ -575,26 +629,37 @@ public class Controller {
 			tab.setSubtitle(subtitleField.getText());
 		}
 		
-		try{
+		
 			DrawPDF.writePDF(tab);
-			}catch(FileNotFoundException e){
-				if (e.toString().contains("The process cannot access the file because it is being used by another process"))
-				    JOptionPane.showMessageDialog(null, "Please close the file before converting.", "Error",
-				                                    JOptionPane.ERROR_MESSAGE);
-					else if (e.toString().contains("Access is denied")) {
-					    JOptionPane.showMessageDialog(null, "Cannot output file to this directory, please select another directory.", "Error",
-		                        JOptionPane.ERROR_MESSAGE);
-					}
-					else if (e.toString().contains("The system cannot find the path specified")) {
-					    JOptionPane.showMessageDialog(null, "The output directory does not exist.", "Error",
-		                        JOptionPane.ERROR_MESSAGE);
-					}
-					else {
-					    JOptionPane.showMessageDialog(null, e, "Error",
-		                        JOptionPane.ERROR_MESSAGE);
-					}
-					return;
+		}catch(FileNotFoundException e){
+			if (e.toString().contains("The process cannot access the file because it is being used by another process")){
+		   // JOptionPane.showMessageDialog(null, "Please close the file before converting.", "Error",JOptionPane.ERROR_MESSAGE);
+				showError( "Please close the file before converting.");
 			}
+			else if (e.toString().contains("Access is denied")) {
+			    
+				showError( "Cannot output file to this directory, please select another directory.");
+			}
+			else if (e.toString().contains("The system cannot find the path specified")) {
+
+				showError( "The output directory does not exist.");
+
+			}
+			else {
+				showError( "Error");
+			
+			}
+			return;
+		}catch(DocumentException e){
+			showError( "Document Exception");
+			return;
+		}catch(InvalidMeasureException e){
+			showError(e.getMessage());
+			return;
+		}catch(EmptyTablatureException e){
+			showError(e.getMessage());
+			return;
+		}
 		
 		advancedPDF.setDisable(false);
 		advancedFolder.setDisable(false);
@@ -720,18 +785,20 @@ public class Controller {
 	}
 	public void spacingLabel(){
 		
-		DecimalFormat oneDigit = new DecimalFormat("#,##0.0");//format to 1 decimal place
-
+		DecimalFormat oneDigit = new DecimalFormat("#,##0.0");
 		String rounded = oneDigit.format(spacingslider.getValue());
-				
-				
-		
 		spacingLabel.setText(rounded);
-		
-		
 	}
 	
-	
-	
-	
+	public void showError(String message) throws IOException{
+		
+		Alert alert = new Alert(AlertType.ERROR);
+		alert.setTitle("Error Dialog");
+		alert.setHeaderText("Error");
+		alert.setContentText(message);
+
+		alert.showAndWait();
+		
+	}
+
 }
