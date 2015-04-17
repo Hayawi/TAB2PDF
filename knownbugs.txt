@@ -2,4 +2,4 @@
 
 - unable to work on some flavours of linux systems because some javaFx functions depend on features which are not supported by some linux distrobutions.
 - files which are so corrupt that no information at all can be parse does not display any notification.
-- 
+- on Windows8 pro 64-bit, sometimes the first page printed is blank, except for the title and subtitle.

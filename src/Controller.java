@@ -565,18 +565,6 @@ public class Controller {
 		
 		Tablature tab = new Tablature(inputPath, outputPath);
 		
-		if(ParseFile.hasBadMeasure){
-			Alert q = new Alert(Alert.AlertType.WARNING, 
-					"The file you selected contained \n" +
-					"unreadable measures,  all unreadable measures were skipped\n" +
-					"one of these included:\n\n" +
-					ParseFile.badMeasureMessage);
-			q.setResizable(true);
-			q.getDialogPane().setPrefSize(480, 320);
-			Optional<ButtonType> b = q.showAndWait();
-			ParseFile.hasBadMeasure = false;
-		}
-		
 		tab.setSpacing((float)spacingslider.getValue());
 		tab.setFontColor(f);
 		tab.setTitleColor(t);
