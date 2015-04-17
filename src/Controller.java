@@ -9,6 +9,7 @@ import java.io.FilenameFilter;
 import java.io.IOException;
 import java.net.URI;
 import java.text.DecimalFormat;
+import java.util.Arrays;
 import java.util.List;
 
 import javafx.beans.value.ChangeListener;
@@ -168,6 +169,13 @@ public class Controller {
 	private Label error;
 	@FXML
 	private Button okay;
+	@FXML
+	private CheckBox number;
+	@FXML
+	private ChoiceBox titleSize;
+	@FXML
+	private ChoiceBox subtitleSize;
+	
 	
 	public void basicHover(){
 	
@@ -446,6 +454,20 @@ public class Controller {
 		titleColor.setValue(javafx.scene.paint.Color.BLACK);
 		subtitleColor.setValue(javafx.scene.paint.Color.BLACK);
 		
+		Integer[] list1 = {30,20,21,22,23,24,25,26,27,28,29,30,31,32,33,34,35,36,37,38,39,40,41,42,43,44,45,46,47,48,49,50};
+		Integer[] list2 = {12,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25};
+		
+		ObservableList<Integer> choices = FXCollections.observableArrayList(list1);
+		
+		titleSize.setItems(choices);
+		titleSize.getSelectionModel().select(0);
+		
+		ObservableList<Integer> choice = FXCollections.observableArrayList(list2);
+		
+		subtitleSize.setItems(choice);
+		subtitleSize.getSelectionModel().select(0);
+		
+		
 		advancedConvert.setDisable(false);
 		
 		advancedPDF.setDisable(true);
@@ -620,6 +642,9 @@ public class Controller {
 		tab.setFontColor(f);
 		tab.setTitleColor(t);
 		tab.setSubtitleColor(s);
+		tab.setNumberMeasures(number.isSelected());
+		tab.setTitleFontSize((int) titleSize.getValue());
+		tab.setSubtitleFontSize((int) subtitleSize.getValue());
 		
 		if(titleField.getText().length() >0){
 			tab.setTitle(titleField.getText());
@@ -714,6 +739,9 @@ public class Controller {
 		tab.setTitleColor(t);
 		tab.setSubtitleColor(s);
 		tab.setSpacing((float)spacingslider.getValue());
+		tab.setNumberMeasures(number.isSelected());
+		tab.setTitleFontSize((int) titleSize.getValue());
+		tab.setSubtitleFontSize((int) subtitleSize.getValue());
 		
 		if(titleField.getText().length() >0){
 			tab.setTitle(titleField.getText());	
