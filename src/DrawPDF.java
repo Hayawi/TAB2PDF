@@ -48,12 +48,13 @@ public class DrawPDF {
 			PdfWriter writer = PdfWriter.getInstance(document, output);
 			document.open();
 			PdfContentByte cb = writer.getDirectContent();
-			drawHeader(cb, tab.getTitle(), tab.getSubtitle(), tab.getTitleColor(), tab.getSubtitleColor());
+			drawHeader(cb, tab.getTitle(), tab.getSubtitle(), 
+					tab.getTitleFontSize(), tab.getSubtitleFontSize(), tab.getTitleColor(), tab.getSubtitleColor());
 			ArrayList<Measure> measures = tab.getMeasures();
 			spacing = tab.getSpacing();
 			fontColor = tab.getFontColor();
 			
-			processTablature(cb, measures, document);
+			processTablature(cb, measures, tab.numberMeasures(), document);
 
 			document.close(); 
 			output.close();
@@ -67,11 +68,12 @@ public class DrawPDF {
 			PdfWriter writer = PdfWriter.getInstance(document, output);
 			document.open();
 			PdfContentByte cb = writer.getDirectContent();
-			drawHeader(cb, tab.getTitle(), tab.getSubtitle(), tab.getTitleColor(), tab.getSubtitleColor());
+			drawHeader(cb, tab.getTitle(), tab.getSubtitle(), 
+					tab.getTitleFontSize(), tab.getSubtitleFontSize(), tab.getTitleColor(), tab.getSubtitleColor());
 			ArrayList<Measure> measures = tab.getMeasures();
 			spacing = tab.getSpacing();
 			fontColor = tab.getFontColor();
-			processTablature(cb, measures, document);
+			processTablature(cb, measures, tab.numberMeasures(), document);
 			
 			document.close(); 
 			output.close();
@@ -80,11 +82,12 @@ public class DrawPDF {
 		return output;
 	}
 	
-	private static void drawHeader(PdfContentByte cb, String title, String subtitle, BaseColor titleColor, BaseColor subtitleColor) throws DocumentException, IOException {
+	private static void drawHeader(PdfContentByte cb, String title, String subtitle, 
+			int titleFontSize, int subtitleFontSize, BaseColor titleColor, BaseColor subtitleColor) throws DocumentException, IOException {
 		cb.beginText();
 		BaseFont bf = BaseFont.createFont();
-		Font titleFont = new Font(bf, 30, 0, titleColor);
-		Font subtitleFont = new Font(bf, 12, 0, subtitleColor);
+		Font titleFont = new Font(bf, titleFontSize, 0, titleColor);
+		Font subtitleFont = new Font(bf, subtitleFontSize, 0, subtitleColor);
 		Chunk c = new Chunk(title, titleFont);
 		Phrase phrase = new Phrase(c);
 		ColumnText.showTextAligned(cb, Element.ALIGN_CENTER, phrase, 300, 780, 0);
@@ -96,12 +99,13 @@ public class DrawPDF {
 		
 	}
 	
-	private static void processTablature(PdfContentByte cb, ArrayList<Measure> measures, Document document) throws DocumentException, IOException {
+	private static void processTablature(PdfContentByte cb, ArrayList<Measure> measures, boolean numberedMeasures, Document document) throws DocumentException, IOException {
 		float pageLocationX = STARTMARGIN;
 		float remainingSpace = 550F;
 		float measureLength = 0;
 		float pageLocationY = 725F;
 		int pageLine = 0;
+		int measureIndex = 1;
 		cb.setLineWidth(0.2F);
 		drawHorizontalLines(cb, pageLocationY);
 		
@@ -129,6 +133,10 @@ public class DrawPDF {
 				drawHorizontalLines(cb, pageLocationY);
 			}
 			processMeasure(cb, measure, pageLine, pageLocationX, pageLocationY);
+			if (numberedMeasures) {
+				drawText(cb, measureIndex + "", pageLocationX, pageLocationY + 5, 5);
+				measureIndex++;
+			}
 			pageLocationX += measureLength;
 		}
 	}
@@ -157,7 +165,6 @@ public class DrawPDF {
 			System.out.println(horizontalShift);
 			if (index == 0 && leftRepeat) {
 				drawLeftRepeatBar(cb, horizontalShift, pageLocationY);
-				drawVerticalBars(cb, horizontalShift, pageLocationY + 5);
 				horizontalShift += 15F;
 				firstVerticalLine = false;
 			}
@@ -190,8 +197,7 @@ public class DrawPDF {
 					firstVerticalLine = false;
 				}
 				else {
-					drawText(cb, s, horizontalShift, verticalShift);
-					drawVerticalBars(cb, horizontalShift, pageLocationY);
+					drawText(cb, s, horizontalShift, verticalShift, fontSize);
 					horizontalShift += (2F * spacing);
 				}
 			}
@@ -207,31 +213,28 @@ public class DrawPDF {
 					;
 				else
 				{
-					drawText(cb, s, horizontalShift, verticalShift);
-					drawVerticalBars(cb, horizontalShift, pageLocationY);
+					drawText(cb, s, horizontalShift, verticalShift, fontSize);
+
 				}
 				horizontalShift += spacing;
 			}
 			else if (s.length() == 3) {
-				drawText(cb, s.substring(1, 2), horizontalShift, verticalShift);
+				drawText(cb, s.substring(1, 2), horizontalShift, verticalShift, fontSize);
 				drawDiamond(cb, horizontalShift + spacing - 1, verticalShift);
-				drawVerticalBars(cb, horizontalShift, pageLocationY);
+
 				horizontalShift += (3F * spacing);
 
 			}
 			else if (s.length() == 4) {
-				drawText(cb, s.substring(1, 3), horizontalShift, verticalShift);
+				drawText(cb, s.substring(1, 3), horizontalShift, verticalShift, fontSize);
 				drawDiamond(cb, horizontalShift + spacing + 1 , verticalShift);
-				drawVerticalBars(cb, horizontalShift, pageLocationY);
 				horizontalShift += (4F * spacing);
 
 			}
 			if (index == tokens.size() - 1 && rightRepeat) {
 				drawRightRepeatBar(cb, horizontalShift, pageLocationY);
-				drawVerticalBars(cb, horizontalShift, pageLocationY);
-
 				if (numberOfRepeats > 1) {
-					drawText(cb, "Repeat " + numberOfRepeats + " times", horizontalShift - 6 * spacing, pageLocationY + HEIGHTSPACING * 1.5F);
+					drawText(cb, "Repeat " + numberOfRepeats + " times", horizontalShift - 6 * spacing, pageLocationY + HEIGHTSPACING * 1.5F, fontSize);
 				}
 			}
 
@@ -299,14 +302,13 @@ public class DrawPDF {
 		cb.setLineWidth(0.2F);
 	}
 	
-	private static void drawText(PdfContentByte cb, String string, float x, float y) throws DocumentException, IOException {
+	private static void drawText(PdfContentByte cb, String string, float x, float y, int fontSize) throws DocumentException, IOException {
 		BaseFont bf = BaseFont.createFont();
 		Font font = new Font(bf, fontSize, 0, fontColor);
 		Chunk c = new Chunk(string, font);
 		c.setBackground(BaseColor.WHITE);
 		Phrase phrase = new Phrase(c);
 		ColumnText.showTextAligned(cb, Element.ALIGN_CENTER, phrase, x, y - 3, 0);
-		
 	}
 	
 	

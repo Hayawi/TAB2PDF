@@ -20,6 +20,8 @@ public class Tablature extends Object {
 	private BaseColor titleColor;
 	private BaseColor subtitleColor;
 	private boolean numberedMeasures;
+	private int titleFontSize;
+	private int subtitleFontSize;
 
 	public void draw() throws IOException, DocumentException {
 		DrawPDF.writePDF(this);
@@ -48,6 +50,8 @@ public class Tablature extends Object {
 		this.processFile(file);
 		this.fontColor = BaseColor.BLACK;
 		this.numberedMeasures = false;
+		this.titleFontSize = 30;
+		this.subtitleFontSize = 12;
 		if(measures.size() == 0) {
 			throw new EmptyTablatureException("No measures were detected during the conversion of the tablature.");
 		}
@@ -74,6 +78,14 @@ public class Tablature extends Object {
 		return this.spacing;
 	}
 	
+	public int getTitleFontSize() {
+		return this.titleFontSize;
+	}
+	
+	public int getSubtitleFontSize() {
+		return this.subtitleFontSize;
+	}
+	
 	public int getFontSize() {
 		return this.fontSize;
 	}
@@ -92,6 +104,14 @@ public class Tablature extends Object {
 	
 	public void setSpacing(float spacing) {
 		this.spacing = spacing;
+	}
+	
+	public void setTitleFontSize(int fontSize) {
+		this.titleFontSize = fontSize;
+	}
+	
+	public void setSubtitleFontSize(int fontSize) {
+		this.subtitleFontSize = fontSize;
 	}
 	
 	public void setFontSize(int fontSize) {
