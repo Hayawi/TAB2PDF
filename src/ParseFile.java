@@ -65,8 +65,8 @@ public class ParseFile {
 					badMeasureMessage = badMeasureMessage  + s + '\n';
 				}
 				hasBadMeasure = true;
-				body = body.substring(body.indexOf('\n') + 1);
-				continue;
+				blockOfMeasures.clear();
+			continue;
 			}
 			if (blockOfMeasures.size() > 0)
 				measures.addAll(convertToMeasures(blockOfMeasures));
