@@ -425,6 +425,11 @@ public class Controller {
 		
 		File file = fileChooser.showOpenDialog(GUI.main);
 		
+		if(!file.getAbsolutePath().endsWith(".txt")){
+			showError("Please only select text files (.txt)");
+			return;
+		}
+		
 		inputField.setText(file.getPath());
 		outputField.setText(file.getPath().substring(file.getPath().lastIndexOf('\\') + 1,file.getPath().length() - 4));
 		destinationFolder.setText(file.getPath().substring(0,file.getPath().lastIndexOf('\\') + 1));
@@ -488,7 +493,12 @@ public class Controller {
 		fileChooser.setTitle("Open Text File");
 		List<File> dir = fileChooser.showOpenMultipleDialog(GUI.main);
 		GUI.dir = dir;
-		
+		for(File f :dir){
+			if(!f.getAbsolutePath().endsWith(".txt")){
+				showError("Please only select text files (.txt)");
+				return;
+			}
+		}
 		if (dir.size() > 0){
 			
 			basicConvert.setDisable(false);
@@ -519,6 +529,7 @@ public class Controller {
 		ObservableList<String> choices = FXCollections.observableArrayList();
 		
 		for(File f:GUI.dir){
+					
 			String output = f.getPath().substring(0,f.getPath().length()-3) + "pdf";
 			
 			try{
