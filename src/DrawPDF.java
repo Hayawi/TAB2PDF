@@ -108,7 +108,7 @@ public class DrawPDF {
 		for (Measure measure: measures) {
 			measureLength = measure.getLength() * spacing;
 			if (measure.rightRepeat()) {
-				measureLength += 15F + spacing;
+				measureLength += 10F + spacing;
 			}
 			if (measure.leftRepeat()) {
 				measureLength += 15F;
@@ -290,12 +290,12 @@ public class DrawPDF {
 	
 	private static void drawRightRepeatBar (PdfContentByte cb, float xShift, float yStart) {
 		cb.setLineWidth(2F);
-		cb.moveTo(xShift + 15F, yStart);
-		cb.lineTo(xShift + 15F, yStart - STAFFHEIGHT);
+		cb.moveTo(xShift + 10F, yStart);
+		cb.lineTo(xShift + 10F, yStart - STAFFHEIGHT);
 		cb.stroke();
-		drawCircle(cb, xShift + 10F, yStart - HEIGHTSPACING * 2);
-		drawCircle(cb, xShift + 10F, yStart - HEIGHTSPACING * 3);
-		drawVerticalBars(cb, xShift + 12.5f, yStart);
+		drawCircle(cb, xShift + 5F, yStart - HEIGHTSPACING * 2);
+		drawCircle(cb, xShift + 5F, yStart - HEIGHTSPACING * 3);
+		drawVerticalBars(cb, xShift + 7.5f, yStart);
 		cb.setLineWidth(0.2F);
 	}
 	
