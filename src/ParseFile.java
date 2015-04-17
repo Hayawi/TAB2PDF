@@ -28,7 +28,6 @@ public class ParseFile {
 		String line = "";
 		int indexOfNewLine = 0;
 		int indexOfVerticalLine = 0;
-		int lineLength = 0;
 		String checkString = "";
 		Pattern pattern = Pattern.compile("\\|?(\\||(\n[0-9]))(-|\\*)");
 		
@@ -63,7 +62,7 @@ public class ParseFile {
 				for (String s : blockOfMeasures) {
 					message = message + s + '\n';
 				}
-				throw new InvalidMeasureException("This measure is formatted incorrectly.");
+				throw new InvalidMeasureException("This measure is formatted incorrectly.\n" + message);
 			}
 			if (blockOfMeasures.size() > 0)
 				measures.addAll(convertToMeasures(blockOfMeasures));
@@ -198,21 +197,4 @@ public class ParseFile {
 			return true;
 		return false;
 	}
-	/*
-	public static ArrayList<String> reconstruct(ArrayList<String> block) {
-		StringBuilder string = new StringBuilder();
-		ArrayList<ArrayList<String>> tokens = new ArrayList<ArrayList<String>>();
-		ArrayList<String> processedBlock = new ArrayList<String>();
-		for (String line : block) {
-			tokens.add(parse(line));
-		}
-		for (ArrayList<String> line : tokens) {
-			for (String token : line) {
-				string.append(token);
-			}
-			processedBlock.add(string.toString());
-		}
-		return null; 
-	}
-	*/
 }

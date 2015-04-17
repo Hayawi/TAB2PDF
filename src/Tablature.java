@@ -2,14 +2,15 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+
 import com.itextpdf.text.BaseColor;
+import com.itextpdf.text.DocumentException;
 
 public class Tablature extends Object {
 	
 	private String s;
 	private String title = "";
 	private String subtitle = "";
-	private String filename;
 	private String filepath;
 	private float spacing;
 	private int fontSize;
@@ -19,7 +20,7 @@ public class Tablature extends Object {
 	private BaseColor titleColor;
 	private BaseColor subtitleColor;
 
-	public void draw() throws IOException {
+	public void draw() throws IOException, DocumentException {
 		DrawPDF.writePDF(this);
 	}
 	
@@ -111,21 +112,15 @@ public class Tablature extends Object {
 	private void processFile(String file) {
 		char newLine = '\n';
 		int indexOfTitle = file.indexOf("TITLE="); 
-		
-		if (indexOfTitle >= 0) {
-			this.title = file.substring(indexOfTitle + "TITLE=".length() , file.indexOf(newLine, indexOfTitle) - 1).trim();
-		}
-		
-
 		int indexOfSubtitle = file.indexOf("SUBTITLE=");
-		
-		if (indexOfSubtitle >= 0) {
-			this.subtitle = file.substring(indexOfSubtitle + "SUBTITLE=".length() , file.indexOf(newLine, indexOfSubtitle) - 1).trim();
-		}
-		
-
 		int indexOfSpacing= file.indexOf("SPACING=");
 		
+		if (indexOfTitle >= 0) {
+			this.title = file.substring(indexOfTitle + "TITLE=".length() , file.indexOf(newLine, indexOfTitle)).trim();
+		}
+		if (indexOfSubtitle >= 0) {
+			this.subtitle = file.substring(indexOfSubtitle + "SUBTITLE=".length() , file.indexOf(newLine, indexOfSubtitle)).trim();
+		}
 		if (indexOfSpacing >= 0) {
 			this.spacing = Float.parseFloat(file.substring(indexOfSpacing + "SPACING=".length() , file.indexOf(newLine, indexOfSpacing)).trim()); 
 		}
