@@ -33,6 +33,7 @@ public class DrawPDF {
 	private static float spacing = 5f;
 	private static int fontSize = 8;
 	private static BaseColor fontColor = BaseColor.BLACK;
+	private static String[] previousNote = new String[6];
 	private static float[] previousNoteX = new float[6];
 	private static int[] previousNoteY = new int[6];
 	private static int[] previousNoteLine = new int[6];
@@ -156,12 +157,9 @@ public class DrawPDF {
 			int currentLine, int pageLine, boolean leftRepeat, boolean rightRepeat, boolean endLine, int numberOfRepeats) throws DocumentException, IOException {
 		boolean firstVerticalLine = true;
 		boolean hold = false;
-		String previousToken = "";
 		String letter = "";
-		
 		float verticalShift = pageLocationY - (HEIGHTSPACING * currentLine);
-
-		int index = 0;
+		int index = 0; 
 		
 		for (String s : tokens) {
 			System.out.print(s);
@@ -199,9 +197,8 @@ public class DrawPDF {
 					firstVerticalLine = false;
 				}
 				else {
-					horizontalShift += spacing;
 					drawText(cb, s, horizontalShift, verticalShift, fontSize);
-					horizontalShift += spacing;
+					horizontalShift += 2F * spacing;
 				}
 			}
 			else if (s.length() == 1) {
@@ -212,7 +209,7 @@ public class DrawPDF {
 					hold = true;
 					letter = s;
 				}
-				else if (index == 0 || index == tokens.size())
+				else if (index == 0 || index == tokens.size() || s.contains("*"))
 					;
 				else
 				{
@@ -249,16 +246,16 @@ public class DrawPDF {
 
 			if (hold && Pattern.matches("[0-9]+", s)) {
 				if (previousNoteLine[currentLine] != pageLine) {
-					drawHold(cb, letter, previousNoteX[currentLine] - previousToken.length() * spacing, 500, horizontalShift - s.length() * spacing, verticalShift + 4F);
+					drawHold(cb, letter, previousNoteX[currentLine] - previousNote[currentLine].length() * spacing, (previousNoteY[currentLine]) + 4F, 575, (previousNoteY[currentLine]) + 4F);
 					drawHold(cb, letter, 5, verticalShift + 4F, horizontalShift - s.length() * spacing, verticalShift + 4F);
 				}
 				else {
-					drawHold(cb, letter, previousNoteX[currentLine] - spacing, (previousNoteY[currentLine]) + 4F, horizontalShift - spacing, verticalShift + 4F);
+					drawHold(cb, letter, previousNoteX[currentLine] - previousNote[currentLine].length() * spacing, (previousNoteY[currentLine]) + 4F, horizontalShift - s.length() * spacing, verticalShift + 4F);
 				}
 				hold = false;
 			}  
 			if (Pattern.matches("[0-9]+", s)) { 
-				previousToken = s;
+				previousNote[currentLine] = s;
 				previousNoteX[currentLine] = horizontalShift;
 				previousNoteY[currentLine] = (int)verticalShift;
 				previousNoteLine[currentLine] = pageLine;
