@@ -40,17 +40,17 @@
             </Button>
          </children>
       </AnchorPane>
-      <Button fx:id="advancedConvert" disable="true" layoutX="44.0" layoutY="607.0" mnemonicParsing="false" onAction="#convert" onMouseEntered="#advancedConvertHover" onMouseExited="#advancedConvertUnhover" prefHeight="34.0" prefWidth="442.0" style="-fx-border-width: 0.4; -fx-border-style: solid; -fx-border-radius: 5; -fx-background-color: #0072bc;" text="Convert to PDF" textFill="WHITE">
+      <Button fx:id="advancedConvert" disable="true" layoutX="44.0" layoutY="622.0" mnemonicParsing="false" onAction="#convert" onMouseEntered="#advancedConvertHover" onMouseExited="#advancedConvertUnhover" prefHeight="34.0" prefWidth="442.0" style="-fx-border-width: 0.4; -fx-border-style: solid; -fx-border-radius: 5; -fx-background-color: #0072bc;" text="Convert to PDF" textFill="WHITE">
          <font>
             <Font name="Roboto Light" size="14.0" />
          </font>
       </Button>
-      <Button fx:id="advancedPDF" disable="true" layoutX="44.0" layoutY="645.0" mnemonicParsing="false" onAction="#advancedPDF" onMouseEntered="#advancedPDFHover" onMouseExited="#advancedPDFUnhover" prefHeight="29.0" prefWidth="214.0" style="-fx-border-radius: 5; -fx-background-color: #30302f;" text="Open PDF" textFill="WHITE">
+      <Button fx:id="advancedPDF" disable="true" layoutX="44.0" layoutY="660.0" mnemonicParsing="false" onAction="#advancedPDF" onMouseEntered="#advancedPDFHover" onMouseExited="#advancedPDFUnhover" prefHeight="29.0" prefWidth="214.0" style="-fx-border-radius: 5; -fx-background-color: #30302f;" text="Open PDF" textFill="WHITE">
          <font>
             <Font name="Roboto Light" size="13.0" />
          </font>
       </Button>
-      <Button fx:id="advancedFolder" disable="true" layoutX="273.0" layoutY="645.0" mnemonicParsing="false" onAction="#advancedFolder" onMouseEntered="#advancedFolderHover" onMouseExited="#advancedFolderUnhover" prefHeight="29.0" prefWidth="214.0" style="-fx-border-radius: 5; -fx-background-color: #30302f;" text="Open Folder" textFill="WHITE">
+      <Button fx:id="advancedFolder" disable="true" layoutX="272.0" layoutY="660.0" mnemonicParsing="false" onAction="#advancedFolder" onMouseEntered="#advancedFolderHover" onMouseExited="#advancedFolderUnhover" prefHeight="29.0" prefWidth="214.0" style="-fx-border-radius: 5; -fx-background-color: #30302f;" text="Open Folder" textFill="WHITE">
          <font>
             <Font name="Roboto Light" size="13.0" />
          </font>
@@ -83,19 +83,19 @@
          </font>
       </Label>
       <TextField fx:id="outputField" layoutX="44.0" layoutY="278.0" prefHeight="25.0" prefWidth="442.0" style="-fx-background-color: #636363; -fx-border-width: 1; -fx-border-color: #7d7d7d; -fx-border-style: solid; -fx-border-radius: 5; -fx-pref-height: 37;" />
-      <Label layoutX="42.0" layoutY="325.0" text="PDF Title" textFill="WHITE">
+      <Label layoutX="43.0" layoutY="325.0" text="PDF Title" textFill="WHITE">
          <font>
             <Font name="Roboto Light" size="14.0" />
          </font>
       </Label>
       <TextField fx:id="titleField" layoutX="44.0" layoutY="345.0" onAction="#preview" onMouseExited="#preview" prefHeight="25.0" prefWidth="442.0" style="-fx-background-color: #636363; -fx-border-width: 1; -fx-border-color: #7d7d7d; -fx-border-style: solid; -fx-border-radius: 5; -fx-pref-height: 37;" />
-      <Label layoutX="46.0" layoutY="384.0" text="PDF Subtitle" textFill="WHITE">
+      <Label layoutX="45.0" layoutY="384.0" text="PDF Subtitle" textFill="WHITE">
          <font>
             <Font name="Roboto Light" size="14.0" />
          </font>
       </Label>
       <TextField fx:id="subtitleField" layoutX="44.0" layoutY="407.0" onAction="#preview" onMouseExited="#preview" prefHeight="25.0" prefWidth="442.0" style="-fx-background-color: #636363; -fx-border-width: 1; -fx-border-color: #7d7d7d; -fx-border-style: solid; -fx-border-radius: 5; -fx-pref-height: 37;" />
-      <ColorPicker fx:id="ColorChooser" layoutX="46.0" layoutY="476.0" onAction="#preview" onMouseEntered="#colorHover" onMouseExited="#colorUnhover" prefHeight="51.0" prefWidth="138.0" style="-fx-background-color: #636363;">
+      <ColorPicker fx:id="ColorChooser" layoutX="46.0" layoutY="476.0" onAction="#preview" onMouseEntered="#colorHover" onMouseExited="#colorUnhover" prefHeight="38.0" prefWidth="138.0" style="-fx-background-color: #636363;">
          <opaqueInsets>
             <Insets />
          </opaqueInsets>
@@ -105,12 +105,12 @@
             <Font name="Roboto Light" size="14.0" />
          </font>
       </Label>
-      <ColorPicker fx:id="titleColor" layoutX="198.0" layoutY="476.0" onAction="#preview" onMouseEntered="#titleColorHover" onMouseExited="#titleColorUnhover" prefHeight="51.0" prefWidth="138.0" style="-fx-background-color: #636363;">
+      <ColorPicker fx:id="titleColor" layoutX="198.0" layoutY="476.0" onAction="#preview" onMouseEntered="#titleColorHover" onMouseExited="#titleColorUnhover" prefHeight="38.0" prefWidth="138.0" style="-fx-background-color: #636363;">
          <opaqueInsets>
             <Insets />
          </opaqueInsets>
       </ColorPicker>
-      <ColorPicker fx:id="subtitleColor" layoutX="348.0" layoutY="476.0" onAction="#preview" onMouseEntered="#subtitleColorHover" onMouseExited="#subtitleColorUnhover" prefHeight="51.0" prefWidth="138.0" style="-fx-background-color: #636363;">
+      <ColorPicker fx:id="subtitleColor" layoutX="348.0" layoutY="476.0" onAction="#preview" onMouseEntered="#subtitleColorHover" onMouseExited="#subtitleColorUnhover" prefHeight="41.0" prefWidth="138.0" style="-fx-background-color: #636363;">
          <opaqueInsets>
             <Insets />
          </opaqueInsets>
@@ -130,13 +130,13 @@
             <Font name="Roboto Light" size="16.0" />
          </font>
       </Button>
-      <Label layoutX="45.0" layoutY="546.0" text="Spacing" textFill="WHITE">
+      <Label layoutX="49.0" layoutY="574.0" text="Spacing" textFill="WHITE">
          <font>
             <Font name="Roboto Light" size="15.0" />
          </font>
       </Label>
-      <AnchorPane layoutX="44.0" layoutY="594.0" prefHeight="3.0" prefWidth="442.0" style="-fx-background-color: white;" />
-      <Slider fx:id="spacingslider" blendMode="MULTIPLY" layoutX="113.0" layoutY="549.0" majorTickUnit="2.0" max="15.0" min="1.0" minorTickCount="1" onMouseDragged="#spacingLabel" onMouseReleased="#preview" prefHeight="29.0" prefWidth="341.0" showTickLabels="true" showTickMarks="true" value="5.0" />
+      <AnchorPane layoutX="44.0" layoutY="612.0" prefHeight="3.0" prefWidth="442.0" style="-fx-background-color: white;" />
+      <Slider fx:id="spacingslider" blendMode="MULTIPLY" layoutX="115.0" layoutY="584.0" majorTickUnit="2.0" max="15.0" min="1.0" minorTickCount="1" onMouseDragged="#spacingLabel" onMouseReleased="#preview" prefHeight="15.0" prefWidth="341.0" showTickLabels="true" showTickMarks="true" value="5.0" />
       <AnchorPane layoutX="558.0" layoutY="656.0" prefHeight="37.0" prefWidth="404.0" style="-fx-background-color: #636363;">
          <children>
             <Button fx:id="leftPage" disable="true" layoutX="4.0" layoutY="4.0" mnemonicParsing="false" onAction="#turnLeft" onMouseEntered="#leftHover" onMouseExited="#leftUnhover" prefHeight="29.0" prefWidth="99.0" style="-fx-border-radius: 5; -fx-background-color: #30302f;" text="Previous Page" textFill="WHITE">
@@ -176,9 +176,27 @@
             <ImageView fx:id="previewPage" fitHeight="463.0" fitWidth="402.0" pickOnBounds="true" preserveRatio="true" />
          </content>
       </ScrollPane>
-      <Label fx:id="spacingLabel" layoutX="460.0" layoutY="546.0" text="5.0" textFill="WHITE">
+      <Label fx:id="spacingLabel" layoutX="466.0" layoutY="573.0" text="5.0" textFill="WHITE">
          <font>
             <Font name="Roboto Light" size="15.0" />
+         </font>
+      </Label>
+      <Label layoutX="45.0" layoutY="539.0" text="Number Measures" textFill="WHITE">
+         <font>
+            <Font size="14.0" />
+         </font>
+      </Label>
+      <CheckBox layoutX="166.0" layoutY="541.0" mnemonicParsing="false" />
+      <ChoiceBox layoutX="198.0" layoutY="542.0" prefHeight="25.0" prefWidth="138.0" style="-fx-background-color: #636363;" />
+      <ChoiceBox layoutX="348.0" layoutY="542.0" prefHeight="25.0" prefWidth="138.0" style="-fx-background-color: #636363;" />
+      <Label layoutX="196.0" layoutY="520.0" text="Title Size" textFill="WHITE">
+         <font>
+            <Font name="Roboto Light" size="14.0" />
+         </font>
+      </Label>
+      <Label layoutX="349.0" layoutY="521.0" text="Subtitle Size" textFill="WHITE">
+         <font>
+            <Font name="Roboto Light" size="14.0" />
          </font>
       </Label>
    </children>

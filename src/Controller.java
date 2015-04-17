@@ -432,6 +432,7 @@ public class Controller {
 		pageCounter.setText(Integer.toString(1));
 		
 		leftPage.setDisable(true);
+		
 		if(PDFPreview.getMaxPage() > 1){
 			rightPage.setDisable(false);
 		}
