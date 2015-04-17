@@ -419,6 +419,8 @@ public class Controller {
 			
 		// file chooser
 		FileChooser fileChooser = new FileChooser();
+		FileChooser.ExtensionFilter extFilter = new FileChooser.ExtensionFilter("TXT files (*.txt)", "*.txt");
+		fileChooser.getExtensionFilters().add(extFilter);
 		fileChooser.setTitle("Open Text File");
 		
 		File file = fileChooser.showOpenDialog(GUI.main);
@@ -481,6 +483,8 @@ public class Controller {
 
 		
 		FileChooser fileChooser = new FileChooser();
+		FileChooser.ExtensionFilter extFilter = new FileChooser.ExtensionFilter("TXT files (*.txt)", "*.txt");
+		fileChooser.getExtensionFilters().add(extFilter);
 		fileChooser.setTitle("Open Text File");
 		List<File> dir = fileChooser.showOpenMultipleDialog(GUI.main);
 		GUI.dir = dir;
