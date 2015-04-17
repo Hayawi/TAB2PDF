@@ -510,8 +510,9 @@ public class Controller {
 		
 		for(File f:GUI.dir){
 			String output = f.getPath().substring(0,f.getPath().length()-3) + "pdf";
-			Tablature tab = new Tablature(f.getPath(), output);
+			
 			try{
+			Tablature tab = new Tablature(f.getPath(), output);
 			DrawPDF.writePDF(tab);
 			}catch(FileNotFoundException e){
 					if (e.toString().contains("The process cannot access the file because it is being used by another process")){
@@ -532,6 +533,10 @@ public class Controller {
 					
 					}
 					return;
+			}catch(DocumentException e){
+				showError( "Document Exception");
+			}catch(InvalidMeasureException e){
+				showError(e.getMessage());
 			}
 			choices.add(output);
 		}
@@ -561,7 +566,7 @@ public class Controller {
 	}catch(NullPointerException e){}
 		
 	}
-	public void convert() throws IOException, DocumentException {
+	public void convert() throws IOException {
 		
 	//	openFolder.setDisable(false);
 //		openPDF.setDisable(false);
@@ -577,7 +582,7 @@ public class Controller {
 		BaseColor f = new BaseColor((float)ColorChooser.getValue().getRed(), (float)ColorChooser.getValue().getGreen(),(float)ColorChooser.getValue().getBlue());
 		BaseColor t = new BaseColor((float)titleColor.getValue().getRed(), (float)titleColor.getValue().getGreen(),(float)titleColor.getValue().getBlue());
 		BaseColor s = new BaseColor((float)subtitleColor.getValue().getRed(), (float)subtitleColor.getValue().getGreen(),(float)subtitleColor.getValue().getBlue());
-		
+		try{
 		Tablature tab = new Tablature(inputPath, outputPath);
 		
 		tab.setSpacing((float)spacingslider.getValue());
@@ -593,7 +598,7 @@ public class Controller {
 			tab.setSubtitle(subtitleField.getText());
 		}
 		
-		try{
+		
 			DrawPDF.writePDF(tab);
 		}catch(FileNotFoundException e){
 			if (e.toString().contains("The process cannot access the file because it is being used by another process")){
@@ -614,7 +619,11 @@ public class Controller {
 			
 			}
 			return;
-	}
+		}catch(DocumentException e){
+			showError( "Document Exception");
+		}catch(InvalidMeasureException e){
+			showError(e.getMessage());
+		}
 		
 		advancedPDF.setDisable(false);
 		advancedFolder.setDisable(false);
@@ -748,7 +757,7 @@ public class Controller {
 	public void showError(String message) throws IOException{
 		
 		Alert alert = new Alert(AlertType.ERROR);
-		alert.setTitle("Error during Conversion");
+		alert.setTitle("Error Dialog");
 		alert.setHeaderText("Error");
 		alert.setContentText(message);
 

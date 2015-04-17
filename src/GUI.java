@@ -48,19 +48,7 @@ public class GUI extends Application {
 		primaryStage.show();
 
 		main = primaryStage;
-
-		Stage secondaryStage = new Stage();
-		
-		Parent roots = FXMLLoader.load(getClass().getResource("/fxml/Error.fxml"));
-		Scene scenes = new Scene(roots, 500, 250);
 	
-		secondaryStage.setScene(scenes);
-		secondaryStage.setTitle("Tab2PDF");
-		secondaryStage.setResizable(false);
-		secondaryStage.centerOnScreen();
-		
-		error = secondaryStage;
-		
 		
 	}
 }
