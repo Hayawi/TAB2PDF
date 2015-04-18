@@ -423,83 +423,85 @@ public class Controller {
 	}
 		
 	public void browse() throws IOException, DocumentException {
-		try{
-			
-		// file chooser
-		FileChooser fileChooser = new FileChooser();
-		FileChooser.ExtensionFilter extFilter = new FileChooser.ExtensionFilter("TXT files (*.txt)", "*.txt");
-		fileChooser.getExtensionFilters().add(extFilter);
-		fileChooser.setTitle("Open Text File");
-		
-		File file = fileChooser.showOpenDialog(GUI.main);
-		
-		if(!file.getAbsolutePath().endsWith(".txt")){
-			showError("Please only select text files (.txt)");
+		String outputPath = "";
+		String inputPath = "";
+		try {
+			// file chooser
+			FileChooser fileChooser = new FileChooser();
+			FileChooser.ExtensionFilter extFilter = new FileChooser.ExtensionFilter("TXT files (*.txt)", "*.txt");
+			fileChooser.getExtensionFilters().add(extFilter);
+			fileChooser.setTitle("Open Text File");
+
+			File file = fileChooser.showOpenDialog(GUI.main);
+
+			if(!file.getAbsolutePath().endsWith(".txt")){
+				showError("Please only select text files (.txt)");
+				return;
+			}
+
+			inputField.setText(file.getPath());
+			outputField.setText(file.getPath().substring(file.getPath().lastIndexOf('\\') + 1,file.getPath().length() - 4));
+			destinationFolder.setText(file.getPath().substring(0,file.getPath().lastIndexOf('\\') + 1));
+			inputPath = file.getPath();
+			outputPath = destinationFolder.getText() + outputField.getText() + ".pdf";
+
+			Tablature tab = new Tablature(file.getPath(), outputPath);
+
+
+			spacingslider.setValue(tab.getSpacing());
+			spacingLabel.setText(Float.toString(tab.getSpacing()));
+			previewPage.setImage(PDFPreview.previewPDFDocumentInImage(tab));
+			ColorChooser.setValue(javafx.scene.paint.Color.BLACK);
+			titleColor.setValue(javafx.scene.paint.Color.BLACK);
+			subtitleColor.setValue(javafx.scene.paint.Color.BLACK);
+
+			Integer[] list1 = {30,20,21,22,23,24,25,26,27,28,29,30,31,32,33,34,35,36,37,38,39,40,41,42,43,44,45,46,47,48,49,50};
+			Integer[] list2 = {12,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25};
+
+			ObservableList<Integer> choices = FXCollections.observableArrayList(list1);
+
+			titleSize.setItems(choices);
+			titleSize.getSelectionModel().select(0);
+
+			ObservableList<Integer> choice = FXCollections.observableArrayList(list2);
+
+			subtitleSize.setItems(choice);
+			subtitleSize.getSelectionModel().select(0);
+
+
+			advancedConvert.setDisable(false);
+
+			advancedPDF.setDisable(true);
+			advancedFolder.setDisable(true);
+
+			advancedPDF.setStyle("-fx-background-color:#30302f; -fx-border-radius:5;");
+			advancedFolder.setStyle("-fx-background-color:#30302f; -fx-border-radius:5;");
+
+			maxPages.setText(Integer.toString(PDFPreview.getMaxPage()));
+			pageCounter.setText(Integer.toString(1));
+
+			leftPage.setDisable(true);
+
+			if(PDFPreview.getMaxPage() > 1){
+				rightPage.setDisable(false);
+			}
+
+
+			previewPage.setFitWidth(zoomSlider.getValue()*5.5);
+			previewPage.setFitHeight(zoomSlider.getValue()*5.5);
+
+			//		if(PDFPreview.getCurrentPage() < PDFPreview.getMaxPage()){
+			//			rightPage.setDisable(false);	
+			//		}
+		}
+		catch(NullPointerException e) {	
+		}
+		catch(InvalidMeasureException e) {
+			showError(e.getMessage(), inputPath);
 			return;
 		}
-		
-		inputField.setText(file.getPath());
-		outputField.setText(file.getPath().substring(file.getPath().lastIndexOf('\\') + 1,file.getPath().length() - 4));
-		destinationFolder.setText(file.getPath().substring(0,file.getPath().lastIndexOf('\\') + 1));
-	    
-		String outputPath = destinationFolder.getText() + outputField.getText() + ".pdf";
-		
-		Tablature tab = new Tablature(file.getPath(), outputPath);
-		
-		
-		spacingslider.setValue(tab.getSpacing());
-		spacingLabel.setText(Float.toString(tab.getSpacing()));
-		previewPage.setImage(PDFPreview.previewPDFDocumentInImage(tab));
-		ColorChooser.setValue(javafx.scene.paint.Color.BLACK);
-		titleColor.setValue(javafx.scene.paint.Color.BLACK);
-		subtitleColor.setValue(javafx.scene.paint.Color.BLACK);
-		
-		Integer[] list1 = {30,20,21,22,23,24,25,26,27,28,29,30,31,32,33,34,35,36,37,38,39,40,41,42,43,44,45,46,47,48,49,50};
-		Integer[] list2 = {12,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25};
-		
-		ObservableList<Integer> choices = FXCollections.observableArrayList(list1);
-		
-		titleSize.setItems(choices);
-		titleSize.getSelectionModel().select(0);
-		
-		ObservableList<Integer> choice = FXCollections.observableArrayList(list2);
-		
-		subtitleSize.setItems(choice);
-		subtitleSize.getSelectionModel().select(0);
-		
-		
-		advancedConvert.setDisable(false);
-		
-		advancedPDF.setDisable(true);
-		advancedFolder.setDisable(true);
-		
-		advancedPDF.setStyle("-fx-background-color:#30302f; -fx-border-radius:5;");
-		advancedFolder.setStyle("-fx-background-color:#30302f; -fx-border-radius:5;");
-		
-		maxPages.setText(Integer.toString(PDFPreview.getMaxPage()));
-		pageCounter.setText(Integer.toString(1));
-		
-		leftPage.setDisable(true);
-		
-		if(PDFPreview.getMaxPage() > 1){
-			rightPage.setDisable(false);
-		}
-		
-	    
-	    previewPage.setFitWidth(zoomSlider.getValue()*5.5);
-	    previewPage.setFitHeight(zoomSlider.getValue()*5.5);
-	    
-//		if(PDFPreview.getCurrentPage() < PDFPreview.getMaxPage()){
-//			rightPage.setDisable(false);	
-//		}
-//		
-		}catch(NullPointerException e){	}
-		
-		catch(InvalidMeasureException e){
-			showError(e.getMessage());
-			return;
-		}catch(EmptyTablatureException e){
-			showError(e.getMessage());
+		catch(EmptyTablatureException e){
+			showError(e.getMessage(), inputPath);
 			return;
 		}
 		
@@ -564,7 +566,7 @@ public class Controller {
 			}catch(FileNotFoundException e){
 					if (e.toString().contains("The process cannot access the file because it is being used by another process")){
 				   // JOptionPane.showMessageDialog(null, "Please close the file before converting.", "Error",JOptionPane.ERROR_MESSAGE);
-						showError( "Please close the file before converting.");
+						showError( "Please close the file before converting.", output);
 					}
 					else if (e.toString().contains("Access is denied")) {
 					    
@@ -575,9 +577,12 @@ public class Controller {
 						showError( "The output directory does not exist.");
 
 					}
-					else {
-						showError( "Error");
+					else if (e.toString().contains("The system cannot find the file specified")){
+						showError(e.toString());
 					
+					}
+					else {
+						showError("An error has occurred with the file(s) you have attempted to convert");
 					}
 					return;
 			}catch(DocumentException e){
@@ -585,10 +590,10 @@ public class Controller {
 				return;
 
 			}catch(InvalidMeasureException e){
-				showError(e.getMessage());
+				showError(e.getMessage(), f.getPath());
 				return;
 			}catch(EmptyTablatureException e){
-				showError(e.getMessage());
+				showError(e.getMessage(), f.getPath());
 				return;
 			}
 			choices.add(output);
@@ -659,30 +664,32 @@ public class Controller {
 		}catch(FileNotFoundException e){
 			if (e.toString().contains("The process cannot access the file because it is being used by another process")){
 		   // JOptionPane.showMessageDialog(null, "Please close the file before converting.", "Error",JOptionPane.ERROR_MESSAGE);
-				showError( "Please close the file before converting.");
+				showError( "Please close the file before converting.", outputPath);
 			}
 			else if (e.toString().contains("Access is denied")) {
 			    
-				showError( "Cannot output file to this directory, please select another directory.");
+				showError( "Cannot output file to this directory, please select another directory.", outputPath);
 			}
 			else if (e.toString().contains("The system cannot find the path specified")) {
 
 				showError( "The output directory does not exist.");
 
 			}
+			else if (e.toString().contains("The system cannot find the file specified")){
+				showError( e.toString(), inputPath);
+			}
 			else {
-				showError( "Error");
-			
+				showError("An error has occurred with the file(s) you have attempted to convert");
 			}
 			return;
 		}catch(DocumentException e){
 			showError( "Document Exception");
 			return;
 		}catch(InvalidMeasureException e){
-			showError(e.getMessage());
+			showError(e.getMessage(), inputPath);
 			return;
 		}catch(EmptyTablatureException e){
-			showError(e.getMessage());
+			showError(e.getMessage(), inputPath);
 			return;
 		}
 		
@@ -826,7 +833,30 @@ public class Controller {
 		alert.setContentText(message);
 
 		alert.showAndWait();
+	}
+	
+	public void showError(String message, String filepath) throws IOException{
 		
+		Alert alert = new Alert(AlertType.ERROR);
+		alert.setTitle("Error Dialog");
+		alert.setHeaderText("Error");
+		String filename = filepath.substring(filepath.lastIndexOf(File.separator) + 1);
+		if (message.contains("Please close the file before converting")) {
+			message = "Please close " + filename + " before converting";
+		}
+		else if (message.contains("No measures were detected during the conversion of the tablature")) {
+			message = "No measures were detected during the conversion of " + filename;
+		}
+		else if (message.contains("This measure is formatted incorrectly.")) {
+			message = "In " + filename + "\n" + message;
+		}
+			
+		alert.setContentText(message);
+		
+		
+		
+
+		alert.showAndWait();
 	}
 
 }
