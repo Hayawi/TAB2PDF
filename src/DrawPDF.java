@@ -268,7 +268,6 @@ public class DrawPDF {
 		int x1 = 0;
 		int x2 = 1000;
 		int linesPerBar = 6;
-		
 		for (int i = 0; i < linesPerBar ; i++) {
 		cb.moveTo(x1, pageLocationY - HEIGHTSPACING * i);
 		cb.lineTo(x2, pageLocationY - HEIGHTSPACING * i);

@@ -147,7 +147,6 @@ public class Tablature extends Object {
 		int indexOfTitle = file.indexOf("TITLE="); 
 		int indexOfSubtitle = file.indexOf("SUBTITLE=");
 		int indexOfSpacing= file.indexOf("SPACING=");
-		
 		if (indexOfTitle >= 0) {
 			this.title = file.substring(indexOfTitle + "TITLE=".length() , file.indexOf(newLine, indexOfTitle)).trim();
 		}

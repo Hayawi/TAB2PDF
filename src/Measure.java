@@ -1,6 +1,7 @@
 import java.util.ArrayList;
 
 public class Measure extends Object {
+	
 	ArrayList<String> measure;
 	ArrayList<ArrayList<String>> tokens;
 	private int length;

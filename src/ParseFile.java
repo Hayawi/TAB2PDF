@@ -40,7 +40,6 @@ public class ParseFile {
 				Matcher matcher = pattern.matcher(body);
 				if (matcher.find()) {
 					indexOfVerticalLine = matcher.start();
-					
 				indexOfNewLine = body.indexOf('\n', indexOfVerticalLine + 1);
 				
 				int check2 = body.indexOf('\n', indexOfNewLine + 1);
