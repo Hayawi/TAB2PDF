@@ -29,8 +29,8 @@ public class ParseFile {
 		int indexOfNewLine = 0;
 		int indexOfVerticalLine = 0;
 		String checkString = "";
-		Pattern pattern = Pattern.compile("\\|?(\\||(\n[0-9]))(-|\\*)");
-		
+		Pattern pattern = Pattern.compile("\\|?(\\||([0-9]))(-|\\*)");
+		Pattern pattern2 = Pattern.compile("\\|?(\\|)(-|\\*)");
 		ArrayList<String> blockOfMeasures = new ArrayList<String>();
 		ArrayList<Measure> measures = new ArrayList<Measure>();
 		
@@ -42,15 +42,19 @@ public class ParseFile {
 					indexOfVerticalLine = matcher.start();
 					
 				indexOfNewLine = body.indexOf('\n', indexOfVerticalLine + 1);
+				
 				int check2 = body.indexOf('\n', indexOfNewLine + 1);
+				
 				checkString = body.substring(indexOfNewLine, check2).trim();
-				Matcher check = pattern.matcher(checkString);
+				
+				Matcher check = pattern2.matcher(checkString);
+				
 				if (!check.find() && i != 5) {
 					blockOfMeasures.clear();
 					break;
 				}
 				line = body.substring(indexOfVerticalLine, indexOfNewLine).trim(); 
-				System.out.println(line);
+
 				if (line.lastIndexOf("| ") > 0) 
 					line = line.substring(0, line.lastIndexOf("| ") + 2).trim(); 
 				body = body.substring(indexOfNewLine + 1); 

@@ -162,7 +162,6 @@ public class DrawPDF {
 		int index = 0; 
 		
 		for (String s : tokens) {
-			System.out.print(s);
 			if (index == 0 && leftRepeat) {
 				drawLeftRepeatBar(cb, horizontalShift, pageLocationY);
 				horizontalShift += 15F;
@@ -262,7 +261,6 @@ public class DrawPDF {
 				}
 			index++; 
 		}
-		System.out.println();
 	}
 	
 

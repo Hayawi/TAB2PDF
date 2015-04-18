@@ -52,7 +52,7 @@ public class Tablature extends Object {
 		this.numberedMeasures = false;
 		this.titleFontSize = 30;
 		this.subtitleFontSize = 12;
-		if(measures.size() == 0) {
+		if(measures.isEmpty()) {
 			throw new EmptyTablatureException("No measures were detected during the conversion of the tablature.");
 		}
 	}
