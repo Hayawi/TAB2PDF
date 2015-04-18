@@ -23,8 +23,9 @@ public class Tablature extends Object {
 	private int titleFontSize;
 	private int subtitleFontSize;
 
-	public void draw() throws IOException, DocumentException {
+	public boolean draw() throws IOException, DocumentException {
 		DrawPDF.writePDF(this);
+		return true;
 	}
 	
 	public void setOutputPath(String filepath) {
@@ -39,8 +40,9 @@ public class Tablature extends Object {
 		return numberedMeasures;
 	}
 	
-	public void setNumberMeasures(boolean numberMeasures) {
+	public boolean setNumberMeasures(boolean numberMeasures) {
 		this.numberedMeasures = numberMeasures;
+		return true;
 	}
 	
 	public Tablature(String inputPath, String outputPath) throws IOException {
@@ -102,28 +104,50 @@ public class Tablature extends Object {
 		this.subtitle = subtitle;
 	}
 	
-	public void setSpacing(float spacing) {
+	public boolean setSpacing(float spacing) {
+		if(spacing > 0){
 		this.spacing = spacing;
+		return true;
+		}
+		else
+			return false;
 	}
 	
-	public void setTitleFontSize(int fontSize) {
+	public boolean setTitleFontSize(int fontSize) {
+		if(fontSize > 0){
 		this.titleFontSize = fontSize;
+		return true;
+		}
+		else
+			return false;
 	}
 	
-	public void setSubtitleFontSize(int fontSize) {
-		this.subtitleFontSize = fontSize;
+	public boolean setSubtitleFontSize(int fontSize) {
+		if(fontSize > 0){
+			this.subtitleFontSize = fontSize;
+		return true;
+		}
+		else
+			return false;
+		
 	}
 	
-	public void setFontSize(int fontSize) {
-		this.fontSize = fontSize;
+	public boolean setFontSize(int fontSize) {
+		if(fontSize > 0){
+			this.fontSize = fontSize;
+		return true;
+		}
+		else
+			return false;
 	}
 
 	public BaseColor getFontColor() {
 		return this.fontColor;
 	}
 	
-	public void setFontColor(BaseColor color) {
+	public boolean setFontColor(BaseColor color) {
 		this.fontColor = color;
+		return true;
 	}
 	
 	public BaseColor getTitleColor() {

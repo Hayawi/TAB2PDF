@@ -19,15 +19,6 @@ public class PDFPreview {
 	private static ByteBuffer buf;
 	
 	 public static javafx.scene.image.Image createImage(java.awt.Image image) throws IOException {
-		    if (!(image instanceof RenderedImage)) {
-		      BufferedImage bufferedImage = new BufferedImage(image.getWidth(null),
-		              image.getHeight(null), BufferedImage.TYPE_INT_ARGB);
-		      Graphics g = bufferedImage.createGraphics();
-		      g.drawImage(image, 0, 0, null);
-		      g.dispose();
-
-		      image = bufferedImage;
-		    }
 		    ByteArrayOutputStream out = new ByteArrayOutputStream();
 		    ImageIO.write((RenderedImage) image, "png", out);
 		    out.flush();
@@ -66,10 +57,12 @@ public class PDFPreview {
 		return currentPage;
 	}
 	
-	public static void setCurrentPage(int page){
+	public static boolean setCurrentPage(int page){
 		if (page >= 1 && page <= maxPage){
 			currentPage = page;
+			return true;
 		}
+		return false;
 	}
 	
 	public static void leftPage(){

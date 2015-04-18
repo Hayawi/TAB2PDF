@@ -93,14 +93,6 @@ public class Measure extends Object {
 				break;
 			}
 		}
-		if (exists){
-			for (ArrayList<String> lines : tokens) {
-				
-					lines.remove(lines.size() - 1);
-					lines.remove(lines.size() - 1);
-			}
-			endLine = true;
-		}
 	}
 
 	private int getMeasureLength(ArrayList<ArrayList<String>> tokens) {

@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <classpath>
 	<classpathentry kind="src" path="src"/>
-	<classpathentry kind="src" path="testing"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.junit.JUNIT_CONTAINER/4"/>
 	<classpathentry kind="lib" path="libs/itext/itext-pdfa-5.5.4-javadoc.jar"/>
 	<classpathentry kind="lib" path="libs/itext/itext-pdfa-5.5.4-sources.jar"/>
@@ -20,5 +19,6 @@
 	<classpathentry kind="lib" path="libs/pdf-report-1.1.jar"/>
 	<classpathentry kind="lib" path="libs/pdf-renderer.jar"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
+	<classpathentry kind="src" path="testing"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

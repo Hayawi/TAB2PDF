@@ -16,11 +16,8 @@ public class ParseFile {
 	public static String openFile(String filePath) throws IOException{
 		  FileInputStream inputStream = new FileInputStream(filePath);
 		  String file;
-		    try {
 		        file = IOUtils.toString(inputStream);
-		    } finally {
 		        inputStream.close();
-		    }
 		    return file;
 	}
 	
@@ -96,10 +93,12 @@ public class ParseFile {
 					token.add("||");
 					i++;
 				}
+				/* dupilcate code
 				else if ((i + 1 < string.length()) && (i + 2 < string.length()) && string.charAt(i+1) == '|' && string.charAt(i+2) == '|') {
 					token.add("|||");
 					i = i + 2;
 				}
+				*/
 				else if ((i + 1 < string.length()) && (string.charAt(i+1) >= '0' && (string.charAt(i+1) <= '9'))) {
 					token.add("|" + string.charAt(i+1));
 					i++;
@@ -108,11 +107,9 @@ public class ParseFile {
 					token.add("|");
 			}
 			else if (string.charAt(i) == '-') {
-				while (string.charAt(i) == '-') {
+				while (string.charAt(i) == '-' && string.length() > i) {
 					hyphen = hyphen + "-"; // use stringbuilder or something for this later
 					i++;
-					if (i == string.length())
-						break;
 				}
 				token.add(hyphen);
 				hyphen = "";
@@ -120,11 +117,10 @@ public class ParseFile {
 			}
 			else if (string.charAt(i) == ' ') {
 				i++;
-				while (string.charAt(i) == ' ') {
+				while (string.charAt(i) == ' ' && string.length() > i) {
 					hyphen = hyphen + "-";
 					i++;
-					if (i == string.length())
-						break;
+				
 				}
 				token.add(hyphen);
 				hyphen = "";

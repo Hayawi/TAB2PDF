@@ -38,11 +38,11 @@ public class DrawPDF {
 	private static int[] previousNoteY = new int[6];
 	private static int[] previousNoteLine = new int[6];
 	
-	private DrawPDF () {
+	DrawPDF () {
 		
 	}
 	
-	public static void writePDF(Tablature tab) throws IOException, DocumentException{
+	public static boolean writePDF(Tablature tab) throws IOException, DocumentException{
 		Document document = new Document();
 		
 			FileOutputStream output = new FileOutputStream(tab.getOutputPath());
@@ -60,6 +60,7 @@ public class DrawPDF {
 			document.close(); 
 			output.close();
 			writer.close();
+			return true;
 	}
 
 	public static ByteArrayOutputStream writePDFInMemory(Tablature tab)
@@ -117,9 +118,6 @@ public class DrawPDF {
 			}
 			if (measure.leftRepeat()) {
 				measureLength += 15F;
-			}
-			if (measure.endLine()) {
-				measureLength += 12F;
 			}
 			if (measureLength < remainingSpace)
 				remainingSpace = remainingSpace - measureLength;
@@ -208,8 +206,7 @@ public class DrawPDF {
 					hold = true;
 					letter = s;
 				}
-				else if (index == 0 || index == tokens.size() || s.contains("*"))
-					;
+				else if (index == 0 || index == tokens.size() || s.contains("*"));
 				else
 				{
 					drawText(cb, s, horizontalShift, verticalShift, fontSize);
@@ -236,13 +233,7 @@ public class DrawPDF {
 					drawText(cb, "Repeat " + numberOfRepeats + " times", horizontalShift - 6 * spacing, pageLocationY + HEIGHTSPACING * 1.5F, fontSize);
 				}
 			}
-			if (endLine && index == tokens.size() - 1) {
-				for (int i = 0; i < 3; i++) {
-					drawVerticalBars(cb, horizontalShift, pageLocationY);
-					horizontalShift += 4F;
-				}
-			}
-
+			
 			if (hold && Pattern.matches("[0-9]+", s)) {
 				if (previousNoteLine[currentLine] != pageLine) {
 					drawHold(cb, letter, previousNoteX[currentLine] - previousNote[currentLine].length() * spacing, (previousNoteY[currentLine]) + 4F, 575, (previousNoteY[currentLine]) + 4F);
